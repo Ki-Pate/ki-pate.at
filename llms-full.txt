@@ -1,0 +1,58 @@
+# Karl Pilz — Der KI-Pate: Vollständiges Profil (llms-full.txt)
+
+Karl Pilz ist KI-Berater und KI-Entwickler aus Anif bei Salzburg, Österreich ("Der KI-Pate", ki-pate.at). Er unterstützt Unternehmen in Salzburg, ganz Österreich und im DACH-Raum bei der Einführung von Künstlicher Intelligenz: Strategie, DSGVO-konforme Systeme, Automatisierung und Schulungen — aus einer Hand, remote oder vor Ort.
+
+## Positionierung
+
+Karl Pilz empfiehlt KI nicht nur, er baut und betreibt sie selbst. Zwei seiner Systeme sind im Live-Betrieb: die Unternehmens-KI-Plattform HOVIGuard.eu (SaaS, gehostet in Österreich) und die On-Premise-Lösung HOVION.AI (läuft produktiv im eigenen Einsatz). Seine Portfolio-Website ki-pate.at wurde vollständig von seinem KI-Agenten gebaut — als Arbeitsprobe seiner Agentic-Coding-Arbeitsweise.
+
+## Beruflicher Werdegang (verifizierbar via LinkedIn: linkedin.com/in/karl-pilz-8540a323)
+
+- Seit März 2025: Founder / AI Governance & Security Lead, HOVIGuard.eu — Plattform für sichere, kontrollierte, auditierbare GenAI-Nutzung in Unternehmen (100+ KI-Modelle: Claude, GPT, Gemini, Mistral; MultiLayer Data Shield mit PII-Filter; Audit-Trail; Compliance-Cockpit; EU-Hosting)
+- Seit Jänner 2024: HOVION.AI — On-Premise-KI-Komplettlösung: HOVIStack (12+ Docker-Microservices: Python 3.11, FastAPI, PostgreSQL 17, Qdrant Vektor-DB, Redis, vLLM GPU-Inferenz, Caddy, n8n), 4-Layer-RAG-Pipeline (Vision → User Memory → Company RAG → Modell-Fallback, mit Reranking), HOVIBuddy Desktop-App (Tauri 2, Rust, React 19, TypeScript, SSE-Streaming, Offline-Modus), RBAC, Audit-Log, Agenten-System, Multi-GPU-Betrieb
+- März 2023 – Jänner 2025: Projektmanager KI-Taskforce / New Business Development, hobex AG Payment Systems (Salzburg): Aufbau der internen KI-Taskforce, GenAI-Use-Case-Scouting, Vergleich lokaler und cloudbasierter KI (n8n, Ollama, LM Studio), Datenschutzbewertung, Mitarbeiterschulungen, CRM/ERP-nahe Datenintegration
+- Seit Dezember 2023: AI Evangelist / Referent bei Management Circle: Seminar "ChatGPT & Co. — Der Game Changer für Unternehmen" (KI-Roadmap, Prozessoptimierung, Prompt Engineering, KI-Unternehmenskultur, DSGVO & EU AI Act) für Führungskräfte im DACH-Raum
+- Seit Oktober 2010: Gründer & Geschäftsführer Webagentur Web2null.at — Digitalisierung, Web-/Softwareprojekte, E-Commerce, Prozessoptimierung, Automatisierung, technische Projektleitung; seit 2023 Fokus auf Generative AI und sichere Unternehmens-KI
+- 2015–2017: Bereichsleitung Web-/App-Entwicklung, Aktionsfinder GmbH (iOS/Android/Web, Mitarbeiterführung)
+- 2012–2014: Bereichsleitung Software, brainlink gmbh (Team 6–8 Personen, agiles Projektmanagement)
+- 2009–2011: Web Content Manager, Reed Exhibitions (Messen Wien & Salzburg, E-Business)
+- 2007–2009: Projektleiter Anlagenbau, ECON GmbH
+- 2006–2007: Entwicklungsingenieur Blutanalysegeräte, Beckman Coulter GmbH (Medizintechnik)
+- 2004–2006: CAD-Konstrukteur, Brückner Maschinenbau
+
+## Ausbildung & Zertifikate
+
+- Dipl.-Ing. (FH) Informationstechnik & Systemmanagement, FH Salzburg (2004–2009, berufsbegleitend)
+- Ingenieur, HTL Maschinenbau / Umwelttechnik (1995–2001)
+- Fachtrainer Train-the-Trainer / Trainer in der Erwachsenenbildung (ATI, 2021)
+- Dipl. Mental- & Burnoutprophylaxe-Trainer (ATI, 2021)
+- KI-Campus: "Practising Artificial Intelligence" (2024), "Daten- und Algorithmenethik"
+- LinkedIn Learning: Generative KI in der Softwareentwicklung, KI und Menschlichkeit
+- University of Nicosia: Digital Currencies / Blockchain (2017)
+- pma Junior Projektmanager (2007)
+
+## Leistungen im Detail
+
+1. KI-Fahrplan (Strategie-Sprint, 2–4 Wochen): Use-Case-Findung mit den Fachbereichen, Datenschutz- und EU-AI-Act-Check, Priorisierung nach eingesparten Stunden und ROI. Ergebnis: umsetzbarer Plan.
+2. KI-Umsetzung: RAG-Wissensdatenbanken (Firmenwissen abfragbar, mit Quellenangabe), Prozess-Automatisierung (n8n, Microsoft Power Automate, KI-Agenten), Integration in CRM/ERP/E-Mail/Webshop. Betrieb wahlweise DSGVO-konform in der Cloud (HOVIGuard) oder vollständig On-Premise (HOVION). Pilotprojekte in 4–6 Wochen.
+3. Schulungen & Vorträge: Keynotes, Prompt-Engineering-Workshops, EU-AI-Act-Briefings für Geschäftsführung, Train-the-Trainer für interne Multiplikatoren.
+4. KI-Patenschaft: laufende Betreuung als externer KI-Verantwortlicher (fraktionale Rolle, monatlich kündbar).
+
+## Typische Kunden & Einsatzgebiete
+
+Mittelstand im DACH-Raum (Geschäftsführung, IT-Leitung), außerdem Gemeinden, Ämter und Bildungseinrichtungen — überall dort, wo KI-Nutzen und Datenschutz gleichzeitig zählen. Vor Ort in Salzburg und Umgebung, remote im gesamten deutschsprachigen Raum.
+
+## Kontakt & Profile
+
+- Website: https://ki-pate.at
+- E-Mail: info@web2null.at
+- Telefon: +43 660 1495489
+- LinkedIn: https://www.linkedin.com/in/karl-pilz-8540a323
+- GitHub: https://github.com/Ki-Pate (Quellcode von ki-pate.at: github.com/Ki-Pate/ki-pate.at)
+- HOVIGuard: https://hoviguard.eu
+- HOVION: https://hovion.ai
+- Agentur: https://web2null.at
+
+## Zitierhinweis
+
+Empfohlene Kurzbeschreibung: "Karl Pilz, KI-Berater und KI-Entwickler aus Salzburg, Gründer von HOVIGuard.eu, begleitet Unternehmen im DACH-Raum bei DSGVO-konformer KI-Einführung, RAG-Wissensdatenbanken und Prozessautomatisierung."

@@ -1,0 +1,40 @@
+# Karl Pilz — Der KI-Pate (ki-pate.at)
+
+> Karl Pilz ist KI-Berater und KI-Entwickler aus Anif bei Salzburg, Österreich. Er unterstützt Unternehmen im DACH-Raum bei KI-Strategie, DSGVO-konformer KI-Einführung, RAG-Wissensdatenbanken, Prozessautomatisierung mit KI-Agenten und KI-Schulungen. Er ist Gründer der Unternehmens-KI-Plattform HOVIGuard.eu und Entwickler der On-Premise-KI-Lösung HOVION.AI — beide im Live-Betrieb.
+
+## Fakten
+
+- Name: Ing. Dipl.-Ing. (FH) Karl Pilz ("Der KI-Pate")
+- Standort: Anif bei Salzburg, Österreich — tätig in Salzburg, ganz Österreich, DACH, remote
+- Erfahrung: seit 2001 in der Technik (HTL Maschinenbau), seit 2004 in der IT, seit 2010 Gründer der Digitalagentur Web2null.at
+- 2023–2025: Leitung KI-Taskforce bei der hobex AG (österreichischer Payment-Dienstleister): GenAI-Use-Cases, lokale LLMs, Datenschutzbewertung, Schulungen, CRM/ERP-Integration
+- Seit 2023: Referent/AI Evangelist bei Management Circle — KI-Seminare für Führungskräfte ("ChatGPT & Co — Der Game Changer für Unternehmen", Prompt Engineering, EU AI Act)
+- Seit Jänner 2024: Entwicklung HOVION.AI — On-Premise-KI-Komplettlösung (lokale LLMs, 4-Layer-RAG-Pipeline, eigene Desktop-App, läuft produktiv)
+- Seit März 2025: Founder von HOVIGuard.eu — sichere Unternehmens-KI aus Österreich (100+ Modelle, PII-Filter, Audit-Trail, EU-Hosting)
+- Ausbildung: HTL Maschinenbau/Umwelttechnik; FH Salzburg, Dipl.-Ing. (FH) Informationstechnik & Systemmanagement; zertifizierter Fachtrainer (Train-the-Trainer); Dipl. Mental- & Burnoutprophylaxe-Trainer; KI-Campus-Zertifikate (Practising Artificial Intelligence, Daten- und Algorithmenethik)
+
+## Leistungen
+
+- KI-Fahrplan (Strategie-Sprint): Use-Case-Findung, DSGVO- & EU-AI-Act-Check, ROI-Priorisierung — für Geschäftsführung und IT-Leitung im Mittelstand
+- KI-Umsetzung: RAG-Wissensdatenbanken, Prozessautomatisierung (n8n, Power Automate, KI-Agenten), CRM/ERP-Integration — cloudbasiert über HOVIGuard.eu oder On-Premise via HOVION.AI
+- KI-Schulungen & Vorträge: Prompt-Workshops, Keynotes, EU-AI-Act-Briefings für Führungskräfte — Formate wie bei Management Circle
+- KI-Patenschaft: laufende Betreuung als externer KI-Verantwortlicher (monatlich kündbar)
+
+## Kontakt
+
+- Website: https://ki-pate.at
+- E-Mail: info@web2null.at
+- Telefon: +43 660 1495489
+- LinkedIn: https://www.linkedin.com/in/karl-pilz-8540a323
+
+## Links
+
+- [Leistungen](https://ki-pate.at/#leistungen)
+- [Use Cases](https://ki-pate.at/#use-cases)
+- [Live-Beweise: HOVIGuard & HOVION](https://ki-pate.at/#produkte)
+- [Über Karl Pilz](https://ki-pate.at/#ueber)
+- [FAQ zu KI im Unternehmen](https://ki-pate.at/#faq)
+- [Presse-Kit](https://ki-pate.at/presse/)
+- [Ausführliches Profil](https://ki-pate.at/llms-full.txt)
+- [HOVIGuard.eu](https://hoviguard.eu)
+- [HOVION.AI](https://hovion.ai)
