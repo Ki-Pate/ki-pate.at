@@ -41,7 +41,7 @@
       "description": "Karl Pilz ist KI-Berater und KI-Entwickler aus Anif bei Salzburg. Er begleitet Unternehmen im DACH-Raum bei KI-Strategie, DSGVO-konformer KI-Einführung, RAG-Wissensdatenbanken und Prozessautomatisierung. Er ist Gründer der KI-Plattform HOVIGuard.eu und Entwickler der On-Premise-Lösung HOVION.AI.",
       "image": "https://ki-pate.at/assets/karl-pilz-ki-berater-salzburg.webp",
       "url": "https://ki-pate.at/",
-      "email": "mailto:info@web2null.at",
+      "email": "mailto:hallo@ki-pate.at",
       "telephone": "+43 660 1495489",
       "address": { "@type": "PostalAddress", "addressLocality": "Anif", "addressRegion": "Salzburg", "postalCode": "5081", "addressCountry": "AT" },
       "alumniOf": [
@@ -64,7 +64,7 @@
       "areaServed": ["Salzburg", "Österreich", "Deutschland", "Schweiz", "DACH"],
       "priceRange": "€€",
       "telephone": "+43 660 1495489",
-      "email": "info@web2null.at",
+      "email": "hallo@ki-pate.at",
       "serviceType": ["KI-Strategie & KI-Fahrplan", "KI-Umsetzung: RAG-Wissensdatenbanken & Automatisierung", "KI-Schulungen, Workshops & Vorträge", "KI-Patenschaft: laufende KI-Betreuung"],
       "sameAs": ["https://hoviguard.eu", "https://hovion.ai", "https://web2null.at"]
     },
@@ -96,7 +96,7 @@
 
 /* ============ SYSTEM ============ */
 :root{
-  --bg:#10141B; --panel:#151A23; --panel2:#12161e;
+  --bg:#10141B; --panel:#151A23; --panel2:#12161E;
   --ink:#EDEBE3; --muted:#9BA3AD; --faint:#6B7683;
   --line:rgba(155,163,173,.16); --line-strong:rgba(155,163,173,.30);
   --tech:#6FA3AD; --tech-dim:rgba(111,163,173,.35);
@@ -137,9 +137,10 @@ section.ruled:after{right:max(14px,calc((100% - var(--maxw))/2 - 7px))}
 /* Header */
 header{position:sticky;top:0;z-index:60;background:rgba(16,20,27,.86);backdrop-filter:blur(12px);border-bottom:1px solid var(--line)}
 .nav{display:flex;align-items:center;justify-content:space-between;height:64px}
-.logo{font-family:var(--display);font-weight:640;font-size:1.05rem;letter-spacing:-.01em}
+.logo{font-family:var(--display);font-weight:650;font-size:1.05rem;letter-spacing:-.01em;display:flex;align-items:center;gap:12px}
 .logo em{font-style:normal;color:var(--acc)}
 .logo .mono{font-size:.62rem;letter-spacing:.18em;color:var(--faint);display:block;margin-top:-2px}
+.logo img{border-radius:0}
 .nav-links{display:flex;gap:30px;align-items:center}
 .nav-links a:not(.btn){font-family:var(--mono);font-size:.74rem;letter-spacing:.14em;text-transform:uppercase;color:var(--muted)}
 .nav-links a:not(.btn):hover{color:var(--ink)}
@@ -156,8 +157,8 @@ header{position:sticky;top:0;z-index:60;background:rgba(16,20,27,.86);backdrop-f
 /* ============ HERO ============ */
 .hero{padding:96px 0 90px;position:relative;overflow:hidden}
 .hero:before{content:"";position:absolute;inset:0;background:
-  linear-gradient(rgba(127,166,184,.05) 1px,transparent 1px),
-  linear-gradient(90deg,rgba(127,166,184,.05) 1px,transparent 1px);
+  linear-gradient(rgba(111,163,173,.05) 1px,transparent 1px),
+  linear-gradient(90deg,rgba(111,163,173,.05) 1px,transparent 1px);
   background-size:72px 72px;mask-image:radial-gradient(900px 600px at 20% 0%,#000 0%,transparent 70%)}
 .hero-grid{display:grid;grid-template-columns:1.15fr .85fr;gap:64px;align-items:start;position:relative}
 .hero .slug{font-family:var(--mono);font-size:.74rem;letter-spacing:.2em;text-transform:uppercase;color:var(--muted);display:flex;gap:12px;align-items:center;margin-bottom:30px}
@@ -184,7 +185,7 @@ header{position:sticky;top:0;z-index:60;background:rgba(16,20,27,.86);backdrop-f
 @keyframes blink{50%{opacity:0}}
 @media(prefers-reduced-motion:reduce){.term-body .cur{animation:none}}
 
-/* Foto rechts: technische Abbildung */
+/* Foto: technische Abbildung */
 .fig{position:relative;padding:14px}
 .fig .frame{position:absolute;inset:0;border:1px solid var(--tech-dim);pointer-events:none}
 .fig .frame:before,.fig .frame:after,.fig .tick:before,.fig .tick:after{content:"+";position:absolute;font-family:var(--mono);font-size:13px;color:var(--tech);line-height:1}
@@ -194,10 +195,10 @@ header{position:sticky;top:0;z-index:60;background:rgba(16,20,27,.86);backdrop-f
 .fig .tick:after{bottom:-7px;right:-6px}
 .fig .tick{position:absolute;inset:0;pointer-events:none}
 .fig img{width:100%;aspect-ratio:1/1;object-fit:cover;border-radius:2px}
-.fig figcaption{font-family:var(--mono);font-size:.68rem;letter-spacing:.14em;color:var(--faint);padding:14px 2px 0;text-transform:uppercase;display:flex;justify-content:space-between}
+.fig figcaption{font-family:var(--mono);font-size:.68rem;letter-spacing:.14em;color:var(--faint);padding:14px 2px 0;text-transform:uppercase;display:flex;justify-content:space-between;gap:10px}
 .fig figcaption b{color:var(--muted);font-weight:400}
 
-/* ============ DATENBLATT (Proof) ============ */
+/* ============ DATENBLATT ============ */
 .sheet{border-top:1px solid var(--line);border-bottom:1px solid var(--line);background:var(--panel2)}
 .sheet-grid{display:grid;grid-template-columns:repeat(6,1fr)}
 .sheet-cell{padding:26px 20px;border-left:1px solid var(--line)}
@@ -215,7 +216,7 @@ header{position:sticky;top:0;z-index:60;background:rgba(16,20,27,.86);backdrop-f
 /* ============ LEISTUNGEN ============ */
 .svc{display:grid;grid-template-columns:repeat(3,1fr);gap:1px;background:var(--line);border:1px solid var(--line);border-radius:6px;overflow:hidden;margin-top:44px}
 .svc-card{background:var(--panel);padding:34px 30px;position:relative;transition:background .2s}
-.svc-card:hover{background:#181e29}
+.svc-card:hover{background:#181E29}
 .svc-card .num{font-family:var(--mono);font-size:.72rem;color:var(--acc);letter-spacing:.16em;display:block;margin-bottom:18px}
 .svc-card p{color:var(--muted);font-size:.95rem}
 .svc-card ul{margin:18px 0 0;padding:0;list-style:none}
@@ -242,7 +243,7 @@ header{position:sticky;top:0;z-index:60;background:rgba(16,20,27,.86);backdrop-f
 .flow .step{display:flex;gap:14px;align-items:baseline;background:var(--panel);border:1px solid var(--line);border-radius:6px;padding:14px 18px;font-size:.92rem;color:var(--muted)}
 .flow .step b{font-family:var(--mono);color:var(--tech);white-space:nowrap;font-weight:500;font-size:.78rem;letter-spacing:.06em}
 
-/* ============ MARKETING Früher/Heute ============ */
+/* ============ MARKETING ============ */
 .compare{display:grid;gap:10px;margin-top:42px;max-width:920px}
 .compare .row{display:grid;grid-template-columns:1fr 1fr;border:1px solid var(--line);border-radius:6px;overflow:hidden}
 .compare .cell{padding:20px 24px;font-size:.95rem;color:var(--muted)}
@@ -320,7 +321,7 @@ header{position:sticky;top:0;z-index:60;background:rgba(16,20,27,.86);backdrop-f
 .skill .proof:before{content:"BELEG // ";color:var(--acc)}
 
 /* ============ ABLAUF ============ */
-.steps{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin-top:44px;counter-reset:s}
+.steps{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin-top:44px}
 .step-card{background:var(--panel);border:1px solid var(--line);border-radius:6px;padding:30px;position:relative}
 .step-card:after{content:"";position:absolute;right:-10px;top:50%;width:10px;height:1px;background:var(--line-strong)}
 .step-card:last-child:after{display:none}
@@ -338,19 +339,30 @@ header{position:sticky;top:0;z-index:60;background:rgba(16,20,27,.86);backdrop-f
 
 /* ============ KONTAKT ============ */
 .contact{background:var(--panel2)}
-.contact-box{display:grid;grid-template-columns:1.15fr .85fr;gap:56px;align-items:center}
-.ways{display:grid;gap:10px}
-.ways a{display:block;border:1px solid var(--line);border-radius:6px;padding:18px 22px;background:var(--panel);transition:border-color .15s}
-.ways a:hover{border-color:var(--acc)}
-.ways .k{font-family:var(--mono);font-size:.62rem;letter-spacing:.18em;color:var(--acc);display:block;margin-bottom:4px}
-.ways b{font-weight:600}
-.ways small{color:var(--muted);display:block;font-size:.84rem;margin-top:2px}
+.contact-box{display:grid;grid-template-columns:1fr 1fr;gap:56px;align-items:start}
+
+/* ============ FORMULAR ============ */
+.cform{display:grid;gap:12px;background:var(--panel);border:1px solid var(--line);border-radius:8px;padding:28px}
+.cform .row2{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+.cform label{font-family:var(--mono);font-size:.64rem;letter-spacing:.16em;text-transform:uppercase;color:var(--tech);display:block;margin-bottom:6px}
+.cform input,.cform textarea{width:100%;background:var(--bg);border:1px solid var(--line-strong);border-radius:5px;padding:12px 14px;color:var(--ink);font-family:var(--sans);font-size:.96rem}
+.cform input:focus,.cform textarea:focus{outline:none;border-color:var(--acc)}
+.cform textarea{min-height:120px;resize:vertical}
+.cform .hp{position:absolute;left:-9999px;opacity:0;height:0;overflow:hidden}
+.cform .btn{justify-content:center;width:100%}
+.cform .note{font-size:.78rem;color:var(--faint);line-height:1.6}
+.cform .note a{color:var(--tech)}
+.alt-ways{display:flex;gap:20px;flex-wrap:wrap;margin-top:16px;font-size:.9rem}
+.alt-ways a{color:var(--muted)}
+.alt-ways a b{color:var(--acc);font-family:var(--mono);font-size:.66rem;letter-spacing:.14em;margin-right:6px}
+@media(max-width:600px){.cform .row2{grid-template-columns:1fr}}
 
 /* ============ FOOTER ============ */
 footer{border-top:1px solid var(--line);padding:0}
-.foot-brand{padding:60px 0 30px;border-bottom:1px solid var(--line)}
+.foot-brand{padding:60px 0 30px;border-bottom:1px solid var(--line);display:flex;align-items:center;justify-content:space-between;gap:30px;flex-wrap:wrap}
 .foot-brand .big{font-family:var(--display);font-weight:640;font-size:clamp(2rem,6vw,4rem);letter-spacing:-.03em;line-height:1;color:var(--ink)}
 .foot-brand .big em{font-style:normal;color:var(--acc)}
+.foot-brand img{border-radius:8px}
 .foot-grid{display:flex;justify-content:space-between;gap:24px;flex-wrap:wrap;padding:30px 0 44px;color:var(--muted);font-size:.88rem}
 footer a{color:var(--muted)}
 footer a:hover{color:var(--ink)}
@@ -372,7 +384,6 @@ footer a:hover{color:var(--ink)}
   .usecase{grid-template-columns:1fr;gap:30px}
   .usecase .visual{order:2}
   .uc-grid{grid-template-columns:1fr 1fr}
-  .uc:nth-child(1),.uc:nth-child(6){grid-column:span 2}
   .branche{grid-template-columns:1fr}
   .branche .bname{border-right:none;border-bottom:1px solid var(--line)}
   .branche .win{border-left:none;border-top:1px solid rgba(43,200,183,.3)}
@@ -392,7 +403,7 @@ footer a:hover{color:var(--ink)}
 
 <header>
   <div class="wrap nav">
-    <a class="logo" href="#top" style="display:flex;align-items:center;gap:12px"><img src="/assets/logo-mono.webp" alt="" width="34" height="27" style="border-radius:0"><span>Karl Pilz <em>—</em> Der KI-Pate<span class="mono">KI-BERATER · SALZBURG / DACH</span></span></a>
+    <a class="logo" href="#top"><img src="/assets/logo-mono.webp" alt="" width="34" height="27"><span>Karl Pilz <em>—</em> Der KI-Pate<span class="mono">KI-BERATER · SALZBURG / DACH</span></span></a>
     <nav class="nav-links" aria-label="Hauptnavigation">
       <a href="#leistungen">Leistungen</a>
       <a href="#use-cases">Use&nbsp;Cases</a>
@@ -619,7 +630,19 @@ footer a:hover{color:var(--ink)}
         <div class="cell new"><span class="lbl">Heute</span><b>10 Varianten vor der Mittagspause</b>Und getestet wird, was verkauft.</div>
       </div>
     </div>
-    <p class="lead" style="margin-top:30px">Bringen Sie ein Produktfoto in die KI-Sprechstunde mit — ich zeige Ihnen in 30 Minuten, was Ihr Marketing ab nächster Woche kann. <a href="#kontakt" style="color:var(--acc)">Termin sichern →</a></p>
+    <div class="usecase" style="border-top:1px dashed var(--line);margin-top:44px">
+      <div>
+        <h3>Mitarbeiterfotos? Braucht keinen Fotografen mehr.</h3>
+        <p>Jeder Betrieb kennt es: Die Team-Seite zeigt Handy-Schnappschüsse aus drei Jahrzehnten — schlechtes Licht, jeder Hintergrund anders, der Neue fehlt ganz. Ein Foto-Termin für alle scheitert an Schichtplänen und Budget. Mit KI reicht pro Person ein einziges brauchbares Foto: Daraus entstehen einheitliche, professionelle Porträts im Look Ihres Unternehmens — gleiches Licht, gleicher Hintergrund, Ihre CI-Farbe. Neue Mitarbeiter? In fünf Minuten im Team-Look, ohne dass jemand das Studio bucht.</p>
+        <p style="margin-top:10px;color:var(--faint);font-size:.85rem">Demo rechts mit KI-generierten, fiktiven Personen — aus Datenschutzgründen. Mit Ihren echten Mitarbeitern funktioniert es genauso, Einverständnis vorausgesetzt.</p>
+        <a class="mini-cta" href="#kontakt">Team-Seite erneuern? → Sprechstunde</a>
+      </div>
+      <figure class="visual">
+        <img src="/assets/usecase-mitarbeiterfotos.webp" alt="Use Case Mitarbeiterfotos mit KI: unvorteilhafte Schnappschüsse werden zu einheitlichen professionellen Team-Porträts im Unternehmensstil" loading="lazy" width="1200" height="670">
+        <figcaption>Vorher: Handy-Schnappschüsse. Nachher: ein Team, ein Stil — ohne Fotostudio.</figcaption>
+      </figure>
+    </div>
+    <p class="lead" style="margin-top:30px">Bringen Sie ein Produktfoto — oder Ihre alte Team-Seite — in die KI-Sprechstunde mit: Ich zeige Ihnen in 30 Minuten, was Ihr Marketing ab nächster Woche kann. <a href="#kontakt" style="color:var(--acc)">Termin sichern →</a></p>
   </div>
 </section>
 
@@ -741,8 +764,8 @@ footer a:hover{color:var(--ink)}
         <h3>Der KI-Pate, von der KI inszeniert</h3>
         <p class="cap" style="margin:4px 0 14px">AUS EINEM EINZIGEN LINKEDIN-FOTO: DREI FILMSZENEN + EIN KURZVIDEO. KLEINE MACHTDEMONSTRATION AUS USE CASE 3.</p>
         <div class="scene-grid">
-          <img src="/assets/karl-hollywood-1.webp" alt="KI-generiertes Hollywood-Porträt von Karl Pilz: Filmszene bei Nacht" loading="lazy" width="600" height="800">
-          <img src="/assets/karl-hollywood-2.webp" alt="KI-generiertes Film-noir-Porträt von Karl Pilz im Studierzimmer" loading="lazy" width="600" height="800">
+          <img src="/assets/karl-hollywood-1.webp" alt="KI-generiertes Filmporträt von Karl Pilz: Abendstraße, Anzug mit türkisem Einstecktuch" loading="lazy" width="600" height="800">
+          <img src="/assets/karl-hollywood-2.webp" alt="KI-generiertes Film-noir-Porträt von Karl Pilz im Studierzimmer mit türkisem Einstecktuch" loading="lazy" width="600" height="800">
           <img src="/assets/karl-hollywood-3.webp" alt="KI-generiertes Porträt von Karl Pilz in einer KI-Kommandozentrale" loading="lazy" width="800" height="450">
         </div>
         <video controls preload="none" poster="/assets/karl-hollywood-video-poster.webp" style="margin-top:8px;border-radius:4px" aria-label="KI-generiertes Kurzvideo: Karl Pilz als Filmfigur">
@@ -873,13 +896,29 @@ footer a:hover{color:var(--ink)}
     <div>
       <p class="eyebrow"><span class="idx">12</span> KI ist weit mehr, als du denkst.</p>
       <h2>Reden wir 30 Minuten über Ihre Prozesse.</h2>
-      <p class="lead">Sie gehen mit 2–3 konkreten KI-Use-Cases für Ihr Unternehmen raus — auch wenn wir nie zusammenarbeiten. Handschlagqualität inklusive.</p>
+      <p class="lead">Schicken Sie mir Ihre Anfrage — Sie bekommen binnen 24 Stunden einen Terminvorschlag für die kostenlose KI-Sprechstunde. Sie gehen mit 2–3 konkreten Use-Cases raus, auch wenn wir nie zusammenarbeiten. Handschlagqualität inklusive.</p>
       <p class="fomo" style="margin-top:24px">„Die Frage ist nicht, ob KI in Ihrer Branche ankommt — nur, <em>bei wem zuerst</em>."</p>
     </div>
-    <div class="ways">
-      <a href="mailto:info@web2null.at?subject=KI-Sprechstunde%20anfragen&body=Guten%20Tag%20Herr%20Pilz%2C%0A%0Aich%20interessiere%20mich%20f%C3%BCr%20eine%20kostenlose%20KI-Sprechstunde.%0A%0AUnternehmen%3A%20%0ABranche%3A%20%0AWunschtermin%3A%20%0A%0AMit%20freundlichen%20Gr%C3%BC%C3%9Fen"><span class="k">E-MAIL</span><b>KI-Sprechstunde buchen</b><small>Mit Terminvorschlag — Antwort binnen 24 h</small></a>
-      <a href="tel:+436601495489"><span class="k">TELEFON</span><b>+43 660 1495489</b><small>Direkt anrufen — wenn ich im Termin bin, rufe ich zurück</small></a>
-      <a href="https://www.linkedin.com/in/karl-pilz-8540a323" target="_blank" rel="noopener"><span class="k">LINKEDIN</span><b>Karl Pilz</b><small>Vernetzen & folgen</small></a>
+    <div>
+      <form class="cform" action="/kontakt.php" method="post" aria-label="Anfrageformular KI-Sprechstunde">
+        <div class="row2">
+          <div><label for="f-name">Name *</label><input id="f-name" name="name" required autocomplete="name"></div>
+          <div><label for="f-firma">Firma</label><input id="f-firma" name="firma" autocomplete="organization"></div>
+        </div>
+        <div class="row2">
+          <div><label for="f-email">E-Mail *</label><input id="f-email" type="email" name="email" required autocomplete="email"></div>
+          <div><label for="f-tel">Telefon</label><input id="f-tel" type="tel" name="telefon" autocomplete="tel"></div>
+        </div>
+        <div><label for="f-msg">Worum geht es? *</label><textarea id="f-msg" name="nachricht" required placeholder="Kurz Ihr Betrieb, Ihre Branche und wo es hakt — den Rest besprechen wir."></textarea></div>
+        <div class="hp" aria-hidden="true"><label for="f-web">Website</label><input id="f-web" name="website" tabindex="-1" autocomplete="off"></div>
+        <button class="btn" type="submit">Anfrage senden</button>
+        <p class="note">Ihre Angaben verwende ich ausschließlich zur Beantwortung Ihrer Anfrage (Art. 6 Abs. 1 lit. b DSGVO) — Details in der <a href="/datenschutz.html">Datenschutzerklärung</a>. Kein Newsletter, keine Weitergabe.</p>
+      </form>
+      <div class="alt-ways">
+        <a href="mailto:hallo@ki-pate.at"><b>E-MAIL</b>hallo@ki-pate.at</a>
+        <a href="tel:+436601495489"><b>TEL</b>+43 660 1495489</a>
+        <a href="https://www.linkedin.com/in/karl-pilz-8540a323" target="_blank" rel="noopener"><b>IN</b>LinkedIn</a>
+      </div>
     </div>
   </div>
 </section>
@@ -887,19 +926,19 @@ footer a:hover{color:var(--ink)}
 </main>
 
 <footer>
-  <div class="wrap foot-brand" style="display:flex;align-items:center;justify-content:space-between;gap:30px;flex-wrap:wrap">
+  <div class="wrap foot-brand">
     <div class="big">Der KI-Pate<em>.</em></div>
-    <img src="/assets/logo-ki-pate.webp" alt="Logo Der KI-Pate" width="150" height="150" loading="lazy" style="border-radius:8px">
+    <img src="/assets/logo-ki-pate.webp" alt="Logo Der KI-Pate" width="150" height="150" loading="lazy">
   </div>
   <div class="wrap foot-grid">
     <div>
-      <b style="color:var(--ink)">Ing. DI (FH) Karl Pilz</b><br>
+      <b style="color:var(--ink)">Ing. DI (FH) Karl Pilz — Der KI-Pate</b><br>
       Sagmüllerweg 8 · 5081 Anif bei Salzburg · Österreich<br>
-      <a href="tel:+436601495489">+43 660 1495489</a> · <a href="mailto:info@web2null.at">info@web2null.at</a><br><br>
+      <a href="tel:+436601495489">+43 660 1495489</a> · <a href="mailto:hallo@ki-pate.at">hallo@ki-pate.at</a><br><br>
       <a href="/impressum.html">Impressum</a> · <a href="/datenschutz.html">Datenschutz</a> · <a href="/presse/">Presse-Kit</a> · <a href="/llms.txt">llms.txt</a> · <a href="https://github.com/Ki-Pate/ki-pate.at" target="_blank" rel="noopener">Quellcode</a>
     </div>
     <div class="foot-meta">
-      DOK.-NR. <b>KIP-2026-V3</b> // GEZEICHNET VON <b>KI-AGENT (CLAUDE)</b><br>
+      DOK.-NR. <b>KIP-2026-V4</b> // GEZEICHNET VON <b>KI-AGENT (CLAUDE)</b><br>
       GEPRÜFT & FREIGEGEBEN VON <b>K. PILZ</b> // STRATEGIE: MENSCH. UMSETZUNG: KI.<br>
       © 2026 KARL PILZ · KI-PATE.AT · SALZBURG
     </div>
@@ -926,10 +965,10 @@ document.querySelectorAll('section .wrap > *, .usecase, .svc-card, .proofcard, .
   let li=0;
   function addLine(){
     if(li>=lines.length){const c=document.createElement('span');c.className='ln';c.innerHTML='<span class="p">karl@ki-pate:~$</span> <span class="cur"></span>';el.appendChild(c);return}
-    const [cls,txt]=lines[li++];
-    const s=document.createElement('span');s.className='ln '+cls;el.appendChild(s);
-    if(reduce){s.textContent=txt;addLine();return}
-    let i=0;(function type(){s.textContent=txt.slice(0,++i);if(i<txt.length)setTimeout(type,12);else setTimeout(addLine,260)})();
+    const pair=lines[li++];
+    const s=document.createElement('span');s.className='ln '+pair[0];el.appendChild(s);
+    if(reduce){s.textContent=pair[1];addLine();return}
+    let i=0;(function type(){s.textContent=pair[1].slice(0,++i);if(i<pair[1].length)setTimeout(type,12);else setTimeout(addLine,260)})();
   }
   if(reduce){addLine()}else{setTimeout(addLine,700)}
 })();
