@@ -369,6 +369,26 @@ footer a:hover{color:var(--ink)}
 .foot-meta{font-family:var(--mono);font-size:.68rem;letter-spacing:.1em;color:var(--faint);line-height:2}
 .foot-meta b{color:var(--tech);font-weight:400}
 
+/* ============ KAPITEL-SYSTEM (Scrollytelling) ============ */
+#progress{position:fixed;top:0;left:0;height:3px;background:var(--acc);width:0;z-index:99;transition:width .1s linear;box-shadow:0 0 12px rgba(43,200,183,.7)}
+.chap{position:relative;min-height:86vh;display:flex;align-items:center;overflow:hidden;border-top:1px solid var(--line);border-bottom:1px solid var(--line);background:#0A0D12}
+.chap .bg{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;opacity:.55;transform:scale(1.08);transition:transform 1.4s ease,opacity 1.4s ease}
+.chap.in .bg{transform:scale(1);opacity:.62}
+.chap:after{content:"";position:absolute;inset:0;background:linear-gradient(180deg,rgba(16,20,27,.88) 0%,rgba(16,20,27,.25) 40%,rgba(16,20,27,.92) 100%)}
+.chap .inner{position:relative;z-index:2;max-width:var(--maxw);margin:0 auto;padding:80px 28px;width:100%}
+.chap .knum{font-family:var(--mono);font-size:.78rem;letter-spacing:.3em;color:var(--acc);display:block;margin-bottom:18px}
+.chap h2{font-size:clamp(2.4rem,6vw,4.4rem);margin-bottom:18px;text-shadow:0 4px 40px rgba(0,0,0,.8)}
+.chap p{color:var(--ink);font-size:1.15rem;max-width:640px;text-shadow:0 2px 20px rgba(0,0,0,.8)}
+.chap .hint{font-family:var(--mono);font-size:.68rem;letter-spacing:.2em;color:var(--muted);margin-top:34px;display:flex;align-items:center;gap:10px}
+.chap .hint:after{content:"↓";color:var(--acc);animation:bob 1.6s ease-in-out infinite}
+@keyframes bob{50%{transform:translateY(5px)}}
+@media(prefers-reduced-motion:reduce){.chap .hint:after{animation:none}.chap .bg{transition:none;transform:none}}
+#chappill{position:fixed;right:18px;bottom:18px;z-index:60;font-family:var(--mono);font-size:.66rem;letter-spacing:.14em;color:var(--muted);background:rgba(16,20,27,.85);border:1px solid var(--line);border-radius:999px;padding:8px 14px;backdrop-filter:blur(8px);pointer-events:none;opacity:0;transition:opacity .3s}
+#chappill.show{opacity:1}
+#chappill b{color:var(--acc);font-weight:500}
+.hero .scenebg{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;opacity:.24;z-index:0}
+.hero .wrap{position:relative;z-index:2}
+
 /* Reveal */
 .reveal{opacity:0;transform:translateY(18px);transition:opacity .55s ease,transform .55s ease}
 .reveal.in{opacity:1;transform:none}
@@ -404,21 +424,24 @@ footer a:hover{color:var(--ink)}
 <header>
   <div class="wrap nav">
     <a class="logo" href="#top"><img src="/assets/logo-mono.webp" alt="" width="34" height="27"><span>Karl Pilz <em>—</em> Der KI-Pate<span class="mono">KI-BERATER · SALZBURG / DACH</span></span></a>
-    <nav class="nav-links" aria-label="Hauptnavigation">
-      <a href="#leistungen">Leistungen</a>
-      <a href="#use-cases">Use&nbsp;Cases</a>
-      <a href="#branchen">Branchen</a>
-      <a href="#produkte">Live-Beweise</a>
-      <a href="#ueber">Über</a>
+    <nav class="nav-links" aria-label="Kapitel-Navigation">
+      <a href="#k1">01&nbsp;Auftrag</a>
+      <a href="#k2">02&nbsp;Problem</a>
+      <a href="#k3">03&nbsp;Lösung</a>
+      <a href="#k4">04&nbsp;Beweis</a>
+      <a href="#k5">05&nbsp;Start</a>
       <a class="btn small" href="#kontakt">KI-Sprechstunde</a>
     </nav>
   </div>
 </header>
 
 <main id="top">
+<div id="progress" role="presentation"></div>
+<div id="chappill">KAPITEL <b>01</b>/05 · DER AUFTRAG</div>
 
-<!-- HERO -->
-<section class="hero" aria-label="Intro">
+<!-- ============ KAPITEL 01: DER AUFTRAG ============ -->
+<section class="hero" aria-label="Intro" id="k1" data-chapter="01" data-chapter-name="DER AUFTRAG">
+  <img class="scenebg" src="/assets/szene-blaupause.webp" alt="" aria-hidden="true" fetchpriority="low">
   <div class="wrap hero-grid">
     <div>
       <p class="slug"><b>KI-PATE.AT</b> // ANIF BEI SALZBURG // SEIT 2001 IN DER TECHNIK</p>
@@ -457,18 +480,29 @@ footer a:hover{color:var(--ink)}
 </div>
 
 <!-- VORSTELLUNG -->
-<section id="vorstellung">
+<section id="vorstellung" data-chapter="01" data-chapter-name="DER AUFTRAG">
   <div class="wrap">
-    <p class="eyebrow"><span class="idx">00</span> Vorstellung</p>
+    <p class="eyebrow"><span class="idx">01.2</span> Vorstellung</p>
     <p class="fomo" style="margin:0;max-width:940px;font-size:clamp(1.4rem,3vw,2.1rem)">„Servus, ich bin Karl Pilz — <em>der KI-Pate, der mit der KI hilft.</em> Ingenieur seit 2001, Unternehmer seit 2010, KI-Entwickler aus Überzeugung. Ich halte keine Vorträge über Ihre Probleme. <em>Ich schaffe Lösungen für Ihre Probleme</em> — und bleibe, bis sie laufen."</p>
     <p class="lead" style="margin-top:22px">Sie beschreiben mir, wo es hakt — ich liefere das System, das es löst. Zwei eigene KI-Plattformen im Live-Betrieb, KI-Taskforce im Payment-Umfeld geleitet, Führungskräfte im DACH-Raum geschult. Und diese Website? Hat mein KI-Agent gebaut — Sie schauen gerade auf mein Werkstück.</p>
   </div>
 </section>
 
+<!-- ============ KAPITEL 02: DAS PROBLEM ============ -->
+<section class="chap" id="k2" data-chapter="02" data-chapter-name="DAS PROBLEM">
+  <img class="bg" src="/assets/szene-datenraum.webp" alt="" loading="lazy" aria-hidden="true">
+  <div class="inner">
+    <span class="knum">KAPITEL 02 / 05</span>
+    <h2>Das Problem.</h2>
+    <p>Ihre Mitarbeiter nutzen KI längst — nur eben unkontrolliert, mit Firmendaten, in privaten Accounts. Und während Sie noch abwägen, spart Ihr Mitbewerb bereits jede Woche Stunden ein.</p>
+    <span class="hint">WEITERSCROLLEN</span>
+  </div>
+</section>
+
 <!-- ENGPASS -->
-<section id="warum" class="ruled">
+<section id="warum" class="ruled" data-chapter="02" data-chapter-name="DAS PROBLEM">
   <div class="wrap">
-    <p class="eyebrow"><span class="idx">01</span> Kommt Ihnen das bekannt vor?</p>
+    <p class="eyebrow"><span class="idx">02.1</span> Kommt Ihnen das bekannt vor?</p>
     <h2>Sie wissen, dass KI etwas bringt. Aber:</h2>
     <ul class="pain-list">
       <li><span class="n">A—</span><span><b>Datenschutz-Unsicherheit.</b> Ihre Mitarbeiter nutzen längst private ChatGPT-Accounts — mit Firmendaten, ohne Kontrolle. DSGVO und EU AI Act stehen im Raum.</span></li>
@@ -479,10 +513,21 @@ footer a:hover{color:var(--ink)}
   </div>
 </section>
 
+<!-- ============ KAPITEL 03: DIE LÖSUNG ============ -->
+<section class="chap" id="k3" data-chapter="03" data-chapter-name="DIE LÖSUNG">
+  <img class="bg" src="/assets/szene-nachtschicht.webp" alt="" loading="lazy" aria-hidden="true">
+  <div class="inner">
+    <span class="knum">KAPITEL 03 / 05</span>
+    <h2>Die Lösung.</h2>
+    <p>Es ist 3 Uhr früh. Ihre KI-Agenten sortieren die E-Mails von morgen, entwerfen Angebote und füllen das CRM. Genau solche Systeme baue ich Ihnen — Strategie, Umsetzung und Schulung aus einer Hand.</p>
+    <span class="hint">WEITERSCROLLEN</span>
+  </div>
+</section>
+
 <!-- LEISTUNGEN -->
-<section id="leistungen" class="ruled panelbg">
+<section id="leistungen" class="ruled panelbg" data-chapter="03" data-chapter-name="DIE LÖSUNG">
   <div class="wrap">
-    <p class="eyebrow"><span class="idx">02</span> Leistungen</p>
+    <p class="eyebrow"><span class="idx">03.1</span> Leistungen</p>
     <h2>Strategie, Systeme und Schulung —<br>aus einer Hand.</h2>
     <p class="lead">Karl Pilz begleitet Unternehmen in Salzburg, Österreich und im gesamten DACH-Raum bei der Einführung von Künstlicher Intelligenz: von der KI-Strategie über DSGVO-konforme KI-Systeme bis zur Schulung der Teams. Sein Ansatz: KI muss messbar Arbeit abnehmen — sonst ist sie Spielerei.</p>
     <div class="svc">
@@ -533,7 +578,7 @@ footer a:hover{color:var(--ink)}
 <!-- USE CASES -->
 <section id="use-cases" class="ruled">
   <div class="wrap">
-    <p class="eyebrow"><span class="idx">03</span> Use Cases</p>
+    <p class="eyebrow"><span class="idx">03.2</span> Use Cases</p>
     <h2>Zeigen, nicht behaupten.</h2>
     <p class="lead">Vier Beispiele, wie KI heute konkret Arbeit abnimmt — alle aus meiner täglichen Praxis.</p>
 
@@ -613,7 +658,7 @@ footer a:hover{color:var(--ink)}
 <!-- MARKETING -->
 <section id="marketing" class="ruled panelbg">
   <div class="wrap">
-    <p class="eyebrow"><span class="idx">04</span> Früher → Heute</p>
+    <p class="eyebrow"><span class="idx">03.3</span> Früher → Heute</p>
     <h2>Marketing hat sich verändert.<br>Fotoshootings und Video-Drehs wurden ersetzt.</h2>
     <p class="lead">Viele Unternehmen zahlen noch immer vierstellige Beträge für ein Produktshooting — und warten Wochen auf den fertigen Werbeclip. Heute entstehen Produktbilder, Videos und Kampagnentexte in Stunden, im eigenen Haus, für einen Bruchteil der Kosten. Wer so arbeitet, testet zehn Varianten statt einer und veröffentlicht jede Woche statt zweimal im Jahr. Genau das passiert gerade — die Frage ist nur, ob in Ihrem Haus oder beim Mitbewerb.</p>
     <div class="compare">
@@ -649,7 +694,7 @@ footer a:hover{color:var(--ink)}
 <!-- ALLTAG -->
 <section id="alltag" class="ruled">
   <div class="wrap">
-    <p class="eyebrow"><span class="idx">05</span> Alltag</p>
+    <p class="eyebrow"><span class="idx">03.4</span> Alltag</p>
     <h2>Diese 8 Routinen hat jeder Betrieb.<br>In manchen laufen sie schon von selbst.</h2>
     <p class="lead">Während Sie das lesen, beantwortet bei Ihrem Mitbewerb eine KI die E-Mails von heute Früh, schreibt das Meeting-Protokoll und legt den Angebotsentwurf zur Freigabe vor.</p>
     <div class="uc-grid">
@@ -670,7 +715,7 @@ footer a:hover{color:var(--ink)}
 <!-- BRANCHEN -->
 <section id="branchen" class="ruled panelbg">
   <div class="wrap">
-    <p class="eyebrow"><span class="idx">06</span> Branchen im Umbruch</p>
+    <p class="eyebrow"><span class="idx">03.5</span> Branchen im Umbruch</p>
     <h2>Diese Branchen verändert KI gerade.<br>Nicht irgendwann — jetzt.</h2>
     <p class="lead">Keine dieser Branchen verschwindet. Aber in jeder verschiebt sich gerade, wer das Geschäft macht: weg von denen, die Routinearbeit verkaufen — hin zu denen, die KI führen können. Das sind keine Prognosen. Das alles passiert bereits.</p>
     <div class="branchen-list">
@@ -710,10 +755,21 @@ footer a:hover{color:var(--ink)}
   </div>
 </section>
 
+<!-- ============ KAPITEL 04: DER BEWEIS ============ -->
+<section class="chap" id="k4" data-chapter="04" data-chapter-name="DER BEWEIS">
+  <img class="bg" src="/assets/karl-hollywood-3.webp" alt="" loading="lazy" aria-hidden="true">
+  <div class="inner">
+    <span class="knum">KAPITEL 04 / 05</span>
+    <h2>Der Beweis.</h2>
+    <p>Zwei eigene KI-Plattformen im Live-Betrieb, 25 Jahre Technik-Karriere — und diese Website, die mein KI-Agent gebaut hat. Prüfen Sie selbst nach.</p>
+    <span class="hint">WEITERSCROLLEN</span>
+  </div>
+</section>
+
 <!-- LIVE-BEWEISE -->
-<section id="produkte" class="ruled">
+<section id="produkte" class="ruled" data-chapter="04" data-chapter-name="DER BEWEIS">
   <div class="wrap">
-    <p class="eyebrow"><span class="idx">07</span> Live-Beweise</p>
+    <p class="eyebrow"><span class="idx">04.1</span> Live-Beweise</p>
     <h2>Was ich für mich selbst gebaut habe,<br>baue ich auch für Sie.</h2>
     <p class="lead">Karl Pilz ist Gründer von HOVIGuard.eu, einer in Österreich gehosteten Plattform für sichere, DSGVO-konforme Unternehmens-KI, und Entwickler von HOVION.AI, einer On-Premise-KI-Komplettlösung für den Betrieb im eigenen Firmennetz. Beide Systeme sind im Live-Betrieb.</p>
     <div class="proofcards">
@@ -755,7 +811,7 @@ footer a:hover{color:var(--ink)}
 <section id="ueber" class="ruled panelbg">
   <div class="wrap about-grid">
     <div>
-      <p class="eyebrow"><span class="idx">08</span> Über Karl</p>
+      <p class="eyebrow"><span class="idx">04.2</span> Über Karl</p>
       <h2>Vom Maschinenbau zur KI — 25 Jahre Technik, die läuft.</h2>
       <p class="lead" style="margin-top:18px">Karl Pilz aus Anif bei Salzburg begleitet Unternehmen bei der DSGVO-konformen Einführung von Künstlicher Intelligenz. Der Ingenieur (HTL Maschinenbau, FH Salzburg Informationstechnik) führte über ein Jahrzehnt Software-Teams, gründete 2010 die Digitalagentur Web2null und leitete 2023–2025 die KI-Taskforce der hobex AG. Heute ist er Gründer von HOVIGuard.eu und schult als Referent bei Management Circle Führungskräfte im DACH-Raum.</p>
       <div class="quotebox">Warum „Pate"? Weil ich Verantwortung übernehme, statt Berichte abzuliefern. Ein Pate ist da, wenn es zählt — und macht seine Schützlinge stark, statt sie abhängig zu halten. Mein Ziel ist erreicht, wenn Ihr Team KI selbstverständlich nutzt.</div>
@@ -798,7 +854,7 @@ footer a:hover{color:var(--ink)}
 <!-- KOMPETENZEN -->
 <section id="kompetenzen" class="ruled">
   <div class="wrap">
-    <p class="eyebrow"><span class="idx">09</span> Kompetenzfelder</p>
+    <p class="eyebrow"><span class="idx">04.3</span> Kompetenzfelder</p>
     <h2>Sechs Felder. Ein Ziel: weniger Arbeit für Sie.</h2>
     <div class="skillgrid">
       <details class="skill">
@@ -847,10 +903,21 @@ footer a:hover{color:var(--ink)}
   </div>
 </section>
 
+<!-- ============ KAPITEL 05: DER START ============ -->
+<section class="chap" id="k5" data-chapter="05" data-chapter-name="DER START">
+  <img class="bg" src="/assets/szene-morgen.webp" alt="" loading="lazy" aria-hidden="true">
+  <div class="inner">
+    <span class="knum">KAPITEL 05 / 05</span>
+    <h2>Der Start.</h2>
+    <p>Die Nacht hat gearbeitet, der Morgen gehört dem Gespräch: 30 Minuten KI-Sprechstunde, kostenlos. Drei Schritte, ein Pilot, messbare Zahlen — so fangen wir an.</p>
+    <span class="hint">WEITERSCROLLEN</span>
+  </div>
+</section>
+
 <!-- ABLAUF -->
-<section id="ablauf" class="ruled panelbg">
+<section id="ablauf" class="ruled panelbg" data-chapter="05" data-chapter-name="DER START">
   <div class="wrap">
-    <p class="eyebrow"><span class="idx">10</span> So starten wir</p>
+    <p class="eyebrow"><span class="idx">05.1</span> So starten wir</p>
     <h2>Wie läuft eine KI-Einführung ab?</h2>
     <div class="steps">
       <div class="step-card">
@@ -875,7 +942,7 @@ footer a:hover{color:var(--ink)}
 <!-- FAQ -->
 <section id="faq" class="ruled">
   <div class="wrap">
-    <p class="eyebrow"><span class="idx">11</span> FAQ</p>
+    <p class="eyebrow"><span class="idx">05.2</span> FAQ</p>
     <h2>Häufige Fragen zu KI im Unternehmen</h2>
     <div class="faq">
       <details><summary>Was macht ein KI-Berater?</summary><p class="a">Ein KI-Berater findet die Prozesse, in denen KI einem Unternehmen messbar Arbeit abnimmt, prüft Datenschutz und Wirtschaftlichkeit und begleitet die Umsetzung. Karl Pilz aus Salzburg geht einen Schritt weiter: Er baut die Systeme selbst — von der RAG-Wissensdatenbank bis zur Automatisierung — und schult anschließend das Team.</p></details>
@@ -894,7 +961,7 @@ footer a:hover{color:var(--ink)}
 <section id="kontakt" class="contact ruled">
   <div class="wrap contact-box">
     <div>
-      <p class="eyebrow"><span class="idx">12</span> KI ist weit mehr, als du denkst.</p>
+      <p class="eyebrow"><span class="idx">05.3</span> KI ist weit mehr, als du denkst.</p>
       <h2>Reden wir 30 Minuten über Ihre Prozesse.</h2>
       <p class="lead">Schicken Sie mir Ihre Anfrage — Sie bekommen binnen 24 Stunden einen Terminvorschlag für die kostenlose KI-Sprechstunde. Sie gehen mit 2–3 konkreten Use-Cases raus, auch wenn wir nie zusammenarbeiten. Handschlagqualität inklusive.</p>
       <p class="fomo" style="margin-top:24px">„Die Frage ist nicht, ob KI in Ihrer Branche ankommt — nur, <em>bei wem zuerst</em>."</p>
@@ -946,6 +1013,29 @@ footer a:hover{color:var(--ink)}
 </footer>
 
 <script>
+/* Kapitel-System: Progressbar + Pille + Szenen */
+(function(){
+  const bar=document.getElementById('progress');
+  const pill=document.getElementById('chappill');
+  addEventListener('scroll',()=>{
+    const h=document.documentElement;
+    const p=h.scrollTop/(h.scrollHeight-h.clientHeight)*100;
+    if(bar)bar.style.width=p+'%';
+    if(pill)pill.classList.toggle('show',h.scrollTop>300);
+  },{passive:true});
+  const chapEls=[...document.querySelectorAll('[data-chapter]')];
+  const cio=new IntersectionObserver(es=>{
+    es.forEach(e=>{
+      if(e.isIntersecting){
+        if(e.target.classList.contains('chap'))e.target.classList.add('in');
+        const c=e.target.getAttribute('data-chapter'), n=e.target.getAttribute('data-chapter-name');
+        if(pill&&c)pill.innerHTML='KAPITEL <b>'+c+'</b>/05 · '+n;
+      }
+    });
+  },{threshold:.3});
+  chapEls.forEach(el=>cio.observe(el));
+})();
+
 /* Reveal on scroll */
 const io=new IntersectionObserver(es=>es.forEach(e=>{if(e.isIntersecting){e.target.classList.add('in');io.unobserve(e.target)}}),{threshold:.1});
 document.querySelectorAll('section .wrap > *, .usecase, .svc-card, .proofcard, .step-card, .skill, .branche, .uc').forEach(el=>{el.classList.add('reveal');io.observe(el)});
