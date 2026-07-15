@@ -35,6 +35,20 @@ async function readIslandMotion(page) {
 }
 
 test.describe('Final audit', () => {
+  test('presents the server launcher as immediately actionable above the fold', async ({ page }) => {
+    const response = await page.goto('/demos/');
+    expect(response?.status()).toBe(200);
+    await page.setViewportSize({ width: 1280, height: 720 });
+
+    await expect(page.locator('.launcher-header .eyebrow')).toHaveText('SERVER-PREVIEW · ENTWURF');
+    const actionBottoms = await page.locator('.demo-card .card-action').evaluateAll((actions) => (
+      actions.map((action) => action.getBoundingClientRect().bottom)
+    ));
+
+    expect(actionBottoms).toHaveLength(DEMO_ROUTES.length);
+    expect(actionBottoms.every((bottom) => bottom <= 720)).toBe(true);
+  });
+
   test('keeps the primary CTA fully inside a short landscape viewport', async ({ page }) => {
     await page.setViewportSize({ width: 844, height: 390 });
     await page.addInitScript(() => sessionStorage.setItem('ki-pate-demo-mode', 'static'));
@@ -177,6 +191,19 @@ test.describe('Final audit', () => {
         `Interaktive Demo: ${route.title}`,
       );
     }
+  });
+
+  test('keeps every Arbeitsfluss 3D group inside the renderer paint boundary', async ({ page }) => {
+    await page.setViewportSize({ width: 1280, height: 720 });
+    await waitForDemo(page, 'arbeitsfluss');
+    await scrollToProgress(page, 0.25);
+
+    const transformStyles = await page.evaluate(() => (
+      [...document.querySelectorAll('.workbench, .workbench-station')]
+        .map((element) => getComputedStyle(element).transformStyle)
+    ));
+
+    expect(new Set(transformStyles)).toEqual(new Set(['flat']));
   });
 
   test('freezes rotation and route dash in Lite while Full keeps the routed camera', async ({ page }) => {

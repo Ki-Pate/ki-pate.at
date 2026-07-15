@@ -19,8 +19,8 @@
   height: 390px;
   transform: translate3d(var(--bench-x), 0, -30px) rotateX(57deg) rotateZ(-5deg);
   transform-origin: 0 50%;
-  transform-style: preserve-3d;
-  will-change: transform;
+  transform-style: flat;
+  will-change: auto;
 }
 
 .bench-surface {
@@ -68,7 +68,7 @@
   height: 288px;
   opacity: calc(.28 + var(--station-active) * .72);
   transform: translate3d(-50%, 0, calc(8px + var(--station-active) * 34px));
-  transform-style: preserve-3d;
+  transform-style: flat;
 }
 
 .station-chaos { --station-active: var(--scene-0); }
