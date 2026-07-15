@@ -18,8 +18,8 @@
   height: 540px;
   transform: translate3d(calc(-50% + var(--camera-x)), calc(-50% + var(--camera-y)), var(--camera-z)) rotateX(var(--camera-rx)) rotateZ(var(--camera-rz)) scale(.91);
   transform-origin: 50% 50%;
-  transform-style: preserve-3d;
-  will-change: transform;
+  transform-style: flat;
+  will-change: auto;
 }
 
 .world-plane {
@@ -94,7 +94,7 @@
   height: 116px;
   opacity: .3;
   transform: translate3d(-50%, -50%, 14px);
-  transform-style: preserve-3d;
+  transform-style: flat;
   transition: opacity 180ms linear, transform 240ms cubic-bezier(.2, .75, .2, 1);
 }
 
@@ -392,6 +392,7 @@ html[data-mode="full"] .machine-island[data-active="true"] .answer-beacon span {
 @keyframes beacon-pulse { 50% { box-shadow: 0 0 0 11px rgba(43, 200, 183, .03); } }
 
 html[data-mode="lite"] .machine-island { transition-duration: 0ms; }
+html[data-mode="lite"] .route-live { transition: none; }
 html[data-mode="static"] .island-world {
   transform: translate3d(-50%, -50%, 0) rotateX(60deg) rotateZ(-38deg) scale(.86);
 }

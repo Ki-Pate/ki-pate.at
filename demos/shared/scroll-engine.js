@@ -191,9 +191,10 @@ export function createScrollController({
     }
 
     targetProgress = (index + 0.5) / SCENES.length;
+    const reducedMotion = view.matchMedia?.('(prefers-reduced-motion: reduce)').matches === true;
     view.scrollTo({
       top: startY + scrollDistance * targetProgress,
-      behavior: scrollBehavior,
+      behavior: reducedMotion ? 'auto' : scrollBehavior,
     });
     queueFrame();
   }

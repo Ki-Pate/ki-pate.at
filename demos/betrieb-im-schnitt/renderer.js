@@ -88,6 +88,7 @@ export function render(frame) {
   const cameraZ = interpolate(CAMERA_Z[sceneIndex], CAMERA_Z[nextIndex], localProgress);
 
   building.style.setProperty('--camera-y', `${cameraY.toFixed(3)}px`);
+  building.style.setProperty('--camera-y-mobile', `${(cameraY * 0.6).toFixed(3)}px`);
   building.style.setProperty('--camera-z', `${cameraZ.toFixed(3)}px`);
 
   for (const [index, floor] of floors.entries()) {

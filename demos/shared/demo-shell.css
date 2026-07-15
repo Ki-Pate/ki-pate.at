@@ -70,7 +70,6 @@ html[data-mode="static"] .demo-scroll { height: 100dvh; }
   position: sticky;
   top: 0;
   height: 100dvh;
-  min-height: 620px;
   overflow: hidden;
   isolation: isolate;
   background:
@@ -108,6 +107,13 @@ html[data-mode="static"] .demo-scroll { height: 100dvh; }
 .renderer-stage {
   position: absolute;
   inset: 64px 0 0;
+}
+
+.renderer-stage {
+  z-index: 0;
+  contain: paint;
+  isolation: isolate;
+  clip-path: inset(0);
 }
 
 .media-layer {
@@ -417,7 +423,14 @@ html[data-mode="lite"] .use-case-dialog * { filter: none !important; backdrop-fi
   .scene-nav button[data-toggle-animation]::before { content: "II"; font-family: var(--mono); font-size: .62rem; }
   .copy-zone { padding: 18px; }
   .copy-zone h1 { font-size: clamp(1.65rem, 7vw, 2.6rem); }
-  .scene-problem { display: none; }
+  .scene-problem {
+    display: -webkit-box;
+    overflow: hidden;
+    font-size: .9rem;
+    line-height: 1.35;
+    -webkit-box-orient: vertical;
+    -webkit-line-clamp: 2;
+  }
 }
 
 @media (max-width: 480px) {
@@ -435,6 +448,35 @@ html[data-mode="lite"] .use-case-dialog * { filter: none !important; backdrop-fi
   .static-story .secondary-action { display: inline-flex; }
   .use-case-dialog fieldset { grid-template-columns: 1fr; }
   .dialog-card { padding: 28px 20px; }
+}
+
+@media (max-height: 520px) and (orientation: landscape) {
+  .demo-toolbar {
+    top: calc(68px + env(safe-area-inset-top));
+    left: max(12px, env(safe-area-inset-left));
+    width: 218px;
+    padding: 6px;
+  }
+
+  .mode-status { margin-top: 4px; font-size: .55rem; line-height: 1.25; }
+  .scene-nav { top: calc(68px + env(safe-area-inset-top)); right: max(12px, env(safe-area-inset-right)); gap: 4px; }
+
+  .copy-zone {
+    left: max(244px, calc(env(safe-area-inset-left) + 232px));
+    right: max(68px, calc(env(safe-area-inset-right) + 56px));
+    bottom: max(8px, env(safe-area-inset-bottom));
+    width: auto;
+    padding: 10px 12px;
+  }
+
+  .copy-zone .scene-label { margin-bottom: 4px; }
+  .copy-zone h1 { margin-bottom: 5px; font-size: clamp(1.25rem, 3.1vw, 1.65rem); }
+  .scene-problem,
+  .scene-solution { margin-bottom: 2px; font-size: .82rem; line-height: 1.3; }
+  .timeline-status { margin-top: 6px; gap: 8px; font-size: .58rem; }
+  .demo-actions { margin-top: 7px; gap: 8px; }
+  .primary-action,
+  .secondary-action { padding: 7px 10px; font-size: .58rem; letter-spacing: .06em; }
 }
 
 @media (prefers-reduced-motion: reduce) {

@@ -86,13 +86,14 @@ export function render(frame) {
   const progress = Math.max(0, Math.min(1, Number(frame?.progress) || 0));
   const current = CAMERA_KEYFRAMES[sceneIndex];
   const next = CAMERA_KEYFRAMES[Math.min(5, sceneIndex + 1)];
+  const lite = document.documentElement.dataset.mode === 'lite';
 
-  for (const key of ['x', 'y', 'z', 'rx', 'rz']) {
+  for (const key of lite ? ['x', 'y', 'z'] : ['x', 'y', 'z', 'rx', 'rz']) {
     const value = interpolate(current[key], next[key], localProgress);
     const unit = key.startsWith('r') ? 'deg' : 'px';
     world.style.setProperty(`--camera-${key}`, `${value.toFixed(3)}${unit}`);
   }
-  world.style.setProperty('--route-progress', progress.toFixed(5));
+  if (!lite) world.style.setProperty('--route-progress', progress.toFixed(5));
 
   for (const [index, island] of islands.entries()) {
     const active = index === sceneIndex;

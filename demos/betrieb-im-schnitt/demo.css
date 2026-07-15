@@ -6,6 +6,7 @@
 
 .section-building {
   --camera-y: -184px;
+  --camera-y-mobile: -110px;
   --camera-z: 18px;
   position: absolute;
   top: 45%;
@@ -13,9 +14,9 @@
   width: 620px;
   height: 590px;
   transform: translate3d(-50%, calc(-50% + var(--camera-y)), var(--camera-z)) rotateX(61deg) rotateZ(-34deg) scale(.92);
-  transform-style: preserve-3d;
+  transform-style: flat;
   transform-origin: 50% 50%;
-  will-change: transform;
+  will-change: auto;
 }
 
 .building-spine {
@@ -55,7 +56,7 @@
   height: 238px;
   opacity: .18;
   transform: translate3d(-50%, var(--floor-y), var(--floor-z));
-  transform-style: preserve-3d;
+  transform-style: flat;
   transition: opacity 180ms linear, transform 260ms cubic-bezier(.2, .7, .2, 1);
 }
 
@@ -469,7 +470,7 @@ html[data-mode="static"] .section-building { transform: translate3d(-50%, -50%, 
   .section-building {
     top: 37%;
     left: 41.5%;
-    transform: translate3d(-50%, calc(-50% + var(--camera-y)), var(--camera-z)) rotateX(61deg) rotateZ(-34deg) scale(.47);
+    transform: translate3d(-50%, calc(-50% + var(--camera-y-mobile)), var(--camera-z)) rotateX(61deg) rotateZ(-34deg) scale(.47);
   }
 
   html[data-mode="static"] .section-building { transform: translate3d(-50%, -54%, 0) rotateX(61deg) rotateZ(-34deg) scale(.47); }
