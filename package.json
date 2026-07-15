@@ -1,0 +1,16 @@
+{
+  "name": "ki-pate-scroll-demos",
+  "version": "0.0.0",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "test:unit": "node --test tests/*.unit.test.mjs",
+    "preview:prepare": "node tools/prepare-preview.mjs",
+    "preview": "npm run preview:prepare && node tools/serve-preview.mjs",
+    "test:demos": "npm run test:unit && npm run preview:prepare && playwright test"
+  },
+  "devDependencies": {
+    "@playwright/test": "1.61.1",
+    "adm-zip": "0.6.0"
+  }
+}
