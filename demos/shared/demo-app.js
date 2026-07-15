@@ -1,5 +1,6 @@
 import { SCENES } from './content.js';
 import { createMediaController } from './media-controller.js';
+import { getMediaManifest } from './media-manifest.js';
 import { MODE_STORAGE_KEY, resolveMode } from './mode-controller.js';
 import { createScrollController } from './scroll-engine.js';
 import { createUseCaseCheck } from './use-case-check.js';
@@ -33,6 +34,23 @@ function createVideo() {
   return video;
 }
 
+function createPoster(specification) {
+  if (!specification?.src) return null;
+
+  const poster = document.createElement('img');
+  poster.src = specification.src;
+  poster.alt = '';
+  poster.width = specification.width;
+  poster.height = specification.height;
+  poster.decoding = 'async';
+  poster.fetchPriority = 'high';
+  poster.dataset.mediaPoster = '';
+  poster.dataset.active = 'true';
+  poster.setAttribute('fetchpriority', 'high');
+  poster.setAttribute('aria-hidden', 'true');
+  return poster;
+}
+
 function addParticles(container) {
   for (let index = 0; index < 18; index += 1) {
     const particle = document.createElement('i');
@@ -58,6 +76,7 @@ async function boot() {
   const animationButton = document.querySelector('[data-toggle-animation]');
   const reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)');
   const session = safeSessionStorage();
+  const mediaManifest = getMediaManifest(demoId);
   let explicitMode = null;
   let animationOff = false;
   let saveDataConsent = false;
@@ -84,18 +103,34 @@ async function boot() {
     mediaController = null;
     mediaLayer.replaceChildren();
     particleLayer.replaceChildren();
+    root.removeAttribute('data-media-ready');
+
+    const poster = createPoster(mediaManifest.poster);
+    if (poster) {
+      mediaLayer.dataset.hasMedia = 'true';
+      mediaLayer.append(poster);
+    } else {
+      delete mediaLayer.dataset.hasMedia;
+    }
 
     if (mode === 'static') return;
+
+    if (mode === 'full') addParticles(particleLayer);
+    if (mediaManifest.clips.length === 0) return;
 
     const videoCount = mode === 'full' ? 2 : 1;
     const videos = Array.from({ length: videoCount }, () => createVideo());
     mediaLayer.append(...videos);
-    if (mode === 'full') addParticles(particleLayer);
 
     mediaController = createMediaController({
       videos,
-      manifest: [],
+      poster,
+      manifest: mediaManifest,
+      onReady() {
+        root.dataset.mediaReady = 'true';
+      },
       onError() {
+        if (mediaError) return;
         mediaError = true;
         applyMode();
       },

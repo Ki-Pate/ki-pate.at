@@ -1,8 +1,12 @@
 import { expect, test } from '@playwright/test';
+import { readFile } from 'node:fs/promises';
+import { dirname, join } from 'node:path';
+import { fileURLToPath } from 'node:url';
 
 import { DEMO_ROUTES, SCENES } from '../demos/shared/content.js';
 
 const DEMO_PATH = '/demos/arbeitsfluss/';
+const PROJECT_ROOT = dirname(dirname(fileURLToPath(import.meta.url)));
 
 async function openArbeitsfluss(page) {
   const response = await page.goto(DEMO_PATH);
@@ -300,6 +304,168 @@ test.describe('Arbeitsfluss', () => {
     } finally {
       await context.close();
     }
+  });
+});
+
+test.describe('Arbeitsfluss media', () => {
+  test('serves exact byte ranges for the approved MP4', async ({ request }) => {
+    const response = await request.get('/demos/media/arbeitsfluss/clip-01.mp4', {
+      headers: { Range: 'bytes=100-199' },
+    });
+    const source = await readFile(join(
+      PROJECT_ROOT,
+      'demos',
+      'media',
+      'arbeitsfluss',
+      'clip-01.mp4',
+    ));
+
+    expect(response.status()).toBe(206);
+    expect(response.headers()['content-range']).toBe('bytes 100-199/1918006');
+    expect(response.headers()['content-length']).toBe('100');
+    expect(Buffer.from(await response.body())).toEqual(source.subarray(100, 200));
+  });
+
+  test('loads the Full poster first and requests both clips only after document boot', async ({ browser }) => {
+    const context = await browser.newContext({ viewport: { width: 390, height: 844 } });
+    const page = await context.newPage();
+    const mp4Requests = [];
+    let documentBooted = false;
+
+    page.on('domcontentloaded', () => { documentBooted = true; });
+    page.on('request', (request) => {
+      if (request.url().includes('/demos/media/arbeitsfluss/') && request.url().endsWith('.mp4')) {
+        mp4Requests.push({ url: request.url(), afterBoot: documentBooted });
+      }
+    });
+
+    try {
+      await openArbeitsfluss(page);
+      const poster = page.locator('[data-media-poster]');
+      await expect(poster).toBeVisible();
+      await expect(poster).toHaveAttribute('fetchpriority', 'high');
+      await expect(page.locator('[data-media-layer] video')).toHaveCount(2);
+      await expect.poll(() => new Set(mp4Requests.map(({ url }) => url)).size).toBe(2);
+
+      expect(mp4Requests.every(({ afterBoot }) => afterBoot)).toBe(true);
+      expect(new Set(mp4Requests.map(({ url }) => new URL(url).pathname))).toEqual(new Set([
+        '/demos/media/arbeitsfluss/clip-01.mp4',
+        '/demos/media/arbeitsfluss/clip-02.mp4',
+      ]));
+    } finally {
+      await context.close();
+    }
+  });
+
+  test('uses fresh cold starts with zero MP4 requests when media is disallowed or absent', async ({ browser }) => {
+    async function coldStart({ path, mode, reducedMotion, saveData = false }) {
+      const context = await browser.newContext({ viewport: { width: 390, height: 844 } });
+      const page = await context.newPage();
+      const mp4Requests = new Set();
+
+      if (reducedMotion) await page.emulateMedia({ reducedMotion: 'reduce' });
+      if (mode || saveData) {
+        await page.addInitScript(({ selectedMode, useSaveData }) => {
+          if (selectedMode) sessionStorage.setItem('ki-pate-demo-mode', selectedMode);
+          if (useSaveData) {
+            Object.defineProperty(navigator, 'connection', {
+              configurable: true,
+              value: { saveData: true },
+            });
+          }
+        }, { selectedMode: mode, useSaveData: saveData });
+      }
+      page.on('request', (request) => {
+        if (request.url().endsWith('.mp4')) mp4Requests.add(request.url());
+      });
+
+      try {
+        await page.goto(path);
+        await expect(page.locator('html')).toHaveAttribute('data-frame-ready', 'true');
+        await page.waitForTimeout(300);
+        return {
+          mode: await page.locator('html').getAttribute('data-mode'),
+          videoCount: await page.locator('[data-media-layer] video').count(),
+          requests: [...mp4Requests],
+        };
+      } finally {
+        await context.close();
+      }
+    }
+
+    for (const scenario of [
+      { path: DEMO_PATH, mode: 'static' },
+      { path: DEMO_PATH, reducedMotion: true },
+      { path: DEMO_PATH, mode: 'lite', saveData: true },
+      { path: '/demos/betrieb-im-schnitt/' },
+      { path: '/demos/betrieb-im-schnitt/', mode: 'lite' },
+      { path: '/demos/use-case-inseln/' },
+      { path: '/demos/use-case-inseln/', mode: 'lite' },
+    ]) {
+      const result = await coldStart(scenario);
+      expect(result.requests, JSON.stringify(scenario)).toEqual([]);
+      expect(result.videoCount, JSON.stringify(scenario)).toBe(0);
+    }
+  });
+
+  test('keeps a painted layer visible while delayed clip 2 crosses the boundary and when reversing', async ({ browser }) => {
+    const context = await browser.newContext({ viewport: { width: 390, height: 844 } });
+    const page = await context.newPage();
+    let releaseClip2;
+    const clip2Gate = new Promise((resolve) => { releaseClip2 = resolve; });
+    let clip2Requested = false;
+
+    await page.route('**/clip-02.mp4', async (route) => {
+      clip2Requested = true;
+      await clip2Gate;
+      await route.continue();
+    });
+
+    async function scrollTo(progress) {
+      await page.evaluate((nextProgress) => {
+        const track = document.querySelector('[data-scroll-track]');
+        const top = window.scrollY + track.getBoundingClientRect().top;
+        const distance = Math.max(1, track.scrollHeight - window.innerHeight);
+        window.scrollTo({ top: top + distance * nextProgress, behavior: 'instant' });
+      }, progress);
+    }
+
+    try {
+      await openArbeitsfluss(page);
+      await expect.poll(() => clip2Requested).toBe(true);
+      await expect(page.locator('video[data-clip-index="0"][data-active="true"]')).toHaveCount(1);
+
+      await scrollTo(0.51);
+      await expect(page.locator('video[data-clip-index="0"][data-active="true"]')).toHaveCount(1);
+      await expect(page.locator('[data-media-poster][data-active="true"]')).toHaveCount(0);
+
+      releaseClip2();
+      await expect(page.locator('video[data-clip-index="1"][data-active="true"]')).toHaveCount(1);
+
+      await scrollTo(0.49);
+      await expect(page.locator('video[data-clip-index="0"][data-active="true"]')).toHaveCount(1);
+    } finally {
+      releaseClip2();
+      await context.close();
+    }
+  });
+
+  test('falls back to Static on a media error without logging a console error', async ({ page }) => {
+    const consoleErrors = [];
+    page.on('console', (message) => {
+      if (message.type() === 'error') consoleErrors.push(message.text());
+    });
+
+    await openArbeitsfluss(page);
+    const video = page.locator('[data-media-layer] video').first();
+    await expect(video).toHaveCount(1);
+    await video.evaluate((element) => element.dispatchEvent(new Event('error')));
+
+    await expect(page.locator('html')).toHaveAttribute('data-mode', 'static');
+    await expect(page.locator('html')).toHaveAttribute('data-mode-reason', 'media-error');
+    await expect(page.locator('[data-media-layer] video')).toHaveCount(0);
+    await expect(page.locator('[data-media-poster]')).toBeVisible();
+    expect(consoleErrors).toEqual([]);
   });
 });
 
