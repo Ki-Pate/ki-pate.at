@@ -1,6 +1,6 @@
 import { expect, test } from '@playwright/test';
 
-import { SCENES } from '../demos/shared/content.js';
+import { DEMO_ROUTES, SCENES } from '../demos/shared/content.js';
 
 const DEMO_PATH = '/demos/arbeitsfluss/';
 
@@ -299,6 +299,144 @@ test.describe('Arbeitsfluss', () => {
       await expect(story.getByRole('link', { name: '30 Minuten KI-Sprechstunde' })).toBeVisible();
     } finally {
       await context.close();
+    }
+  });
+});
+
+test.describe('Varianten', () => {
+  const expectedStory = SCENES.map((scene) => ({
+    id: scene.id,
+    label: scene.label,
+    headline: scene.headline,
+    problem: `Ausgangslage: ${scene.problem}`,
+    solution: `Sichtbares Ergebnis: ${scene.solution}`,
+    resultTerms: scene.resultTerms,
+  }));
+
+  test('serves canonical scenes and calculator configuration on every route', async ({ page }) => {
+    for (const route of DEMO_ROUTES) {
+      const response = await page.goto(`/demos/${route.slug}/`);
+
+      expect(response?.status(), route.slug).toBe(200);
+      await expect(page.locator('html')).toHaveAttribute('data-demo-id', route.slug);
+      await expect(page.locator('html')).toHaveAttribute('data-frame-ready', 'true');
+
+      const story = await page.locator('[data-static-story] [data-scene-id]').evaluateAll((sections) => (
+        sections.map((section) => {
+          const paragraphs = Array.from(section.querySelectorAll(':scope > p'));
+          return {
+            id: section.dataset.sceneId,
+            label: section.querySelector('.scene-label')?.textContent.trim(),
+            headline: section.querySelector('h2')?.textContent.trim(),
+            problem: paragraphs.find((paragraph) => paragraph.querySelector('strong')?.textContent === 'Ausgangslage:')?.textContent.trim(),
+            solution: paragraphs.find((paragraph) => paragraph.querySelector('strong')?.textContent === 'Sichtbares Ergebnis:')?.textContent.trim(),
+            resultTerms: Array.from(section.querySelectorAll('.result-terms li'), (item) => item.textContent.trim()),
+          };
+        })
+      ));
+      expect(story, route.slug).toEqual(expectedStory);
+
+      const calculator = await page.locator('#use-case-dialog').evaluate((dialog) => ({
+        choices: Array.from(dialog.querySelectorAll('input[name="useCases"]'), (input) => input.value),
+        hours: (() => {
+          const input = dialog.querySelector('#weekly-hours');
+          return {
+            inputmode: input.getAttribute('inputmode'),
+            min: input.getAttribute('min'),
+            max: input.getAttribute('max'),
+            step: input.getAttribute('step'),
+          };
+        })(),
+        submit: dialog.querySelector('button[type="submit"]')?.textContent.trim(),
+        consultationHref: dialog.querySelector('a.secondary-action')?.getAttribute('href'),
+      }));
+      expect(calculator, route.slug).toEqual({
+        choices: ['E-Mail', 'Angebote', 'Meetings', 'Firmenwissen'],
+        hours: { inputmode: 'numeric', min: '1', max: '80', step: '1' },
+        submit: 'Potenzial prüfen',
+        consultationHref: '../../index.html#kontakt',
+      });
+    }
+  });
+
+  test('mounts six technical floors around one service core in variant B', async ({ page }) => {
+    await page.goto('/demos/betrieb-im-schnitt/');
+    await expect(page.locator('[data-building-stack] [data-floor]')).toHaveCount(6);
+    await expect(page.locator('[data-service-core]')).toHaveCount(1);
+
+    const initialCamera = await page.locator('[data-building-stack]').evaluate((building) => ({
+      y: building.style.getPropertyValue('--camera-y'),
+      z: building.style.getPropertyValue('--camera-z'),
+    }));
+    await page.locator('[data-next-scene]').click();
+    await expect(page.locator('html')).toHaveAttribute('data-active-scene', 'inbox');
+    const nextCamera = await page.locator('[data-building-stack]').evaluate((building) => ({
+      y: building.style.getPropertyValue('--camera-y'),
+      z: building.style.getPropertyValue('--camera-z'),
+    }));
+
+    expect(nextCamera.y).not.toBe(initialCamera.y);
+    expect(nextCamera.z).not.toBe(initialCamera.z);
+  });
+
+  test('mounts six routed machine islands with fixed camera keyframes in variant C', async ({ page }) => {
+    await page.goto('/demos/use-case-inseln/');
+    await expect(page.locator('[data-island-world] [data-island]')).toHaveCount(6);
+    await expect(page.locator('[data-island-route]')).toHaveCount(1);
+
+    const firstCamera = await page.locator('[data-island-world]').evaluate((world) => ({
+      x: world.style.getPropertyValue('--camera-x'),
+      y: world.style.getPropertyValue('--camera-y'),
+      z: world.style.getPropertyValue('--camera-z'),
+    }));
+    await page.locator('[data-next-scene]').click();
+    await expect(page.locator('html')).toHaveAttribute('data-active-scene', 'inbox');
+    const secondCamera = await page.locator('[data-island-world]').evaluate((world) => ({
+      x: world.style.getPropertyValue('--camera-x'),
+      y: world.style.getPropertyValue('--camera-y'),
+      z: world.style.getPropertyValue('--camera-z'),
+    }));
+
+    expect(secondCamera).not.toEqual(firstCamera);
+  });
+
+  test('keeps each active machine inside the mobile cinematic safe zone', async ({ page }) => {
+    await page.setViewportSize({ width: 390, height: 844 });
+
+    for (const { slug, selector } of [
+      { slug: 'betrieb-im-schnitt', selector: '[data-floor][data-active="true"]' },
+      { slug: 'use-case-inseln', selector: '[data-island][data-active="true"]' },
+    ]) {
+      await page.goto(`/demos/${slug}/`);
+      const copy = await page.locator('.copy-zone').boundingBox();
+
+      expect(copy, slug).not.toBeNull();
+
+      for (const [index, scene] of SCENES.entries()) {
+        await page.evaluate((progress) => {
+          const track = document.querySelector('[data-scroll-track]');
+          const top = window.scrollY + track.getBoundingClientRect().top;
+          const distance = Math.max(1, track.scrollHeight - window.innerHeight);
+          window.scrollTo({ top: top + distance * progress, behavior: 'instant' });
+        }, (index + 0.5) / SCENES.length);
+        await expect(page.locator('html')).toHaveAttribute('data-active-scene', scene.id);
+
+        const visual = await page.locator(selector).boundingBox();
+        const label = `${slug}:${scene.id}`;
+        expect(visual, label).not.toBeNull();
+        expect(visual.x, label).toBeGreaterThanOrEqual(10);
+        expect(visual.x + visual.width, label).toBeLessThanOrEqual(380);
+        expect(visual.y, label).toBeGreaterThanOrEqual(176);
+        expect(visual.y + visual.height, label).toBeLessThanOrEqual(copy.y - 12);
+      }
+    }
+  });
+
+  test('keeps canonical content out of the variant renderer modules', async ({ request }) => {
+    for (const slug of ['betrieb-im-schnitt', 'use-case-inseln']) {
+      const response = await request.get(`/demos/${slug}/renderer.js`);
+      expect(response.status(), slug).toBe(200);
+      expect(await response.text(), slug).not.toContain('content.js');
     }
   });
 });
