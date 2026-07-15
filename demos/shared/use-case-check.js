@@ -1,7 +1,8 @@
 import { calculatePotentialHours } from './content.js';
 
-export function createUseCaseCheck({ dialog, shell, triggers = [] } = {}) {
-  if (!dialog || !shell) throw new TypeError('dialog and shell are required');
+export function createUseCaseCheck({ dialog, background, shell, triggers = [] } = {}) {
+  const inertTarget = background ?? shell;
+  if (!dialog || !inertTarget) throw new TypeError('dialog and background are required');
 
   const form = dialog.querySelector('[data-use-case-form]');
   const closeButton = dialog.querySelector('[data-close-use-case]');
@@ -14,14 +15,15 @@ export function createUseCaseCheck({ dialog, shell, triggers = [] } = {}) {
   let returnTarget = null;
 
   function finishClose() {
-    shell.inert = false;
+    inertTarget.inert = false;
     returnTarget?.focus();
     returnTarget = null;
   }
 
   function open(event) {
+    event.preventDefault();
     returnTarget = event.currentTarget;
-    shell.inert = true;
+    inertTarget.inert = true;
 
     if (supportsModal) {
       dialog.showModal();
@@ -41,6 +43,7 @@ export function createUseCaseCheck({ dialog, shell, triggers = [] } = {}) {
     }
 
     dialog.removeAttribute('open');
+    dialog.removeAttribute('aria-modal');
     finishClose();
   }
 
@@ -77,15 +80,37 @@ export function createUseCaseCheck({ dialog, shell, triggers = [] } = {}) {
     }
   }
 
-  function fallbackEscape(event) {
-    if (!supportsModal && event.key === 'Escape' && dialog.hasAttribute('open')) close();
+  function fallbackKeys(event) {
+    if (supportsModal || !dialog.hasAttribute('open')) return;
+
+    if (event.key === 'Escape') {
+      event.preventDefault();
+      close();
+      return;
+    }
+
+    if (event.key !== 'Tab') return;
+
+    const focusable = Array.from(dialog.querySelectorAll(
+      'a[href], button:not([disabled]), input:not([disabled]), [tabindex]:not([tabindex="-1"])',
+    )).filter((element) => !element.closest('[hidden]') && element.getClientRects().length > 0);
+    const first = focusable[0];
+    const last = focusable.at(-1);
+
+    if (event.shiftKey && document.activeElement === first) {
+      event.preventDefault();
+      last.focus();
+    } else if (!event.shiftKey && document.activeElement === last) {
+      event.preventDefault();
+      first.focus();
+    }
   }
 
   for (const trigger of triggerList) trigger.addEventListener('click', open);
   closeButton.addEventListener('click', close);
   form.addEventListener('submit', submit);
   dialog.addEventListener('close', finishClose);
-  document.addEventListener('keydown', fallbackEscape);
+  document.addEventListener('keydown', fallbackKeys);
 
   return {
     destroy() {
@@ -93,8 +118,8 @@ export function createUseCaseCheck({ dialog, shell, triggers = [] } = {}) {
       closeButton.removeEventListener('click', close);
       form.removeEventListener('submit', submit);
       dialog.removeEventListener('close', finishClose);
-      document.removeEventListener('keydown', fallbackEscape);
-      shell.inert = false;
+      document.removeEventListener('keydown', fallbackKeys);
+      inertTarget.inert = false;
     },
   };
 }

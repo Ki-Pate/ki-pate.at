@@ -13,9 +13,10 @@
   <link rel="stylesheet" href="./demo.css">
 </head>
 <body>
-  <a class="skip-link" href="#static-story">Zur statischen Inhaltsansicht</a>
+  <div id="page-content">
+    <a class="skip-link" href="#static-story">Zur statischen Inhaltsansicht</a>
 
-  <div id="demo-shell" class="js-only">
+    <div id="demo-shell" class="js-only">
     <header class="demo-header">
       <a class="brand" href="../" aria-label="Zur Demo-Übersicht">
         <img src="/assets/logo-mono.webp" alt="" width="34" height="27">
@@ -71,9 +72,9 @@
         </article>
       </div>
     </section>
-  </div>
+    </div>
 
-  <main id="static-story" class="static-story" data-static-story>
+    <main id="static-story" class="static-story" data-static-story>
     <header class="static-intro">
       <p class="scene-label">PREVIZ · A</p>
       <h1>Der stille Arbeitsfluss</h1>
@@ -94,6 +95,7 @@
     <section class="static-scene" data-scene-id="inbox">
       <p class="scene-label">02 · Posteingang</p>
       <h2>83 E-Mails. 7 Entscheidungen.</h2>
+      <p class="example-day">BEISPIELTAG</p>
       <p><strong>Ausgangslage:</strong> 83 Nachrichten, unklare Priorität</p>
       <p><strong>Sichtbares Ergebnis:</strong> sortieren, zusammenfassen, Antworten vorbereiten</p>
       <ul class="result-terms" aria-label="Ergebnismerkmale">
@@ -156,11 +158,12 @@
       <h2 id="static-proof-title">Gebaut für den betrieblichen Alltag.</h2>
       <p>25+ Jahre Technik · 2 KI-Plattformen live · Pilot in 4–6 Wochen</p>
       <div class="demo-actions">
-        <a class="primary-action" href="../../index.html#kontakt">Meine Use Cases finden</a>
+        <a class="primary-action" href="../../index.html#kontakt" data-open-use-case>Meine Use Cases finden</a>
         <a class="secondary-action" href="../../index.html#kontakt">30 Minuten KI-Sprechstunde</a>
       </div>
     </section>
-  </main>
+    </main>
+  </div>
 
   <dialog id="use-case-dialog" class="use-case-dialog js-only" aria-labelledby="use-case-title">
     <div class="dialog-card">

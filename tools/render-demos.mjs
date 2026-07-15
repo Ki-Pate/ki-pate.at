@@ -17,15 +17,21 @@ export function escapeHtml(value) {
 }
 
 function renderStaticSections() {
-  return SCENES.map((scene) => `    <section class="static-scene" data-scene-id="${escapeHtml(scene.id)}">
+  return SCENES.map((scene) => {
+    const exampleDay = scene.id === 'inbox'
+      ? '\n      <p class="example-day">BEISPIELTAG</p>'
+      : '';
+
+    return `    <section class="static-scene" data-scene-id="${escapeHtml(scene.id)}">
       <p class="scene-label">${escapeHtml(scene.label)}</p>
-      <h2>${escapeHtml(scene.headline)}</h2>
+      <h2>${escapeHtml(scene.headline)}</h2>${exampleDay}
       <p><strong>Ausgangslage:</strong> ${escapeHtml(scene.problem)}</p>
       <p><strong>Sichtbares Ergebnis:</strong> ${escapeHtml(scene.solution)}</p>
       <ul class="result-terms" aria-label="Ergebnismerkmale">
 ${scene.resultTerms.map((term) => `        <li>${escapeHtml(term)}</li>`).join('\n')}
       </ul>
-    </section>`).join('\n\n');
+    </section>`;
+  }).join('\n\n');
 }
 
 function fillTemplate(template, route) {

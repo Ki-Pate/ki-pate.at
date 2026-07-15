@@ -199,7 +199,7 @@ async function boot() {
 
   createUseCaseCheck({
     dialog: document.querySelector('#use-case-dialog'),
-    shell: document.querySelector('#demo-shell'),
+    background: document.querySelector('#page-content'),
     triggers: document.querySelectorAll('[data-open-use-case]'),
   });
 

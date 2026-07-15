@@ -90,12 +90,53 @@ test.describe('Arbeitsfluss', () => {
     await trigger.click();
     await expect(dialog).toBeVisible();
     await expect(firstChoice).toBeFocused();
-    expect(await page.locator('#demo-shell').evaluate((element) => element.inert)).toBe(true);
+    expect(await page.locator('#page-content').evaluate((element) => element.inert)).toBe(true);
 
     await page.keyboard.press('Escape');
     await expect(dialog).toBeHidden();
     await expect(trigger).toBeFocused();
-    expect(await page.locator('#demo-shell').evaluate((element) => element.inert)).toBe(false);
+    expect(await page.locator('#page-content').evaluate((element) => element.inert)).toBe(false);
+  });
+
+  test('opens the dialog from the static primary CTA while preserving its no-JS href', async ({ page }) => {
+    await openArbeitsfluss(page);
+
+    const hrefBefore = page.url();
+    const trigger = page.locator('[data-static-story]').getByRole('link', { name: 'Meine Use Cases finden' });
+    await expect(trigger).toHaveAttribute('href', '../../index.html#kontakt');
+    await trigger.click();
+
+    const dialog = page.getByRole('dialog', { name: 'Mini Use-Case-Check' });
+    await expect(dialog).toBeVisible();
+    await expect(dialog.getByRole('checkbox', { name: 'E-Mail' })).toBeFocused();
+    expect(page.url()).toBe(hrefBefore);
+
+    await page.keyboard.press('Escape');
+    await expect(trigger).toBeFocused();
+  });
+
+  test('contains focus when the native dialog API is unavailable', async ({ page }) => {
+    await page.addInitScript(() => {
+      Object.defineProperty(HTMLDialogElement.prototype, 'showModal', {
+        configurable: true,
+        value: undefined,
+      });
+    });
+    await openArbeitsfluss(page);
+    await page.getByRole('button', { name: 'Meine Use Cases finden' }).click();
+
+    const dialog = page.getByRole('dialog', { name: 'Mini Use-Case-Check' });
+    const closeButton = dialog.getByRole('button', { name: 'Dialog schließen' });
+    const lastLink = dialog.getByRole('link', { name: 'Ergebnis in der KI-Sprechstunde prüfen' });
+    expect(await page.locator('#page-content').evaluate((element) => element.inert)).toBe(true);
+
+    await lastLink.focus();
+    await page.keyboard.press('Tab');
+    await expect(closeButton).toBeFocused();
+
+    await page.keyboard.press('Escape');
+    await expect(dialog).toBeHidden();
+    expect(await page.locator('#page-content').evaluate((element) => element.inert)).toBe(false);
   });
 
   test('calculates the approved vectors and shows validation errors', async ({ page }) => {
@@ -253,6 +294,7 @@ test.describe('Arbeitsfluss', () => {
       await expect(story.locator('[data-scene-id] h2')).toHaveText(
         SCENES.map(({ headline }) => headline),
       );
+      await expect(story.locator('[data-scene-id="inbox"]').getByText('BEISPIELTAG', { exact: true })).toBeVisible();
       await expect(story.getByRole('link', { name: 'Meine Use Cases finden' })).toBeVisible();
       await expect(story.getByRole('link', { name: '30 Minuten KI-Sprechstunde' })).toBeVisible();
     } finally {
