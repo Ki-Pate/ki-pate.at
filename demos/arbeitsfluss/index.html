@@ -1,0 +1,198 @@
+<!doctype html>
+<html lang="de" class="no-js" data-demo-id="arbeitsfluss" data-sentinel="ki-pate-scroll-demo">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <meta name="robots" content="noindex,nofollow,noarchive">
+  <title>Der stille Arbeitsfluss · KI-Pate Previz</title>
+  <link rel="icon" href="/favicon.svg" type="image/svg+xml">
+  <script>document.documentElement.classList.replace('no-js', 'js');</script>
+  <link rel="preload" href="/assets/fonts/space-grotesk-var.woff2" as="font" type="font/woff2" crossorigin>
+  <link rel="stylesheet" href="../shared/ci.css">
+  <link rel="stylesheet" href="../shared/demo-shell.css">
+  <link rel="stylesheet" href="./demo.css">
+</head>
+<body>
+  <a class="skip-link" href="#static-story">Zur statischen Inhaltsansicht</a>
+
+  <div id="demo-shell" class="js-only">
+    <header class="demo-header">
+      <a class="brand" href="../" aria-label="Zur Demo-Übersicht">
+        <img src="/assets/logo-mono.webp" alt="" width="34" height="27">
+        <span>Der KI-Pate <small>PREVIZ · A</small></span>
+      </a>
+      <a class="overview-link" href="../">Alle Entwürfe</a>
+    </header>
+
+    <section class="demo-scroll" data-scroll-track aria-label="Interaktive Arbeitsfluss-Demo">
+      <div class="demo-stage" data-demo-stage>
+        <div class="stage-grid" aria-hidden="true"></div>
+        <div class="media-layer" data-media-layer aria-hidden="true"></div>
+        <div class="particle-layer" data-particles aria-hidden="true"></div>
+        <div class="renderer-stage" data-renderer-stage aria-hidden="true"></div>
+
+        <div class="demo-toolbar" aria-label="Demo testen">
+          <div class="mode-switch" role="group" aria-label="Darstellungsmodus">
+            <button type="button" data-mode-choice="full">Full</button>
+            <button type="button" data-mode-choice="lite">Lite</button>
+            <button type="button" data-mode-choice="static">Static</button>
+          </div>
+          <p class="mode-status" data-mode-status aria-live="polite">Modus wird geprüft</p>
+          <button class="save-data-consent" type="button" data-save-data-consent hidden>
+            Trotz Datensparmodus laden
+          </button>
+        </div>
+
+        <div class="scene-nav" aria-label="Szenennavigation">
+          <button type="button" data-to-start>Zum Anfang</button>
+          <button type="button" data-next-scene>Nächste Szene</button>
+          <button type="button" data-toggle-animation>Animation aus</button>
+        </div>
+
+        <article class="copy-zone" aria-live="polite" aria-atomic="true">
+          <p class="scene-label" data-scene-label>01 · Chaos</p>
+          <h1 data-scene-headline>KI, die Arbeit wirklich abnimmt.</h1>
+          <p class="scene-problem" data-scene-problem>Montagmorgen, E-Mails, Notizen, Anfragen</p>
+          <p class="scene-solution" data-scene-solution>Eingänge werden erkannt und geordnet</p>
+          <p class="example-day" data-example-day hidden>BEISPIELTAG</p>
+
+          <div class="timeline-status">
+            <span data-scene-counter>01/06</span>
+            <span class="progress-track" aria-hidden="true"><i data-progress-bar></i></span>
+            <span data-viewport-class>MOBIL</span>
+          </div>
+
+          <div class="demo-actions">
+            <button class="primary-action" type="button" data-open-use-case>
+              Meine Use Cases finden
+            </button>
+            <a class="secondary-action" href="../../index.html#kontakt">30 Minuten KI-Sprechstunde</a>
+          </div>
+        </article>
+      </div>
+    </section>
+  </div>
+
+  <main id="static-story" class="static-story" data-static-story>
+    <header class="static-intro">
+      <p class="scene-label">PREVIZ · A</p>
+      <h1>Der stille Arbeitsfluss</h1>
+      <p>Sechs konkrete Stationen zeigen, wie aus Eingängen prüfbare Ergebnisse werden.</p>
+    </header>
+
+        <section class="static-scene" data-scene-id="chaos">
+      <p class="scene-label">01 · Chaos</p>
+      <h2>KI, die Arbeit wirklich abnimmt.</h2>
+      <p><strong>Ausgangslage:</strong> Montagmorgen, E-Mails, Notizen, Anfragen</p>
+      <p><strong>Sichtbares Ergebnis:</strong> Eingänge werden erkannt und geordnet</p>
+      <ul class="result-terms" aria-label="Ergebnismerkmale">
+        <li>erkannt</li>
+        <li>geordnet</li>
+      </ul>
+    </section>
+
+    <section class="static-scene" data-scene-id="inbox">
+      <p class="scene-label">02 · Posteingang</p>
+      <h2>83 E-Mails. 7 Entscheidungen.</h2>
+      <p><strong>Ausgangslage:</strong> 83 Nachrichten, unklare Priorität</p>
+      <p><strong>Sichtbares Ergebnis:</strong> sortieren, zusammenfassen, Antworten vorbereiten</p>
+      <ul class="result-terms" aria-label="Ergebnismerkmale">
+        <li>sortiert</li>
+        <li>zusammengefasst</li>
+        <li>vorbereitet</li>
+      </ul>
+    </section>
+
+    <section class="static-scene" data-scene-id="offer">
+      <p class="scene-label">03 · Angebot</p>
+      <h2>Die Anfrage kommt. Das Angebot wartet schon.</h2>
+      <p><strong>Ausgangslage:</strong> Anfrage, Anhang, Kunden- und Preisdaten</p>
+      <p><strong>Sichtbares Ergebnis:</strong> Angebotsentwurf und CRM-Eintrag entstehen</p>
+      <ul class="result-terms" aria-label="Ergebnismerkmale">
+        <li>Angebotsentwurf</li>
+        <li>CRM-Eintrag</li>
+        <li>Freigabe</li>
+      </ul>
+    </section>
+
+    <section class="static-scene" data-scene-id="meeting">
+      <p class="scene-label">04 · Meeting</p>
+      <h2>Das Meeting endet. Die Nacharbeit auch.</h2>
+      <p><strong>Ausgangslage:</strong> Gespräch vorbei, Nacharbeit beginnt</p>
+      <p><strong>Sichtbares Ergebnis:</strong> Entscheidungen, Aufgaben und Termine werden extrahiert</p>
+      <ul class="result-terms" aria-label="Ergebnismerkmale">
+        <li>Entscheidungen</li>
+        <li>Aufgaben</li>
+        <li>Termine</li>
+      </ul>
+    </section>
+
+    <section class="static-scene" data-scene-id="knowledge">
+      <p class="scene-label">05 · Wissen</p>
+      <h2>Antworten mit Quelle. Nicht mit Bauchgefühl.</h2>
+      <p><strong>Ausgangslage:</strong> Information steckt in Dateien und Köpfen</p>
+      <p><strong>Sichtbares Ergebnis:</strong> Antwort erscheint mit überprüfbaren Quellen</p>
+      <ul class="result-terms" aria-label="Ergebnismerkmale">
+        <li>Antwort</li>
+        <li>Quellen</li>
+        <li>prüfbar</li>
+      </ul>
+    </section>
+
+    <section class="static-scene" data-scene-id="control">
+      <p class="scene-label">06 · Kontrolle</p>
+      <h2>Die KI arbeitet. Sie entscheiden.</h2>
+      <p><strong>Ausgangslage:</strong> Sorge vor Blackbox und Datenschutz</p>
+      <p><strong>Sichtbares Ergebnis:</strong> menschliche Freigabe, DSGVO und On-Premise</p>
+      <ul class="result-terms" aria-label="Ergebnismerkmale">
+        <li>Freigabe</li>
+        <li>DSGVO</li>
+        <li>On-Premise</li>
+      </ul>
+    </section>
+
+    <section class="static-proof" aria-labelledby="static-proof-title">
+      <p class="scene-label">06+ · ABSCHLUSSBEWEIS</p>
+      <h2 id="static-proof-title">Gebaut für den betrieblichen Alltag.</h2>
+      <p>25+ Jahre Technik · 2 KI-Plattformen live · Pilot in 4–6 Wochen</p>
+      <div class="demo-actions">
+        <a class="primary-action" href="../../index.html#kontakt">Meine Use Cases finden</a>
+        <a class="secondary-action" href="../../index.html#kontakt">30 Minuten KI-Sprechstunde</a>
+      </div>
+    </section>
+  </main>
+
+  <dialog id="use-case-dialog" class="use-case-dialog js-only" aria-labelledby="use-case-title">
+    <div class="dialog-card">
+      <button class="dialog-close" type="button" data-close-use-case aria-label="Dialog schließen">×</button>
+      <p class="scene-label">LOKAL · KEINE ÜBERTRAGUNG</p>
+      <h2 id="use-case-title">Mini Use-Case-Check</h2>
+      <p>Wählen Sie Bereiche und prüfen Sie einen konservativen Stundenkorridor.</p>
+
+      <form data-use-case-form novalidate>
+        <fieldset>
+          <legend>Wo verliert Ihr Team heute Zeit?</legend>
+          <label><input type="checkbox" name="useCases" value="E-Mail"> <span>E-Mail</span></label>
+          <label><input type="checkbox" name="useCases" value="Angebote"> <span>Angebote</span></label>
+          <label><input type="checkbox" name="useCases" value="Meetings"> <span>Meetings</span></label>
+          <label><input type="checkbox" name="useCases" value="Firmenwissen"> <span>Firmenwissen</span></label>
+        </fieldset>
+
+        <label class="hours-field" for="weekly-hours">
+          <span>Verlorene Teamstunden pro Woche</span>
+          <input id="weekly-hours" name="weeklyHours" type="number" inputmode="numeric" min="1" max="80" step="1" required>
+        </label>
+
+        <p class="calculator-error" data-calculator-error role="alert" hidden></p>
+        <button class="primary-action" type="submit">Potenzial prüfen</button>
+      </form>
+
+      <div class="calculator-result" data-calculator-result aria-live="polite" hidden></div>
+      <p class="model-note">20–40 Prozent sind eine illustrative Modellannahme für die Demo, keine gemessene Einsparung.</p>
+      <a class="secondary-action" href="../../index.html#kontakt">Ergebnis in der KI-Sprechstunde prüfen</a>
+    </div>
+  </dialog>
+
+  <script type="module" src="../shared/demo-app.js"></script>
+</body>
+</html>

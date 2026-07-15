@@ -1,0 +1,129 @@
+<!doctype html>
+<html lang="de" class="no-js" data-demo-id="{{DEMO_ID}}" data-sentinel="ki-pate-scroll-demo">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <meta name="robots" content="noindex,nofollow,noarchive">
+  <title>{{TITLE}} · KI-Pate Previz</title>
+  <link rel="icon" href="/favicon.svg" type="image/svg+xml">
+  <script>document.documentElement.classList.replace('no-js', 'js');</script>
+  <link rel="preload" href="/assets/fonts/space-grotesk-var.woff2" as="font" type="font/woff2" crossorigin>
+  <link rel="stylesheet" href="../shared/ci.css">
+  <link rel="stylesheet" href="../shared/demo-shell.css">
+  <link rel="stylesheet" href="./demo.css">
+</head>
+<body>
+  <a class="skip-link" href="#static-story">Zur statischen Inhaltsansicht</a>
+
+  <div id="demo-shell" class="js-only">
+    <header class="demo-header">
+      <a class="brand" href="../" aria-label="Zur Demo-Übersicht">
+        <img src="/assets/logo-mono.webp" alt="" width="34" height="27">
+        <span>Der KI-Pate <small>PREVIZ · {{DEMO_LABEL}}</small></span>
+      </a>
+      <a class="overview-link" href="../">Alle Entwürfe</a>
+    </header>
+
+    <section class="demo-scroll" data-scroll-track aria-label="Interaktive Arbeitsfluss-Demo">
+      <div class="demo-stage" data-demo-stage>
+        <div class="stage-grid" aria-hidden="true"></div>
+        <div class="media-layer" data-media-layer aria-hidden="true"></div>
+        <div class="particle-layer" data-particles aria-hidden="true"></div>
+        <div class="renderer-stage" data-renderer-stage aria-hidden="true"></div>
+
+        <div class="demo-toolbar" aria-label="Demo testen">
+          <div class="mode-switch" role="group" aria-label="Darstellungsmodus">
+            <button type="button" data-mode-choice="full">Full</button>
+            <button type="button" data-mode-choice="lite">Lite</button>
+            <button type="button" data-mode-choice="static">Static</button>
+          </div>
+          <p class="mode-status" data-mode-status aria-live="polite">Modus wird geprüft</p>
+          <button class="save-data-consent" type="button" data-save-data-consent hidden>
+            Trotz Datensparmodus laden
+          </button>
+        </div>
+
+        <div class="scene-nav" aria-label="Szenennavigation">
+          <button type="button" data-to-start>Zum Anfang</button>
+          <button type="button" data-next-scene>Nächste Szene</button>
+          <button type="button" data-toggle-animation>Animation aus</button>
+        </div>
+
+        <article class="copy-zone" aria-live="polite" aria-atomic="true">
+          <p class="scene-label" data-scene-label>{{INITIAL_LABEL}}</p>
+          <h1 data-scene-headline>{{INITIAL_HEADLINE}}</h1>
+          <p class="scene-problem" data-scene-problem>{{INITIAL_PROBLEM}}</p>
+          <p class="scene-solution" data-scene-solution>{{INITIAL_SOLUTION}}</p>
+          <p class="example-day" data-example-day hidden>BEISPIELTAG</p>
+
+          <div class="timeline-status">
+            <span data-scene-counter>01/06</span>
+            <span class="progress-track" aria-hidden="true"><i data-progress-bar></i></span>
+            <span data-viewport-class>MOBIL</span>
+          </div>
+
+          <div class="demo-actions">
+            <button class="primary-action" type="button" data-open-use-case>
+              Meine Use Cases finden
+            </button>
+            <a class="secondary-action" href="../../index.html#kontakt">30 Minuten KI-Sprechstunde</a>
+          </div>
+        </article>
+      </div>
+    </section>
+  </div>
+
+  <main id="static-story" class="static-story" data-static-story>
+    <header class="static-intro">
+      <p class="scene-label">PREVIZ · {{DEMO_LABEL}}</p>
+      <h1>{{TITLE}}</h1>
+      <p>Sechs konkrete Stationen zeigen, wie aus Eingängen prüfbare Ergebnisse werden.</p>
+    </header>
+
+    {{STATIC_SECTIONS}}
+
+    <section class="static-proof" aria-labelledby="static-proof-title">
+      <p class="scene-label">06+ · ABSCHLUSSBEWEIS</p>
+      <h2 id="static-proof-title">Gebaut für den betrieblichen Alltag.</h2>
+      <p>25+ Jahre Technik · 2 KI-Plattformen live · Pilot in 4–6 Wochen</p>
+      <div class="demo-actions">
+        <a class="primary-action" href="../../index.html#kontakt">Meine Use Cases finden</a>
+        <a class="secondary-action" href="../../index.html#kontakt">30 Minuten KI-Sprechstunde</a>
+      </div>
+    </section>
+  </main>
+
+  <dialog id="use-case-dialog" class="use-case-dialog js-only" aria-labelledby="use-case-title">
+    <div class="dialog-card">
+      <button class="dialog-close" type="button" data-close-use-case aria-label="Dialog schließen">×</button>
+      <p class="scene-label">LOKAL · KEINE ÜBERTRAGUNG</p>
+      <h2 id="use-case-title">Mini Use-Case-Check</h2>
+      <p>Wählen Sie Bereiche und prüfen Sie einen konservativen Stundenkorridor.</p>
+
+      <form data-use-case-form novalidate>
+        <fieldset>
+          <legend>Wo verliert Ihr Team heute Zeit?</legend>
+          <label><input type="checkbox" name="useCases" value="E-Mail"> <span>E-Mail</span></label>
+          <label><input type="checkbox" name="useCases" value="Angebote"> <span>Angebote</span></label>
+          <label><input type="checkbox" name="useCases" value="Meetings"> <span>Meetings</span></label>
+          <label><input type="checkbox" name="useCases" value="Firmenwissen"> <span>Firmenwissen</span></label>
+        </fieldset>
+
+        <label class="hours-field" for="weekly-hours">
+          <span>Verlorene Teamstunden pro Woche</span>
+          <input id="weekly-hours" name="weeklyHours" type="number" inputmode="numeric" min="1" max="80" step="1" required>
+        </label>
+
+        <p class="calculator-error" data-calculator-error role="alert" hidden></p>
+        <button class="primary-action" type="submit">Potenzial prüfen</button>
+      </form>
+
+      <div class="calculator-result" data-calculator-result aria-live="polite" hidden></div>
+      <p class="model-note">20–40 Prozent sind eine illustrative Modellannahme für die Demo, keine gemessene Einsparung.</p>
+      <a class="secondary-action" href="../../index.html#kontakt">Ergebnis in der KI-Sprechstunde prüfen</a>
+    </div>
+  </dialog>
+
+  <script type="module" src="../shared/demo-app.js"></script>
+</body>
+</html>
