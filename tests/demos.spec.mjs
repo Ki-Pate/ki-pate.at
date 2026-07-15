@@ -313,6 +313,19 @@ test.describe('Varianten', () => {
     resultTerms: scene.resultTerms,
   }));
 
+  test('links all three testable routes from the demo launcher', async ({ page }) => {
+    const response = await page.goto('/demos/');
+
+    expect(response?.status()).toBe(200);
+    await expect(page.locator('.demo-card')).toHaveCount(DEMO_ROUTES.length);
+
+    for (const route of DEMO_ROUTES) {
+      const card = page.locator('.demo-card').filter({ hasText: route.title });
+      await expect(card.locator('.eyebrow')).toHaveText(`${route.label} · TESTBAR`);
+      await expect(card.getByRole('link')).toHaveAttribute('href', `./${route.slug}/`);
+    }
+  });
+
   test('serves canonical scenes and calculator configuration on every route', async ({ page }) => {
     for (const route of DEMO_ROUTES) {
       const response = await page.goto(`/demos/${route.slug}/`);
