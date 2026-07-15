@@ -1,0 +1,424 @@
+.renderer-stage {
+  perspective: 1050px;
+  perspective-origin: 62% 38%;
+  overflow: hidden;
+}
+
+.island-world {
+  --camera-x: 218px;
+  --camera-y: -136px;
+  --camera-z: -30px;
+  --camera-rx: 61deg;
+  --camera-rz: -38deg;
+  --route-progress: 0;
+  position: absolute;
+  top: 44%;
+  left: 69%;
+  width: 620px;
+  height: 540px;
+  transform: translate3d(calc(-50% + var(--camera-x)), calc(-50% + var(--camera-y)), var(--camera-z)) rotateX(var(--camera-rx)) rotateZ(var(--camera-rz)) scale(.91);
+  transform-origin: 50% 50%;
+  transform-style: flat;
+  will-change: auto;
+}
+
+.world-plane {
+  position: absolute;
+  inset: -58px;
+  border: 1px solid var(--line);
+  background:
+    linear-gradient(90deg, transparent 47px, rgba(111, 163, 173, .1) 48px, transparent 49px),
+    linear-gradient(transparent 47px, rgba(111, 163, 173, .1) 48px, transparent 49px),
+    radial-gradient(circle at 50% 50%, rgba(43, 200, 183, .06), transparent 58%),
+    #0B1016;
+  background-size: 48px 48px, 48px 48px, auto, auto;
+  box-shadow: 0 45px 80px rgba(0, 0, 0, .48);
+  transform: translateZ(-8px);
+}
+
+.world-plane::before,
+.world-plane::after {
+  content: "+";
+  position: absolute;
+  color: var(--tech);
+  font: 11px var(--mono);
+}
+
+.world-plane::before { top: 15px; left: 15px; }
+.world-plane::after { right: 15px; bottom: 15px; }
+
+.island-route {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  overflow: visible;
+  transform: translateZ(5px);
+}
+
+.route-bed,
+.route-live {
+  fill: none;
+  stroke-linecap: square;
+  stroke-linejoin: bevel;
+  vector-effect: non-scaling-stroke;
+}
+
+.route-bed {
+  stroke: rgba(111, 163, 173, .26);
+  stroke-width: 13;
+}
+
+.route-live {
+  stroke: var(--acc);
+  stroke-width: 3;
+  stroke-dasharray: 1;
+  stroke-dashoffset: calc(1 - var(--route-progress));
+  transition: stroke-dashoffset 90ms linear;
+}
+
+.route-junctions circle {
+  fill: #0A0F15;
+  stroke: var(--tech);
+  stroke-width: 2;
+  vector-effect: non-scaling-stroke;
+}
+
+.machine-island {
+  --island-active: 0;
+  position: absolute;
+  z-index: 2;
+  top: var(--island-y);
+  left: var(--island-x);
+  width: 154px;
+  height: 116px;
+  opacity: .3;
+  transform: translate3d(-50%, -50%, 14px);
+  transform-style: flat;
+  transition: opacity 180ms linear, transform 240ms cubic-bezier(.2, .75, .2, 1);
+}
+
+.machine-island[data-active="true"] {
+  z-index: 5;
+  opacity: 1;
+  transform: translate3d(-50%, -50%, 42px);
+}
+
+.island-plinth {
+  position: absolute;
+  inset: 0;
+  border: 1px solid rgba(111, 163, 173, .38);
+  background:
+    linear-gradient(90deg, transparent 24px, rgba(111, 163, 173, .1) 25px, transparent 26px),
+    linear-gradient(transparent 24px, rgba(111, 163, 173, .1) 25px, transparent 26px),
+    #121922;
+  background-size: 25px 25px;
+  box-shadow: 10px 14px 0 rgba(0, 0, 0, .22);
+  clip-path: polygon(9% 0, 100% 0, 100% 88%, 91% 100%, 0 100%, 0 12%);
+  transform: translateZ(-2px);
+}
+
+.island-plinth::before {
+  content: "";
+  position: absolute;
+  inset: 9px;
+  border: 1px dashed rgba(111, 163, 173, .18);
+}
+
+.island-plinth span,
+.island-plinth b {
+  position: absolute;
+  z-index: 2;
+  font-family: var(--mono);
+  letter-spacing: .12em;
+}
+
+.island-plinth span { top: 8px; left: 12px; color: var(--acc); font-size: 8px; }
+.island-plinth b { right: 9px; bottom: 7px; color: var(--faint); font-size: 6px; }
+
+.machine-island[data-active="true"] .island-plinth {
+  border-color: rgba(43, 200, 183, .82);
+  background-color: #15242A;
+  box-shadow: 0 0 0 1px rgba(43, 200, 183, .12), 15px 20px 0 rgba(0, 0, 0, .24);
+}
+
+.machine-island > p {
+  position: absolute;
+  z-index: 9;
+  right: 11px;
+  top: -18px;
+  margin: 0;
+  padding: 3px 6px;
+  border: 1px solid var(--line-strong);
+  background: #0B1118;
+  color: var(--tech);
+  font: 6px var(--mono);
+  letter-spacing: .1em;
+  transform: translateZ(34px);
+}
+
+.machine-island[data-active="true"] > p {
+  border-color: var(--acc);
+  color: var(--acc-hi);
+}
+
+.intake-carousel,
+.sorting-tower,
+.sorting-chutes,
+.offer-printer,
+.crm-cube,
+.meeting-reactor,
+.output-tokens,
+.knowledge-array,
+.answer-beacon,
+.approval-frame,
+.trust-cells,
+.paper-feed {
+  position: absolute;
+  z-index: 5;
+  border: 1px solid var(--line-strong);
+  background: #151D26;
+  color: var(--muted);
+  font-family: var(--mono);
+  box-shadow: 5px 7px 0 rgba(0, 0, 0, .2);
+  transform: translateZ(19px);
+}
+
+.intake-carousel {
+  top: 24px;
+  left: 19px;
+  width: 68px;
+  height: 68px;
+  border-radius: 50%;
+}
+
+.intake-carousel::before {
+  content: "";
+  position: absolute;
+  inset: 23px;
+  border: 2px solid var(--acc);
+  border-radius: 50%;
+  background: #0B1118;
+}
+
+.intake-carousel i {
+  position: absolute;
+  top: 29px;
+  left: 4px;
+  width: 60px;
+  height: 8px;
+  background: var(--tech);
+  transform: rotate(var(--arm));
+}
+
+.intake-carousel i:nth-child(1) { --arm: 0deg; }
+.intake-carousel i:nth-child(2) { --arm: 45deg; }
+.intake-carousel i:nth-child(3) { --arm: 90deg; }
+.intake-carousel i:nth-child(4) { --arm: 135deg; }
+
+.paper-feed {
+  top: 30px;
+  right: 15px;
+  width: 47px;
+  height: 58px;
+  padding: 7px;
+  display: grid;
+  gap: 4px;
+}
+
+.paper-feed span { padding: 2px; background: #DED9CE; color: #1B232C; font-size: 5px; }
+
+.sorting-tower {
+  top: 16px;
+  left: 47px;
+  width: 59px;
+  height: 75px;
+  padding: 13px 9px;
+}
+
+.sorting-tower b { color: var(--ink); font-size: 8px; letter-spacing: .12em; }
+.sorting-tower i { display: block; height: 4px; margin-top: 8px; background: var(--tech); }
+.sorting-tower i:nth-child(3) { width: 70%; }
+.sorting-tower i:nth-child(4) { width: 42%; background: var(--acc); }
+
+.sorting-chutes {
+  top: 72px;
+  left: 27px;
+  width: 101px;
+  height: 25px;
+  display: flex;
+  justify-content: space-around;
+  padding: 6px;
+}
+
+.sorting-chutes span { color: var(--tech); font-size: 6px; }
+
+.offer-printer {
+  top: 15px;
+  left: 19px;
+  width: 83px;
+  height: 84px;
+  padding: 12px;
+  background: #E6E1D6;
+  color: #1A222B;
+}
+
+.offer-printer span,
+.offer-printer b { display: block; font-size: 6px; letter-spacing: .09em; }
+.offer-printer b { margin-top: 12px; color: #146D64; }
+.offer-printer i { display: block; height: 1px; margin-top: 11px; background: rgba(26, 34, 43, .25); }
+
+.crm-cube {
+  top: 34px;
+  right: 16px;
+  width: 36px;
+  height: 44px;
+  padding: 8px 5px;
+  color: var(--ink);
+  font-size: 7px;
+  text-align: center;
+}
+
+.crm-cube small { display: block; margin-top: 5px; color: var(--acc); font-size: 6px; }
+
+.meeting-reactor {
+  top: 22px;
+  left: 36px;
+  width: 82px;
+  height: 70px;
+  padding: 26px 12px;
+  border-radius: 50%;
+  text-align: center;
+}
+
+.meeting-reactor b { color: var(--tech); font-size: 8px; }
+.meeting-reactor i { position: absolute; width: 10px; height: 10px; border: 1px solid var(--acc); border-radius: 50%; background: #0C1219; }
+.meeting-reactor i:nth-child(2) { top: -5px; left: 18px; }
+.meeting-reactor i:nth-child(3) { top: 28px; right: -5px; }
+.meeting-reactor i:nth-child(4) { bottom: -5px; left: 27px; }
+
+.output-tokens {
+  top: 18px;
+  left: 14px;
+  width: 27px;
+  padding: 4px;
+  display: grid;
+  gap: 4px;
+  background: transparent;
+  box-shadow: none;
+}
+
+.output-tokens span { padding: 3px; border: 1px solid rgba(43, 200, 183, .4); background: #0F2220; color: var(--acc); font-size: 6px; text-align: center; }
+
+.knowledge-array {
+  top: 18px;
+  left: 15px;
+  width: 89px;
+  height: 82px;
+  padding: 9px;
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 5px;
+}
+
+.knowledge-array i {
+  padding: 9px 5px;
+  border-left: 2px solid var(--tech);
+  background: #0D131A;
+  color: var(--muted);
+  font-size: 6px;
+  font-style: normal;
+}
+
+.answer-beacon {
+  top: 31px;
+  right: 12px;
+  width: 39px;
+  height: 57px;
+  padding: 30px 4px 4px;
+  color: var(--acc);
+  font-size: 5px;
+  text-align: center;
+}
+
+.answer-beacon span {
+  position: absolute;
+  top: 9px;
+  left: 11px;
+  width: 15px;
+  height: 15px;
+  border: 2px solid var(--acc);
+  border-radius: 50%;
+  box-shadow: 0 0 0 5px rgba(43, 200, 183, .09);
+}
+
+.approval-frame {
+  top: 17px;
+  left: 18px;
+  width: 77px;
+  height: 82px;
+  padding: 52px 7px 0;
+  border-width: 4px;
+  text-align: center;
+}
+
+.approval-frame i {
+  position: absolute;
+  top: 35px;
+  left: -12px;
+  width: 93px;
+  height: 7px;
+  border: 1px solid var(--acc);
+  background: #0F2623;
+  transform: rotate(-9deg);
+  transform-origin: left;
+}
+
+.approval-frame b { color: var(--ink); font-size: 6px; letter-spacing: .1em; }
+
+.trust-cells {
+  top: 32px;
+  right: 12px;
+  width: 45px;
+  padding: 6px;
+}
+
+.trust-cells span { display: block; padding: 4px 1px; color: var(--tech); font-size: 5px; }
+
+html[data-mode="full"] .machine-island[data-active="true"] .intake-carousel { animation: carousel-turn 9s linear infinite; }
+html[data-mode="full"] .machine-island[data-active="true"] .answer-beacon span { animation: beacon-pulse 2.4s ease-in-out infinite; }
+
+@keyframes carousel-turn { to { transform: translateZ(19px) rotate(360deg); } }
+@keyframes beacon-pulse { 50% { box-shadow: 0 0 0 11px rgba(43, 200, 183, .03); } }
+
+html[data-mode="lite"] .machine-island { transition-duration: 0ms; }
+html[data-mode="lite"] .route-live { transition: none; }
+html[data-mode="static"] .island-world {
+  transform: translate3d(-50%, -50%, 0) rotateX(60deg) rotateZ(-38deg) scale(.86);
+}
+
+@media (max-width: 860px) {
+  .renderer-stage { perspective-origin: 50% 36%; }
+  .island-world {
+    top: 39%;
+    left: 51%;
+    transform: translate3d(calc(-50% + var(--camera-x)), calc(-50% + var(--camera-y)), var(--camera-z)) rotateX(var(--camera-rx)) rotateZ(var(--camera-rz)) scale(.7);
+  }
+}
+
+@media (max-width: 480px) {
+  .island-world {
+    top: 37%;
+    transform: translate3d(calc(-50% + var(--camera-x) - 76px), calc(-50% + var(--camera-y)), var(--camera-z)) rotateX(var(--camera-rx)) rotateZ(var(--camera-rz)) scale(.6);
+  }
+
+  html[data-mode="static"] .island-world { transform: translate3d(-50%, -54%, 0) rotateX(60deg) rotateZ(-38deg) scale(.6); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .machine-island,
+  .route-live { transition: none; }
+  .island-world { will-change: auto; }
+  .intake-carousel,
+  .answer-beacon span { animation: none !important; }
+}
