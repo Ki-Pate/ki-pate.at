@@ -49,6 +49,22 @@ test.describe('Final audit', () => {
     expect(actionBottoms.every((bottom) => bottom <= 720)).toBe(true);
   });
 
+  test('cache-busts every demo stylesheet and entry script', async ({ page }) => {
+    for (const path of ['/demos/', ...DEMO_ROUTES.map(({ slug }) => `/demos/${slug}/`)]) {
+      await page.goto(path);
+      const assetUrls = await page.locator('link[rel="stylesheet"], script[src]').evaluateAll((elements) => (
+        elements
+          .map((element) => element.href || element.src)
+          .filter((url) => new URL(url).pathname.startsWith('/demos/'))
+      ));
+
+      expect(assetUrls.length, `${path}: no demo assets found`).toBeGreaterThan(0);
+      for (const assetUrl of assetUrls) {
+        expect(new URL(assetUrl).searchParams.get('v'), assetUrl).toMatch(/^\d{8}[a-z]$/);
+      }
+    }
+  });
+
   test('keeps the primary CTA fully inside a short landscape viewport', async ({ page }) => {
     await page.setViewportSize({ width: 844, height: 390 });
     await page.addInitScript(() => sessionStorage.setItem('ki-pate-demo-mode', 'static'));
