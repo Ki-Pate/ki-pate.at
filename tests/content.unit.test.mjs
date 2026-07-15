@@ -1,7 +1,14 @@
 import assert from 'node:assert/strict';
 import test from 'node:test';
 
-import { calculatePotentialHours } from '../demos/shared/content.js';
+import { calculatePotentialHours, SCENES } from '../demos/shared/content.js';
+
+test('defines the canonical scene order', () => {
+  assert.deepEqual(
+    SCENES.map(({ id }) => id),
+    ['chaos', 'inbox', 'offer', 'meeting', 'knowledge', 'control'],
+  );
+});
 
 test('calculates the approved annual potential ranges', () => {
   assert.deepEqual(calculatePotentialHours(10), { min: 92, max: 184 });

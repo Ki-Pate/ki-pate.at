@@ -7,8 +7,19 @@ import {
   getSceneState,
 } from '../demos/shared/scroll-engine.js';
 
-test('maps the fourth scene midpoint to meeting', () => {
-  assert.equal(getSceneState(0.5833).id, 'meeting');
+test('maps all six scene midpoints to the canonical scene order', () => {
+  const expectedScenes = [
+    [0.0833, 'chaos'],
+    [0.25, 'inbox'],
+    [0.4167, 'offer'],
+    [0.5833, 'meeting'],
+    [0.75, 'knowledge'],
+    [0.9167, 'control'],
+  ];
+
+  for (const [progress, id] of expectedScenes) {
+    assert.equal(getSceneState(progress).id, id);
+  }
 });
 
 test('maps an exact clip boundary to the following clip', () => {
