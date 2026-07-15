@@ -1,0 +1,55 @@
+<!doctype html>
+<html lang="de">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+  <meta name="robots" content="noindex,nofollow">
+  <title>KI-Pate · Signature Hero</title>
+  <style>
+    :root{--accent:#2bc8b7;--ink:#edebe3;--muted:#aab0b7;--bg:#10141b;--progress:0;--fill:1;--detail:0}
+    *{box-sizing:border-box}html{background:var(--bg)}body{margin:0;color:var(--ink);font-family:Inter,ui-sans-serif,system-ui,-apple-system,"Segoe UI",sans-serif;background:var(--bg)}
+    .journey{height:185svh}.stage{position:sticky;top:0;height:100svh;min-height:620px;overflow:hidden;background:#0b0d11}.stage video{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:center center}.stage:after{content:"";position:absolute;inset:0;background:linear-gradient(90deg,rgba(7,10,14,.96) 0%,rgba(7,10,14,.82) 34%,rgba(7,10,14,.24) 63%,rgba(7,10,14,.12)),linear-gradient(0deg,rgba(7,10,14,.62),transparent 43%);pointer-events:none}
+    nav{position:absolute;z-index:5;inset:0 0 auto;display:flex;align-items:center;justify-content:space-between;padding:24px clamp(20px,5vw,72px);border-bottom:1px solid rgba(237,235,227,.16)}.brand{font-size:12px;font-weight:850;letter-spacing:.18em;text-transform:uppercase}.brand b{color:var(--accent)}nav a{padding:10px 14px;border:1px solid rgba(237,235,227,.3);border-radius:4px;color:var(--ink);font:700 10px ui-monospace,monospace;letter-spacing:.12em;text-decoration:none;text-transform:uppercase}
+    .content{position:relative;z-index:4;display:flex;flex-direction:column;justify-content:center;width:min(830px,66vw);height:100%;padding:112px 0 52px clamp(20px,5vw,72px)}.eyebrow{display:flex;align-items:center;gap:13px;margin-bottom:24px;color:var(--accent);font:750 11px ui-monospace,monospace;letter-spacing:.18em;text-transform:uppercase}.eyebrow:before{content:"";width:36px;height:1px;background:var(--accent)}
+    .title-wrap{position:relative}.outline,.fill{margin:0;font-size:clamp(58px,8.6vw,138px);font-weight:800;line-height:.82;letter-spacing:-.07em}.outline{color:transparent;-webkit-text-stroke:1px rgba(237,235,227,.22)}.fill{position:absolute;inset:0;opacity:var(--fill)}.fill span{color:var(--accent)}
+    .details{max-width:680px;margin-top:34px;opacity:var(--detail);transform:translateY(calc((1 - var(--detail))*28px))}.lead{margin:0;color:#d0d4d5;font-size:clamp(15px,1.35vw,19px);line-height:1.55;text-wrap:balance}.lead b{color:var(--ink)}.actions{display:flex;flex-wrap:wrap;gap:12px;margin-top:25px}.btn{display:inline-flex;align-items:center;justify-content:center;min-height:48px;padding:0 20px;border:1px solid rgba(237,235,227,.42);border-radius:4px;color:var(--ink);font:750 11px ui-monospace,monospace;letter-spacing:.1em;text-decoration:none;text-transform:uppercase}.btn.primary{border-color:var(--accent);background:var(--accent);color:#07120f}.micro{max-width:610px;margin:18px 0 0;color:#8e969e;font:600 10px/1.55 ui-monospace,monospace;letter-spacing:.08em;text-transform:uppercase}
+    .scroll{position:absolute;z-index:5;right:clamp(20px,4vw,58px);bottom:30px;display:flex;align-items:center;gap:12px;color:#b2b9ba;font:700 9px ui-monospace,monospace;letter-spacing:.14em;text-transform:uppercase;transition:opacity .2s}.scroll i{display:block;width:1px;height:38px;background:linear-gradient(var(--accent) calc(var(--progress)*100%),rgba(237,235,227,.25) 0)}
+    @media(max-width:760px){.stage{min-height:580px}.stage video{object-position:66% center}.stage:after{background:linear-gradient(0deg,rgba(7,10,14,.98) 0%,rgba(7,10,14,.78) 45%,rgba(7,10,14,.08) 82%),linear-gradient(90deg,rgba(7,10,14,.68),transparent 72%)}nav{padding:18px}.content{justify-content:flex-end;width:100%;padding:94px 18px 74px}.eyebrow{margin-bottom:16px}.outline,.fill{font-size:clamp(50px,16vw,78px);line-height:.86}.details{margin-top:22px}.lead{font-size:14px}.micro{display:none}.scroll{right:16px;bottom:18px}.actions{gap:9px}.btn{min-height:44px;padding:0 14px;font-size:9px}}
+    @media(prefers-reduced-motion:reduce){.journey{height:100svh}.fill{opacity:1!important}.details{opacity:1!important;transform:none!important}.scroll{display:none}.stage video{display:none}.stage{background:linear-gradient(135deg,#141b22,#10141b)}}
+  </style>
+</head>
+<body>
+  <main class="journey">
+    <section class="stage" aria-label="KI-Pate Hero">
+      <video src="media/hero-d-expression-720p.mp4" poster="media/hero-d-expression-start.jpg" autoplay muted loop playsinline preload="auto" aria-hidden="true"></video>
+      <nav><div class="brand">KI-<b>PATE</b> · KARL PILZ</div><a href="index.html#d">Vier Varianten</a></nav>
+      <div class="content">
+        <div class="eyebrow">Anif bei Salzburg · seit 2001 in der Technik</div>
+        <div class="title-wrap">
+          <h1 class="outline" aria-hidden="true">KI ist weit mehr,<br>als du denkst.</h1>
+          <h1 class="fill">KI ist weit mehr,<br><span>als du denkst.</span></h1>
+        </div>
+        <div class="details">
+          <p class="lead"><b>KI, die Ihnen wirklich Arbeit abnimmt:</b> Ich bin Karl Pilz — Ingenieur, Unternehmer und KI-Pate aus Salzburg. Seit 25 Jahren baue ich IT-Systeme, die laufen. Heute bringe ich KI in Ihre Prozesse: DSGVO-konform, messbar, auf Wunsch komplett in Ihrem Haus. Keine Folien. Laufende Systeme.</p>
+          <div class="actions"><a class="btn primary" href="/#kontakt">KI-Sprechstunde buchen</a><a class="btn" href="/#use-cases">Use Cases ansehen</a></div>
+          <p class="micro">30 Min · kostenlos · Sie gehen mit 2–3 Use Cases und einer Zahl raus: wie viele Stunden pro Woche Ihr Betrieb derzeit verschenkt.</p>
+        </div>
+      </div>
+      <div class="scroll"><span>Scroll für Wirkung</span><i></i></div>
+    </section>
+  </main>
+  <script>
+    const root=document.documentElement;
+    const update=()=>{
+      const max=document.documentElement.scrollHeight-innerHeight;
+      const p=max>0?Math.min(1,Math.max(0,scrollY/max)):0;
+      const fill=Math.max(.04,1-p/0.48);
+      const detail=Math.min(1,Math.max(0,(p-.30)/.38));
+      root.style.setProperty('--progress',p.toFixed(3));
+      root.style.setProperty('--fill',fill.toFixed(3));
+      root.style.setProperty('--detail',detail.toFixed(3));
+    };
+    addEventListener('scroll',update,{passive:true});addEventListener('resize',update);update();
+  </script>
+</body>
+</html>
