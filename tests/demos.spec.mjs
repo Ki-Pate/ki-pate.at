@@ -1,12 +1,16 @@
-import { expect, test } from '@playwright/test';
 import { readFile } from 'node:fs/promises';
 import { dirname, join } from 'node:path';
 import { fileURLToPath } from 'node:url';
 
 import { DEMO_ROUTES, SCENES } from '../demos/shared/content.js';
+import { expect, test } from './fixtures.mjs';
 
 const DEMO_PATH = '/demos/arbeitsfluss/';
 const PROJECT_ROOT = dirname(dirname(fileURLToPath(import.meta.url)));
+
+function isMp4Request(request) {
+  return new URL(request.url()).pathname.endsWith('.mp4');
+}
 
 async function openArbeitsfluss(page) {
   const response = await page.goto(DEMO_PATH);
@@ -39,7 +43,7 @@ test.describe('Arbeitsfluss', () => {
     });
 
     await openArbeitsfluss(page);
-    await page.waitForLoadState('networkidle');
+    await expect(page.locator('html')).toHaveAttribute('data-media-ready', 'true');
 
     await expect(page.locator('link[rel="icon"]')).toHaveAttribute('href', '/favicon.svg');
     expect(consoleErrors).toEqual([]);
@@ -180,7 +184,7 @@ test.describe('Arbeitsfluss', () => {
 
   test('does not request, navigate or persist calculator input', async ({ page }) => {
     await openArbeitsfluss(page);
-    await page.waitForLoadState('networkidle');
+    await expect(page.locator('html')).toHaveAttribute('data-media-ready', 'true');
     await page.getByRole('button', { name: 'Meine Use Cases finden' }).click();
 
     const before = await page.evaluate(() => ({
@@ -214,7 +218,7 @@ test.describe('Arbeitsfluss', () => {
     await page.emulateMedia({ reducedMotion: 'reduce' });
     const mp4Requests = [];
     page.on('request', (request) => {
-      if (request.url().endsWith('.mp4')) mp4Requests.push(request.url());
+      if (isMp4Request(request)) mp4Requests.push(request.url());
     });
 
     await openArbeitsfluss(page);
@@ -238,7 +242,7 @@ test.describe('Arbeitsfluss', () => {
     });
     const mp4Requests = [];
     page.on('request', (request) => {
-      if (request.url().endsWith('.mp4')) mp4Requests.push(request.url());
+      if (isMp4Request(request)) mp4Requests.push(request.url());
     });
 
     await openArbeitsfluss(page);
@@ -309,9 +313,12 @@ test.describe('Arbeitsfluss', () => {
 
 test.describe('Arbeitsfluss media', () => {
   test('serves exact byte ranges for the approved MP4', async ({ request }) => {
-    const response = await request.get('/demos/media/arbeitsfluss/clip-01.mp4', {
+    const path = '/demos/media/arbeitsfluss/clip-01.mp4';
+    const version = '1C28CCCAA79F0F8F5EE2D6869862867C4E0E1AC74FCFA6301442D974C3CFD13F';
+    const response = await request.get(`${path}?v=${version}`, {
       headers: { Range: 'bytes=100-199' },
     });
+    const unversioned = await request.head(path);
     const source = await readFile(join(
       PROJECT_ROOT,
       'demos',
@@ -323,18 +330,20 @@ test.describe('Arbeitsfluss media', () => {
     expect(response.status()).toBe(206);
     expect(response.headers()['content-range']).toBe('bytes 100-199/1918006');
     expect(response.headers()['content-length']).toBe('100');
+    expect(response.headers()['cache-control']).toBe('public, max-age=31536000, immutable');
+    expect(unversioned.headers()['cache-control']).toBe('no-store');
     expect(Buffer.from(await response.body())).toEqual(source.subarray(100, 200));
   });
 
-  test('loads the Full poster first and requests both clips only after document boot', async ({ browser }) => {
-    const context = await browser.newContext({ viewport: { width: 390, height: 844 } });
-    const page = await context.newPage();
+  test('loads the Full poster first and requests both clips only after document boot', async ({ sharedContext }) => {
+    const page = await sharedContext.newPage();
+    await page.setViewportSize({ width: 390, height: 844 });
     const mp4Requests = [];
     let documentBooted = false;
 
     page.on('domcontentloaded', () => { documentBooted = true; });
     page.on('request', (request) => {
-      if (request.url().includes('/demos/media/arbeitsfluss/') && request.url().endsWith('.mp4')) {
+      if (request.url().includes('/demos/media/arbeitsfluss/') && isMp4Request(request)) {
         mp4Requests.push({ url: request.url(), afterBoot: documentBooted });
       }
     });
@@ -353,14 +362,50 @@ test.describe('Arbeitsfluss media', () => {
         '/demos/media/arbeitsfluss/clip-02.mp4',
       ]));
     } finally {
+      await page.close();
+    }
+  });
+
+  test('fetches each buffered clip once during repeated forward and reverse seeks', async ({ browser }) => {
+    const context = await browser.newContext({ viewport: { width: 390, height: 844 } });
+    const page = await context.newPage();
+    const mp4Requests = [];
+
+    page.on('request', (request) => {
+      if (request.url().includes('/demos/media/arbeitsfluss/') && isMp4Request(request)) {
+        mp4Requests.push({
+          path: new URL(request.url()).pathname,
+          range: request.headers().range ?? null,
+        });
+      }
+    });
+
+    try {
+      await openArbeitsfluss(page);
+      for (const progress of [0.1, 0.49, 0.51, 0.9, 0.24, 0.76, 0.01, 0.99, 0.2, 0.8]) {
+        await page.evaluate((nextProgress) => {
+          const track = document.querySelector('[data-scroll-track]');
+          const top = window.scrollY + track.getBoundingClientRect().top;
+          const distance = Math.max(1, track.scrollHeight - window.innerHeight);
+          window.scrollTo({ top: top + distance * nextProgress, behavior: 'instant' });
+        }, progress);
+        await page.waitForTimeout(80);
+      }
+      await page.waitForTimeout(250);
+
+      expect(mp4Requests).toEqual([
+        { path: '/demos/media/arbeitsfluss/clip-01.mp4', range: null },
+        { path: '/demos/media/arbeitsfluss/clip-02.mp4', range: null },
+      ]);
+    } finally {
       await context.close();
     }
   });
 
-  test('uses fresh cold starts with zero MP4 requests when media is disallowed or absent', async ({ browser }) => {
+  test('uses fresh cold starts with zero MP4 requests when media is disallowed or absent', async ({ sharedContext }) => {
     async function coldStart({ path, mode, reducedMotion, saveData = false }) {
-      const context = await browser.newContext({ viewport: { width: 390, height: 844 } });
-      const page = await context.newPage();
+      const page = await sharedContext.newPage();
+      await page.setViewportSize({ width: 390, height: 844 });
       const mp4Requests = new Set();
 
       if (reducedMotion) await page.emulateMedia({ reducedMotion: 'reduce' });
@@ -376,7 +421,7 @@ test.describe('Arbeitsfluss media', () => {
         }, { selectedMode: mode, useSaveData: saveData });
       }
       page.on('request', (request) => {
-        if (request.url().endsWith('.mp4')) mp4Requests.add(request.url());
+        if (isMp4Request(request)) mp4Requests.add(request.url());
       });
 
       try {
@@ -389,7 +434,7 @@ test.describe('Arbeitsfluss media', () => {
           requests: [...mp4Requests],
         };
       } finally {
-        await context.close();
+        await page.close();
       }
     }
 
@@ -408,14 +453,14 @@ test.describe('Arbeitsfluss media', () => {
     }
   });
 
-  test('keeps a painted layer visible while delayed clip 2 crosses the boundary and when reversing', async ({ browser }) => {
-    const context = await browser.newContext({ viewport: { width: 390, height: 844 } });
-    const page = await context.newPage();
+  test('keeps a painted layer visible while delayed clip 2 crosses the boundary and when reversing', async ({ sharedContext }) => {
+    const page = await sharedContext.newPage();
+    await page.setViewportSize({ width: 390, height: 844 });
     let releaseClip2;
     const clip2Gate = new Promise((resolve) => { releaseClip2 = resolve; });
     let clip2Requested = false;
 
-    await page.route('**/clip-02.mp4', async (route) => {
+    await page.route('**/clip-02.mp4*', async (route) => {
       clip2Requested = true;
       await clip2Gate;
       await route.continue();
@@ -446,7 +491,7 @@ test.describe('Arbeitsfluss media', () => {
       await expect(page.locator('video[data-clip-index="0"][data-active="true"]')).toHaveCount(1);
     } finally {
       releaseClip2();
-      await context.close();
+      await page.close();
     }
   });
 

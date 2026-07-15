@@ -43,6 +43,10 @@ test('resolves the approved Arbeitsfluss media and empty manifests for B and C',
     arbeitsfluss.clips.map(({ src }) => new URL(src).pathname.split('/').at(-1)),
     ['clip-01.mp4', 'clip-02.mp4'],
   );
+  assert.deepEqual(
+    arbeitsfluss.clips.map(({ src }) => new URL(src).searchParams.get('v')),
+    arbeitsfluss.clips.map(({ sha256 }) => sha256),
+  );
   assert.deepEqual(module.getMediaManifest('betrieb-im-schnitt'), { poster: null, clips: [] });
   assert.deepEqual(module.getMediaManifest('use-case-inseln'), { poster: null, clips: [] });
 });

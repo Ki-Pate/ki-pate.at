@@ -1,5 +1,6 @@
 import { SCENES } from './content.js';
 import { createMediaController } from './media-controller.js';
+import { createBlobClipLoader } from './media-loader.js';
 import { getMediaManifest } from './media-manifest.js';
 import { MODE_STORAGE_KEY, resolveMode } from './mode-controller.js';
 import { createScrollController } from './scroll-engine.js';
@@ -77,6 +78,7 @@ async function boot() {
   const reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)');
   const session = safeSessionStorage();
   const mediaManifest = getMediaManifest(demoId);
+  const loadMediaSource = createBlobClipLoader();
   let explicitMode = null;
   let animationOff = false;
   let saveDataConsent = false;
@@ -126,6 +128,7 @@ async function boot() {
       videos,
       poster,
       manifest: mediaManifest,
+      loadSource: loadMediaSource,
       onReady() {
         root.dataset.mediaReady = 'true';
       },

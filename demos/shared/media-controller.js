@@ -47,6 +47,7 @@ export function createMediaController({
   onReady = () => {},
   onError = () => {},
   scheduleAfterPaint = afterNextPaint,
+  loadSource = null,
 } = {}) {
   const videoList = Array.from(videos);
   const clips = getClips(manifest);
@@ -63,6 +64,8 @@ export function createMediaController({
     primeStatus: 'idle',
     primeAttempts: 0,
     generation: 0,
+    loadController: null,
+    releaseSource: null,
   }));
   const listeners = [];
   let latestProgress = 0;
@@ -98,6 +101,18 @@ export function createMediaController({
     state.frameCallbackId = null;
   }
 
+  function discardSource(state) {
+    const hadSource = Boolean(state.loadController || state.releaseSource || state.video.src);
+    state.loadController?.abort();
+    state.loadController = null;
+    state.releaseSource?.();
+    state.releaseSource = null;
+    if (!hadSource) return;
+    state.video.pause();
+    state.video.removeAttribute('src');
+    state.video.load();
+  }
+
   function releaseState(state) {
     if (state.clipIndex === null) return;
 
@@ -111,11 +126,9 @@ export function createMediaController({
     state.paintedTime = Number.NaN;
     state.primeStatus = 'idle';
     state.primeAttempts = 0;
-    state.video.pause();
-    state.video.removeAttribute('src');
+    discardSource(state);
     state.video.removeAttribute('data-active');
     state.video.removeAttribute('data-clip-index');
-    state.video.load();
   }
 
   function clampedTarget(state) {
@@ -239,6 +252,7 @@ export function createMediaController({
 
     cancelFrameConfirmation(state);
     state.generation += 1;
+    discardSource(state);
     state.clipIndex = index;
     state.metadataReady = false;
     state.requestedTime = null;
@@ -250,9 +264,37 @@ export function createMediaController({
     state.video.dataset.clipIndex = String(index);
     state.video.dataset.active = 'false';
     state.video.preload = 'metadata';
-    state.video.src = source;
-    state.video.load?.();
-    armFrameConfirmation(state);
+
+    if (typeof loadSource !== 'function') {
+      state.video.src = source;
+      state.video.load?.();
+      armFrameConfirmation(state);
+      return;
+    }
+
+    const generation = state.generation;
+    const controller = new AbortController();
+    state.loadController = controller;
+    Promise.resolve()
+      .then(() => loadSource(clips[index], { signal: controller.signal }))
+      .then((loaded) => {
+        if (destroyed || state.generation !== generation) {
+          loaded?.release?.();
+          return;
+        }
+        if (!loaded?.src) throw new Error('Medium lieferte keine verwendbare Quelle.');
+
+        state.loadController = null;
+        state.releaseSource = loaded.release ?? null;
+        state.video.src = loaded.src;
+        state.video.load?.();
+        armFrameConfirmation(state);
+      })
+      .catch((error) => {
+        if (destroyed || state.generation !== generation || error?.name === 'AbortError') return;
+        state.loadController = null;
+        reportError(error);
+      });
   }
 
   function ensureBuffer(index) {
@@ -364,11 +406,9 @@ export function createMediaController({
       video.removeEventListener('loadeddata', loadedData);
       video.removeEventListener('seeked', seeked);
       video.removeEventListener('error', error);
-      video.pause();
-      video.removeAttribute('src');
+      discardSource(state);
       video.removeAttribute('data-active');
       video.removeAttribute('data-clip-index');
-      video.load();
     }
     showPoster();
   }

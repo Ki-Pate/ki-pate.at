@@ -329,3 +329,65 @@ test('propagates synchronous seek and media errors without throwing from event h
   mediaVideo.dispatchEvent(new Event('error'));
   assert.equal(mediaErrors.length, 1);
 });
+
+test('uses an asynchronous source loader and releases loaded sources on destroy', async () => {
+  const videos = [new FakeVideo(), new FakeVideo()];
+  const paint = deferredPaint();
+  const loaded = [];
+  const released = [];
+  const controller = createMediaController({
+    videos,
+    manifest: clipManifest(),
+    scheduleAfterPaint: paint.schedule,
+    async loadSource(clip, { signal }) {
+      loaded.push({ src: clip.src, signal });
+      return {
+        src: `blob:${clip.src.split('/').at(-1)}`,
+        release() { released.push(clip.src); },
+      };
+    },
+  });
+
+  controller.setProgress(0);
+  paint.flush();
+  await new Promise((resolve) => setImmediate(resolve));
+
+  assert.deepEqual(loaded.map(({ src }) => src), [
+    'https://example.test/clip-1.mp4',
+    'https://example.test/clip-2.mp4',
+  ]);
+  assert.equal(loaded.every(({ signal }) => signal instanceof AbortSignal), true);
+  assert.deepEqual(videos.map(({ src }) => src), ['blob:clip-1.mp4', 'blob:clip-2.mp4']);
+
+  controller.destroy();
+  assert.deepEqual(released.sort(), [
+    'https://example.test/clip-1.mp4',
+    'https://example.test/clip-2.mp4',
+  ]);
+});
+
+test('releases a source that finishes loading after the controller was destroyed', async () => {
+  const video = new FakeVideo();
+  const paint = deferredPaint();
+  const released = [];
+  let finishLoad;
+  const pending = new Promise((resolve) => { finishLoad = resolve; });
+  const controller = createMediaController({
+    videos: [video],
+    manifest: clipManifest(1),
+    scheduleAfterPaint: paint.schedule,
+    loadSource: () => pending,
+  });
+
+  controller.setProgress(0);
+  paint.flush();
+  controller.destroy();
+  finishLoad({
+    src: 'blob:late-clip',
+    release() { released.push('blob:late-clip'); },
+  });
+  await new Promise((resolve) => setImmediate(resolve));
+
+  assert.deepEqual(released, ['blob:late-clip']);
+  assert.equal(video.src, '');
+});

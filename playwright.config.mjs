@@ -1,6 +1,9 @@
 import { defineConfig, devices } from '@playwright/test';
 
 const baseURL = 'http://127.0.0.1:43110';
+const windowsLaunchOptions = process.platform === 'win32'
+  ? { launchOptions: { args: ['--disable-features=TcpPortRandomizationWin'] } }
+  : {};
 
 export default defineConfig({
   testDir: './tests',
@@ -21,7 +24,7 @@ export default defineConfig({
   projects: [
     {
       name: 'chromium',
-      use: { ...devices['Desktop Chrome'] },
+      use: { ...devices['Desktop Chrome'], ...windowsLaunchOptions },
     },
   ],
 });

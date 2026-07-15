@@ -145,9 +145,13 @@ async function handleRequest(root, request, response) {
 
   const contentType = MIME_TYPES.get(extname(file.path).toLowerCase())
     ?? 'application/octet-stream';
+  const version = new URL(request.url ?? '/', 'http://preview.local').searchParams.get('v');
+  const cacheControl = contentType === 'video/mp4' && /^[a-f0-9]{64}$/i.test(version ?? '')
+    ? 'public, max-age=31536000, immutable'
+    : 'no-store';
   const headers = {
     'Accept-Ranges': 'bytes',
-    'Cache-Control': 'no-store',
+    'Cache-Control': cacheControl,
     'Content-Type': contentType,
   };
   let statusCode = 200;
