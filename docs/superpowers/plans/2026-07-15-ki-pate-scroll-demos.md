@@ -145,7 +145,7 @@ git commit -m "test: define scroll demo contracts"
 
 - [ ] **Step 2: Run the content test green**
 
-Run: `node --test tests/content.unit.test.mjs`  
+Run: `node --test tests/content.unit.test.mjs`
 Expected: all content/calculator assertions pass.
 
 - [ ] **Step 3: Implement pure progress functions**
@@ -203,7 +203,7 @@ Cover status/MIME/sentinel, six canonical headings, midpoint scene IDs, no overf
 
 - [ ] **Step 2: Run the browser test and verify RED**
 
-Run: `npm run test:demos -- --grep "Arbeitsfluss"`  
+Run: `npm run test:demos -- --grep "Arbeitsfluss"`
 Expected: fail because preview tooling and route do not exist.
 
 - [ ] **Step 3: Implement deterministic page generation and preview preparation**
@@ -249,7 +249,7 @@ Loop over all three routes and assert identical serialized scene IDs/copy/calcul
 
 - [ ] **Step 2: Observe RED**
 
-Run: `npm run test:demos -- --grep "Varianten"`  
+Run: `npm run test:demos -- --grep "Varianten"`
 Expected: B/C routes or renderer sentinels missing.
 
 - [ ] **Step 3: Implement B with a vertical camera**
