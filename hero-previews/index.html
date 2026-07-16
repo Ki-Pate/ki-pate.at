@@ -42,17 +42,35 @@
       <div class="copy"><div><span class="num">C · CHAOS → SYSTEM</span><h2>Vom Alltag zum Ablauf</h2><p>Dokumente und Aufgaben werden zu einem klaren Prozess – der unmittelbar verständliche KMU-Use-Case.</p></div><a class="open" href="#c">Direktlink</a></div>
     </article>
     <article class="card" id="d">
-      <div class="media"><video src="media/hero-v1-desktop.mp4" poster="media/hero-v1-poster.jpg" autoplay muted loop playsinline controls preload="metadata"></video><div class="hero-overlay"><strong>KI, die Ihnen <span>Arbeit abnimmt.</span></strong></div></div>
-      <div class="copy"><div><span class="num">D · V1 HERO</span><h2>KI, die sichtbar mitarbeitet.</h2><p>Der neue Higgsfield-Clip mit Karl und den erscheinenden KI-Assistenten – als komprimierter, weich geloopter Hero für Desktop und Mobil.</p></div><a class="open" href="hero.html">Hero öffnen ↗</a></div>
+      <div class="media"><video class="chosen-hero" src="media/hero-v2-desktop.mp4" poster="media/hero-v2-poster.jpg" muted playsinline controls preload="metadata"></video><div class="hero-overlay"><strong>KI, die Ihnen <span>Arbeit abnimmt.</span></strong></div></div>
+      <div class="copy"><div><span class="num">D · V2 HERO</span><h2>KI, die sichtbar mitarbeitet.</h2><p>Der hochwertige Hero-Clip mit Karl – 3 Sekunden ruhiges Startbild, reduzierte Geschwindigkeit und eine stehenbleibende Schlussszene.</p></div><a class="open" href="hero.html">Hero öffnen ↗</a></div>
     </article>
   </main>
   <footer>KI-PATE.AT · NICHT INDEXIERTE AUSWAHLSEITE</footer>
   <script>
     const videos=[...document.querySelectorAll('video')];
+    const chosenHero=document.querySelector('.chosen-hero');
+    let chosenVisible=false;
+    let chosenHoldTimer;
+    if(chosenHero){chosenHero.defaultPlaybackRate=.72;chosenHero.playbackRate=.72}
     if('IntersectionObserver' in window){
-      const observer=new IntersectionObserver(entries=>entries.forEach(entry=>entry.isIntersecting?entry.target.play().catch(()=>{}):entry.target.pause()),{threshold:.35});
+      const observer=new IntersectionObserver(entries=>entries.forEach(entry=>{
+        if(entry.target===chosenHero){
+          chosenVisible=entry.isIntersecting;
+          if(!entry.isIntersecting){chosenHero.pause();return}
+          if(chosenHero.dataset.holdDone==='true'){
+            if(!chosenHero.ended) chosenHero.play().catch(()=>{});
+          }else if(!chosenHoldTimer){
+            chosenHoldTimer=setTimeout(()=>{
+              chosenHero.dataset.holdDone='true';
+              if(chosenVisible) chosenHero.play().catch(()=>{});
+            },3000);
+          }
+          return;
+        }
+        entry.isIntersecting?entry.target.play().catch(()=>{}):entry.target.pause();
+      }),{threshold:.35});
       videos.forEach(video=>observer.observe(video));
-    }
-  </script>
+    }  </script>
 </body>
 </html>

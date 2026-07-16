@@ -5,7 +5,7 @@
   <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
   <meta name="robots" content="noindex,nofollow">
   <meta name="theme-color" content="#10141b">
-  <title>KI-Pate · V1 Hero</title>
+  <title>KI-Pate · V2 Hero</title>
   <link rel="preload" href="/assets/fonts/space-grotesk-var.woff2" as="font" type="font/woff2" crossorigin>
   <style>
     @font-face{font-family:"Space Grotesk";src:url("/assets/fonts/space-grotesk-var.woff2") format("woff2");font-weight:300 700;font-display:swap}
@@ -17,7 +17,7 @@
     html,body{margin:0;min-height:100%;background:var(--bg);color:var(--ink)}
     body{font-family:"IBM Plex Sans",system-ui,sans-serif;-webkit-font-smoothing:antialiased}
     a{color:inherit}
-    .hero{position:relative;isolation:isolate;min-height:100svh;overflow:hidden;background:#080b0f url("media/hero-v1-poster.jpg") center/cover no-repeat}
+    .hero{position:relative;isolation:isolate;min-height:100svh;overflow:hidden;background:#080b0f url("media/hero-v2-poster.jpg") center/cover no-repeat}
     .hero-video{position:absolute;z-index:-3;inset:0;width:100%;height:100%;object-fit:cover;object-position:center;filter:saturate(.96)}
     .shade{position:absolute;z-index:-2;inset:0;background:linear-gradient(90deg,rgba(7,10,14,.97) 0%,rgba(7,10,14,.88) 27%,rgba(7,10,14,.63) 48%,rgba(7,10,14,.12) 72%),linear-gradient(0deg,rgba(7,10,14,.64),transparent 45%);pointer-events:none}
     .hero:after{content:"";position:absolute;z-index:-1;inset:0;background-image:linear-gradient(rgba(111,163,173,.07) 1px,transparent 1px),linear-gradient(90deg,rgba(111,163,173,.07) 1px,transparent 1px);background-size:72px 72px;mask-image:linear-gradient(90deg,#000,transparent 55%);pointer-events:none}
@@ -48,7 +48,7 @@
     .is-ready .eyebrow,.is-ready h1,.is-ready .lead,.is-ready .actions,.is-ready .proof{opacity:1;transform:none;transition:opacity .75s cubic-bezier(.2,.7,.2,1),transform .75s cubic-bezier(.2,.7,.2,1)}
     .is-ready h1{transition-delay:.08s}.is-ready .lead{transition-delay:.16s}.is-ready .actions{transition-delay:.24s}.is-ready .proof{transition-delay:.32s}
     @media(max-width:760px){
-      .hero{background-image:url("media/hero-v1-poster-mobile.jpg");background-position:center}
+      .hero{background-image:url("media/hero-v2-poster-mobile.jpg");background-position:center}
       .hero-video{object-position:center}
       .shade{background:linear-gradient(0deg,rgba(7,10,14,.98) 0%,rgba(7,10,14,.94) 33%,rgba(7,10,14,.55) 57%,rgba(7,10,14,.08) 78%),linear-gradient(180deg,rgba(7,10,14,.55),transparent 20%)}
       .hero:after{background-size:48px 48px;mask-image:linear-gradient(0deg,#000,transparent 64%)}
@@ -66,10 +66,10 @@
   </style>
 </head>
 <body>
-  <main class="hero" id="hero">
-    <video class="hero-video" id="hero-video" poster="media/hero-v1-poster.jpg" autoplay muted loop playsinline preload="metadata" aria-hidden="true">
-      <source src="media/hero-v1-mobile.mp4" type="video/mp4" media="(max-width:760px)">
-      <source src="media/hero-v1-desktop.mp4" type="video/mp4">
+  <main class="hero" id="hero" data-video-state="holding">
+    <video class="hero-video" id="hero-video" poster="media/hero-v2-poster.jpg" muted playsinline preload="metadata" aria-hidden="true">
+      <source src="media/hero-v2-mobile.mp4" type="video/mp4" media="(max-width:760px)">
+      <source src="media/hero-v2-desktop.mp4" type="video/mp4">
     </video>
     <div class="shade" aria-hidden="true"></div>
     <nav class="nav" aria-label="Vorschau-Navigation">
@@ -90,8 +90,8 @@
         </ul>
       </div>
     </div>
-    <div class="status" aria-hidden="true"><i></i><span>KI-Assistenten starten</span></div>
-    <button class="hero-video-toggle" type="button" aria-label="Hintergrundvideo pausieren">Video pausieren</button>
+    <div class="status" aria-hidden="true"><i></i><span>Standbild · Start in 3 s</span></div>
+    <button class="hero-video-toggle" type="button" aria-label="Hintergrundvideo sofort starten">Video starten</button>
   </main>
   <script>
     const root=document.documentElement;
@@ -99,24 +99,42 @@
     const video=document.querySelector('#hero-video');
     const status=document.querySelector('.status span');
     const videoToggle=document.querySelector('.hero-video-toggle');
+    const HOLD_MS=3000;
+    const PLAYBACK_RATE=.72;
+    let holdTimer;
+    let countdownTimer;
     requestAnimationFrame(()=>root.classList.add('is-ready'));
-    const updateStatus=()=>{
-      const online=video.currentTime>=4.1&&video.currentTime<=8.9;
-      hero.classList.toggle('assistants-online',online);
-      status.textContent=online?'KI-Assistenten im Einsatz':'KI-Assistenten starten';
+    if(matchMedia('(max-width:760px)').matches) video.poster='media/hero-v2-poster-mobile.jpg';
+    video.muted=true;
+    video.defaultPlaybackRate=PLAYBACK_RATE;
+    video.playbackRate=PLAYBACK_RATE;
+    const clearHold=()=>{clearTimeout(holdTimer);clearInterval(countdownTimer)};
+    const setState=state=>{
+      hero.dataset.videoState=state;
+      hero.classList.toggle('assistants-online',state==='playing');
+      if(state==='playing'){status.textContent='Film läuft · 0,72×';videoToggle.textContent='Video pausieren'}
+      if(state==='paused'){status.textContent='Video pausiert';videoToggle.textContent='Video fortsetzen'}
+      if(state==='ended'){status.textContent='Schlussszene';videoToggle.textContent='Nochmal ansehen'}
     };
-    video.addEventListener('timeupdate',updateStatus);
-    video.addEventListener('seeked',updateStatus);
-    const syncVideoToggle=()=>{
-      const paused=video.paused;
-      videoToggle.textContent=paused?'Video starten':'Video pausieren';
-      videoToggle.setAttribute('aria-label',paused?'Hintergrundvideo abspielen':'Hintergrundvideo pausieren');
+    const startVideo=()=>{
+      clearHold();
+      video.defaultPlaybackRate=PLAYBACK_RATE;
+      video.playbackRate=PLAYBACK_RATE;
+      const request=video.play();
+      if(request) request.catch(()=>setState('paused'));
     };
-    videoToggle.addEventListener('click',()=>video.paused?video.play().catch(syncVideoToggle):video.pause());
-    video.addEventListener('play',syncVideoToggle);
-    video.addEventListener('pause',syncVideoToggle);
-    syncVideoToggle();
-    video.play().catch(syncVideoToggle);
-  </script>
-</body>
+    video.addEventListener('loadedmetadata',()=>{video.defaultPlaybackRate=PLAYBACK_RATE;video.playbackRate=PLAYBACK_RATE});
+    video.addEventListener('play',()=>setState('playing'));
+    video.addEventListener('pause',()=>{if(hero.dataset.videoState!=='holding'&&hero.dataset.videoState!=='ended')setState('paused')});
+    video.addEventListener('ended',()=>{video.pause();setState('ended')});
+    videoToggle.addEventListener('click',()=>{
+      if(hero.dataset.videoState==='holding') startVideo();
+      else if(hero.dataset.videoState==='ended'){video.currentTime=0;startVideo()}
+      else if(video.paused) startVideo();
+      else video.pause();
+    });
+    const startedAt=performance.now();
+    countdownTimer=setInterval(()=>{const seconds=Math.max(1,Math.ceil((HOLD_MS-(performance.now()-startedAt))/1000));status.textContent=`Standbild · Start in ${seconds} s`},250);
+    holdTimer=setTimeout(startVideo,HOLD_MS);
+  </script></body>
 </html>

@@ -87,1039 +87,195 @@
 }
 </script>
 <style>
-/* ============ FONTS (self-hosted, DSGVO-sauber) ============ */
-@font-face{font-family:'Space Grotesk';src:url('/assets/fonts/space-grotesk-var.woff2') format('woff2');font-weight:300 700;font-display:swap}
-@font-face{font-family:'IBM Plex Sans';src:url('/assets/fonts/plex-sans-400.woff2') format('woff2');font-weight:400;font-display:swap}
-@font-face{font-family:'IBM Plex Sans';src:url('/assets/fonts/plex-sans-600.woff2') format('woff2');font-weight:600;font-display:swap}
-@font-face{font-family:'IBM Plex Mono';src:url('/assets/fonts/plex-mono-400.woff2') format('woff2');font-weight:400;font-display:swap}
-@font-face{font-family:'IBM Plex Mono';src:url('/assets/fonts/plex-mono-500.woff2') format('woff2');font-weight:500;font-display:swap}
-
-/* ============ SYSTEM ============ */
-:root{
-  --bg:#10141B; --panel:#151A23; --panel2:#12161E;
-  --ink:#EDEBE3; --muted:#9BA3AD; --faint:#6B7683;
-  --line:rgba(155,163,173,.16); --line-strong:rgba(155,163,173,.30);
-  --tech:#6FA3AD; --tech-dim:rgba(111,163,173,.35);
-  --acc:#2BC8B7; --acc-hi:#48E2D1; --acc-soft:rgba(43,200,183,.10);
-  --display:'Space Grotesk',system-ui,sans-serif;
-  --sans:'IBM Plex Sans',system-ui,-apple-system,'Segoe UI',sans-serif;
-  --mono:'IBM Plex Mono','Cascadia Mono',Consolas,monospace;
-  --maxw:1200px;
-}
-*{margin:0;padding:0;box-sizing:border-box}
-html{scroll-behavior:smooth}
-@media(prefers-reduced-motion:reduce){html{scroll-behavior:auto}}
-body{background:var(--bg);color:var(--ink);font-family:var(--sans);font-size:16.5px;line-height:1.7;-webkit-font-smoothing:antialiased;text-rendering:optimizeLegibility}
-::selection{background:var(--acc);color:#10141B}
-img,video{max-width:100%;height:auto;display:block}
-a{color:var(--ink);text-decoration:none}
-.wrap{max-width:var(--maxw);margin:0 auto;padding:0 28px}
-
-/* Typo */
-h1,h2{font-family:var(--display);font-weight:640;letter-spacing:-.028em;line-height:1.02}
-h1{font-size:clamp(2.9rem,7vw,5.2rem)}
-h2{font-size:clamp(2rem,4.2vw,3.1rem);margin-bottom:20px}
-h3{font-family:var(--display);font-weight:600;font-size:1.3rem;letter-spacing:-.01em;margin-bottom:10px}
-.lead{color:var(--muted);font-size:1.08rem;max-width:720px}
-.eyebrow{font-family:var(--mono);font-size:.72rem;font-weight:500;letter-spacing:.22em;text-transform:uppercase;color:var(--tech);display:flex;align-items:center;gap:14px;margin-bottom:26px}
-.eyebrow:before{content:"";width:34px;height:1px;background:var(--tech-dim)}
-.eyebrow .idx{color:var(--acc)}
-.mono{font-family:var(--mono)}
-
-/* Sections: Konstruktions-Raster */
-section{position:relative;padding:110px 0;scroll-margin-top:80px}
-section.ruled{border-top:1px solid var(--line)}
-section.ruled:before,section.ruled:after{content:"+";position:absolute;top:-11px;font-family:var(--mono);font-size:14px;color:var(--tech-dim);line-height:1}
-section.ruled:before{left:max(14px,calc((100% - var(--maxw))/2 - 7px))}
-section.ruled:after{right:max(14px,calc((100% - var(--maxw))/2 - 7px))}
-.panelbg{background:var(--panel2)}
-
-/* Header */
-header{position:sticky;top:0;z-index:60;background:rgba(16,20,27,.86);backdrop-filter:blur(12px);border-bottom:1px solid var(--line)}
-.nav{display:flex;align-items:center;justify-content:space-between;height:64px}
-.logo{font-family:var(--display);font-weight:650;font-size:1.05rem;letter-spacing:-.01em;display:flex;align-items:center;gap:12px}
-.logo em{font-style:normal;color:var(--acc)}
-.logo .mono{font-size:.62rem;letter-spacing:.18em;color:var(--faint);display:block;margin-top:-2px}
-.logo img{border-radius:0}
-.nav-links{display:flex;gap:30px;align-items:center}
-.nav-links a:not(.btn){font-family:var(--mono);font-size:.74rem;letter-spacing:.14em;text-transform:uppercase;color:var(--muted)}
-.nav-links a:not(.btn):hover{color:var(--ink)}
-
-/* Buttons */
-.btn{display:inline-flex;align-items:center;gap:10px;background:var(--acc);color:#06110F;font-family:var(--mono);font-size:.78rem;font-weight:500;letter-spacing:.12em;text-transform:uppercase;padding:16px 26px;border:1px solid var(--acc);border-radius:4px;cursor:pointer;transition:background .15s,border-color .15s}
-.btn:hover{background:var(--acc-hi);border-color:var(--acc-hi)}
-.btn:after{content:"→";font-family:var(--sans)}
-.btn.ghost{background:transparent;color:var(--ink);border-color:var(--line-strong)}
-.btn.ghost:hover{border-color:var(--ink);background:transparent}
-.btn.small{padding:10px 16px;font-size:.68rem}
-.btn.small:after{content:""}
-
-/* ============ HERO ============ */
-.hero{padding:96px 0 90px;position:relative;overflow:hidden}
-.hero:before{content:"";position:absolute;inset:0;background:
-  linear-gradient(rgba(111,163,173,.05) 1px,transparent 1px),
-  linear-gradient(90deg,rgba(111,163,173,.05) 1px,transparent 1px);
-  background-size:72px 72px;mask-image:radial-gradient(900px 600px at 20% 0%,#000 0%,transparent 70%)}
-.hero-grid{display:grid;grid-template-columns:1.15fr .85fr;gap:64px;align-items:start;position:relative}
-.hero .slug{font-family:var(--mono);font-size:.74rem;letter-spacing:.2em;text-transform:uppercase;color:var(--muted);display:flex;gap:12px;align-items:center;margin-bottom:30px}
-.hero .slug b{color:var(--acc);font-weight:500}
-.hero h1{margin-bottom:26px}
-.hero h1 .u{box-shadow:inset 0 -0.16em 0 var(--acc-soft), inset 0 -0.18em 0 rgba(43,200,183,.35)}
-.hero .sub{color:var(--muted);font-size:1.1rem;max-width:600px;margin-bottom:36px}
-.hero .sub b{color:var(--ink);font-weight:600}
-.hero-ctas{display:flex;gap:14px;flex-wrap:wrap;align-items:center;margin-bottom:14px}
-.hero .micro{font-family:var(--mono);font-size:.74rem;color:var(--faint);max-width:520px;line-height:1.8}
-
-/* Terminal — Signature */
-.term{margin-top:52px;background:#0C0F15;border:1px solid var(--line-strong);border-radius:8px;overflow:hidden;box-shadow:0 30px 70px rgba(0,0,0,.45);max-width:640px}
-.term-bar{display:flex;align-items:center;gap:8px;padding:11px 16px;border-bottom:1px solid var(--line);background:rgba(155,163,173,.05)}
-.term-bar i{width:10px;height:10px;border-radius:50%;background:var(--faint);opacity:.5}
-.term-bar i:first-child{background:var(--acc);opacity:.9}
-.term-bar span{font-family:var(--mono);font-size:.68rem;color:var(--faint);margin-left:10px;letter-spacing:.08em}
-.term-body{padding:18px 20px;font-family:var(--mono);font-size:.78rem;line-height:2.05;color:var(--muted);min-height:178px}
-.term-body .ln{display:block;white-space:pre-wrap}
-.term-body .p{color:var(--tech)}
-.term-body .ok{color:#8FBF7F}
-.term-body .hl{color:var(--ink)}
-.term-body .cur{display:inline-block;width:8px;height:15px;background:var(--acc);vertical-align:-2px;animation:blink 1s steps(1) infinite}
-@keyframes blink{50%{opacity:0}}
-@media(prefers-reduced-motion:reduce){.term-body .cur{animation:none}}
-
-/* Foto: technische Abbildung */
-.fig{position:relative;padding:14px}
-.fig .frame{position:absolute;inset:0;border:1px solid var(--tech-dim);pointer-events:none}
-.fig .frame:before,.fig .frame:after,.fig .tick:before,.fig .tick:after{content:"+";position:absolute;font-family:var(--mono);font-size:13px;color:var(--tech);line-height:1}
-.fig .frame:before{top:-7px;left:-6px}
-.fig .frame:after{top:-7px;right:-6px}
-.fig .tick:before{bottom:-7px;left:-6px}
-.fig .tick:after{bottom:-7px;right:-6px}
-.fig .tick{position:absolute;inset:0;pointer-events:none}
-.fig img{width:100%;aspect-ratio:1/1;object-fit:cover;border-radius:2px}
-.fig figcaption{font-family:var(--mono);font-size:.68rem;letter-spacing:.14em;color:var(--faint);padding:14px 2px 0;text-transform:uppercase;display:flex;justify-content:space-between;gap:10px}
-.fig figcaption b{color:var(--muted);font-weight:400}
-
-/* ============ DATENBLATT ============ */
-.sheet{border-top:1px solid var(--line);border-bottom:1px solid var(--line);background:var(--panel2)}
-.sheet-grid{display:grid;grid-template-columns:repeat(6,1fr)}
-.sheet-cell{padding:26px 20px;border-left:1px solid var(--line)}
-.sheet-cell:first-child{border-left:none}
-.sheet-cell b{font-family:var(--display);font-size:1.9rem;font-weight:640;color:var(--ink);display:block;letter-spacing:-.02em}
-.sheet-cell b i{font-style:normal;color:var(--acc)}
-.sheet-cell span{font-family:var(--mono);font-size:.64rem;letter-spacing:.12em;text-transform:uppercase;color:var(--faint);line-height:1.7;display:block;margin-top:6px}
-
-/* ============ ENGPASS ============ */
-.pain-list{display:grid;gap:1px;background:var(--line);border:1px solid var(--line);border-radius:6px;overflow:hidden;margin-top:40px;max-width:820px}
-.pain-list li{list-style:none;background:var(--panel);padding:22px 26px;color:var(--muted);display:grid;grid-template-columns:44px 1fr;gap:16px;align-items:baseline}
-.pain-list li b{color:var(--ink);display:block;margin-bottom:2px}
-.pain-list li .n{font-family:var(--mono);color:var(--acc);font-size:.8rem}
-
-/* ============ LEISTUNGEN ============ */
-.svc{display:grid;grid-template-columns:repeat(3,1fr);gap:1px;background:var(--line);border:1px solid var(--line);border-radius:6px;overflow:hidden;margin-top:44px}
-.svc-card{background:var(--panel);padding:34px 30px;position:relative;transition:background .2s}
-.svc-card:hover{background:#181E29}
-.svc-card .num{font-family:var(--mono);font-size:.72rem;color:var(--acc);letter-spacing:.16em;display:block;margin-bottom:18px}
-.svc-card p{color:var(--muted);font-size:.95rem}
-.svc-card ul{margin:18px 0 0;padding:0;list-style:none}
-.svc-card li{color:var(--muted);font-size:.9rem;padding:7px 0 7px 20px;position:relative;border-top:1px dashed var(--line)}
-.svc-card li:before{content:"—";position:absolute;left:0;color:var(--tech)}
-.banner{margin-top:26px;border:1px solid rgba(43,200,183,.4);background:linear-gradient(90deg,var(--acc-soft),transparent 60%);border-radius:6px;padding:30px 34px;display:flex;justify-content:space-between;align-items:center;gap:28px;flex-wrap:wrap}
-.banner p{color:var(--muted);max-width:640px;font-size:.97rem}
-
-/* ============ USE CASES ============ */
-.usecase{display:grid;grid-template-columns:1fr 1fr;gap:56px;align-items:center;padding:56px 0;border-top:1px dashed var(--line)}
-.usecase:first-of-type{border-top:none;padding-top:20px}
-.usecase h3{font-size:1.6rem}
-.usecase p{color:var(--muted)}
-.usecase .visual{border:1px solid var(--line);border-radius:8px;padding:12px;background:var(--panel2)}
-.usecase .visual img,.usecase .visual video{border-radius:4px}
-.usecase .visual figcaption{font-family:var(--mono);font-size:.68rem;letter-spacing:.1em;text-transform:uppercase;color:var(--faint);padding:12px 4px 2px;text-align:left}
-.usecase details{margin-top:18px;border:1px solid var(--line);border-radius:6px;padding:14px 18px;color:var(--muted);font-size:.94rem}
-.usecase summary{cursor:pointer;color:var(--ink);font-weight:600;font-family:var(--mono);font-size:.8rem;letter-spacing:.06em}
-.usecase .mini-cta{display:inline-block;margin-top:20px;font-family:var(--mono);font-size:.78rem;letter-spacing:.1em;text-transform:uppercase;color:var(--acc);border-bottom:1px solid rgba(43,200,183,.4);padding-bottom:3px}
-.usecase .mini-cta:hover{color:var(--acc-hi)}
-.scene-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin-top:8px}
-.scene-grid img{aspect-ratio:1/1;object-fit:cover}
-.flow{display:grid;gap:8px}
-.flow .step{display:flex;gap:14px;align-items:baseline;background:var(--panel);border:1px solid var(--line);border-radius:6px;padding:14px 18px;font-size:.92rem;color:var(--muted)}
-.flow .step b{font-family:var(--mono);color:var(--tech);white-space:nowrap;font-weight:500;font-size:.78rem;letter-spacing:.06em}
-
-/* ============ MARKETING ============ */
-.compare{display:grid;gap:10px;margin-top:42px;max-width:920px}
-.compare .row{display:grid;grid-template-columns:1fr 1fr;border:1px solid var(--line);border-radius:6px;overflow:hidden}
-.compare .cell{padding:20px 24px;font-size:.95rem;color:var(--muted)}
-.compare .cell b{display:block;color:var(--ink);margin-bottom:3px;font-family:var(--display);font-weight:600;letter-spacing:-.01em}
-.compare .lbl{font-family:var(--mono);display:inline-block;font-size:.62rem;letter-spacing:.16em;text-transform:uppercase;padding:2px 8px;border-radius:3px;margin-bottom:10px}
-.compare .old{background:var(--panel2)}
-.compare .old .lbl{background:rgba(155,163,173,.12);color:var(--muted)}
-.compare .old b{color:var(--muted);text-decoration:line-through;text-decoration-color:rgba(43,200,183,.6);text-decoration-thickness:2px}
-.compare .new{background:var(--panel);border-left:1px solid rgba(43,200,183,.35)}
-.compare .new .lbl{background:var(--acc-soft);color:var(--acc)}
-
-/* ============ ALLTAG: Bento ============ */
-.uc-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:10px;margin-top:44px}
-.uc{background:var(--panel);border:1px solid var(--line);border-radius:6px;padding:24px;transition:border-color .15s}
-.uc:hover{border-color:var(--tech-dim)}
-.uc:nth-child(1),.uc:nth-child(6){grid-column:span 2}
-.uc h4{font-family:var(--display);font-weight:600;font-size:1.02rem;margin-bottom:10px;letter-spacing:-.01em}
-.uc p{color:var(--muted);font-size:.88rem}
-.uc .sol{color:var(--ink)}
-.uc .sol:before{content:"→ ";color:var(--acc)}
-.calc{margin-top:28px;border:1px dashed rgba(43,200,183,.5);border-radius:6px;padding:20px 26px;color:var(--muted);font-size:.95rem;max-width:920px;font-family:var(--mono)}
-.calc b{color:var(--acc)}
-.fomo{color:var(--muted);font-family:var(--display);font-weight:600;font-size:clamp(1.15rem,2.2vw,1.5rem);letter-spacing:-.01em;max-width:820px;margin:44px 0 0;line-height:1.4}
-.fomo em{font-style:normal;color:var(--acc)}
-
-/* ============ BRANCHEN ============ */
-.branchen-list{display:grid;gap:10px;margin-top:44px}
-.branche{display:grid;grid-template-columns:230px 1fr 1fr;border:1px solid var(--line);border-radius:6px;overflow:hidden;background:var(--panel)}
-.branche .bname{padding:22px;font-family:var(--display);font-weight:600;font-size:1.06rem;letter-spacing:-.01em;border-right:1px solid var(--line);display:flex;align-items:flex-start;gap:10px}
-.branche .bname .mono{font-size:.66rem;color:var(--tech);margin-top:5px}
-.branche .cell{padding:20px 22px;font-size:.9rem;color:var(--muted)}
-.branche .cell .lbl{font-family:var(--mono);display:block;font-size:.62rem;letter-spacing:.16em;text-transform:uppercase;margin-bottom:8px}
-.branche .fear .lbl{color:var(--faint)}
-.branche .win{background:var(--panel2);border-left:1px solid rgba(43,200,183,.3)}
-.branche .win .lbl{color:var(--acc)}
-
-/* ============ LIVE-BEWEISE ============ */
-.proofcards{display:grid;grid-template-columns:1fr 1fr;gap:24px;margin-top:44px}
-.proofcard{border:1px solid var(--line);border-radius:8px;overflow:hidden;background:var(--panel)}
-.proofcard img{border-radius:0;border-bottom:1px solid var(--line)}
-.proofcard .inner{padding:30px}
-.proofcard ul{margin:16px 0 24px;padding:0;list-style:none}
-.proofcard li{color:var(--muted);font-size:.92rem;padding:7px 0 7px 20px;position:relative;border-top:1px dashed var(--line)}
-.proofcard li:first-child{border-top:none}
-.proofcard li:before{content:"—";position:absolute;left:0;color:var(--tech)}
-.proofcard .status{font-family:var(--mono);font-size:.64rem;letter-spacing:.16em;text-transform:uppercase;color:#8FBF7F;display:inline-flex;align-items:center;gap:8px;margin-bottom:12px}
-.proofcard .status:before{content:"";width:7px;height:7px;border-radius:50%;background:#8FBF7F;box-shadow:0 0 8px rgba(143,191,127,.8)}
-
-/* ============ ÜBER ============ */
-.about-grid{display:grid;grid-template-columns:.92fr 1.08fr;gap:64px;align-items:start}
-.quotebox{border-left:2px solid var(--acc);padding:6px 0 6px 22px;margin:26px 0;color:var(--muted);font-size:1rem}
-.timeline{list-style:none;margin-top:38px;position:relative;padding-left:30px}
-.timeline:before{content:"";position:absolute;left:8px;top:8px;bottom:8px;width:1px;background:var(--line-strong)}
-.timeline li{position:relative;padding-bottom:22px;color:var(--muted);font-size:.94rem}
-.timeline li:before{content:"";position:absolute;left:-26px;top:7px;width:9px;height:9px;border-radius:50%;background:var(--bg);border:2px solid var(--tech)}
-.timeline li:last-child:before{border-color:var(--acc);background:var(--acc)}
-.timeline b{color:var(--ink);display:block;font-weight:600}
-.timeline .year{font-family:var(--mono);color:var(--tech);font-size:.72rem;letter-spacing:.12em}
-.holly{margin-top:36px}
-.holly .cap{font-family:var(--mono);color:var(--faint);font-size:.72rem;margin-top:12px;letter-spacing:.06em;line-height:1.8}
-
-/* ============ KOMPETENZEN ============ */
-.skillgrid{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:44px}
-.skill{background:var(--panel);border:1px solid var(--line);border-radius:6px}
-.skill summary{cursor:pointer;padding:22px 26px;list-style:none;display:flex;justify-content:space-between;align-items:center;gap:14px}
-.skill summary::-webkit-details-marker{display:none}
-.skill summary:after{content:"+";font-family:var(--mono);color:var(--acc);font-size:1.3rem;transition:transform .2s}
-.skill[open] summary:after{transform:rotate(45deg)}
-.skill summary .t{font-family:var(--display);font-weight:600;font-size:1.04rem;letter-spacing:-.01em}
-.skill summary .benefit{display:block;color:var(--muted);font-weight:400;font-family:var(--sans);font-size:.86rem;margin-top:4px}
-.skill .body{padding:0 26px 24px;color:var(--muted);font-size:.92rem}
-.skill .tags{display:flex;flex-wrap:wrap;gap:7px;margin-top:8px}
-.skill .tags span{font-family:var(--mono);font-size:.7rem;border:1px solid var(--line);border-radius:3px;padding:4px 9px;color:var(--muted)}
-.skill .proof{margin-top:14px;font-family:var(--mono);font-size:.7rem;color:var(--tech);letter-spacing:.04em;line-height:1.8}
-.skill .proof:before{content:"BELEG // ";color:var(--acc)}
-
-/* ============ ABLAUF ============ */
-.steps{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin-top:44px}
-.step-card{background:var(--panel);border:1px solid var(--line);border-radius:6px;padding:30px;position:relative}
-.step-card:after{content:"";position:absolute;right:-10px;top:50%;width:10px;height:1px;background:var(--line-strong)}
-.step-card:last-child:after{display:none}
-.step-card .n{font-family:var(--mono);color:var(--acc);font-size:.78rem;letter-spacing:.16em;display:block;margin-bottom:16px}
-.step-card p{color:var(--muted);font-size:.93rem}
-
-/* ============ FAQ ============ */
-.faq{max-width:860px}
-.faq details{border-bottom:1px solid var(--line)}
-.faq summary{cursor:pointer;padding:20px 0;font-family:var(--display);font-weight:600;font-size:1.05rem;letter-spacing:-.01em;list-style:none;display:flex;justify-content:space-between;gap:14px}
-.faq summary::-webkit-details-marker{display:none}
-.faq summary:after{content:"+";font-family:var(--mono);color:var(--acc);font-weight:400}
-.faq details[open] summary:after{content:"–"}
-.faq .a{color:var(--muted);padding:0 0 22px;max-width:760px}
-
-/* ============ KONTAKT ============ */
-.contact{background:var(--panel2)}
-.contact-box{display:grid;grid-template-columns:1fr 1fr;gap:56px;align-items:start}
-
-/* ============ FORMULAR ============ */
-.cform{display:grid;gap:12px;background:var(--panel);border:1px solid var(--line);border-radius:8px;padding:28px}
-.cform .row2{display:grid;grid-template-columns:1fr 1fr;gap:12px}
-.cform label{font-family:var(--mono);font-size:.64rem;letter-spacing:.16em;text-transform:uppercase;color:var(--tech);display:block;margin-bottom:6px}
-.cform input,.cform textarea{width:100%;background:var(--bg);border:1px solid var(--line-strong);border-radius:5px;padding:12px 14px;color:var(--ink);font-family:var(--sans);font-size:.96rem}
-.cform input:focus,.cform textarea:focus{outline:none;border-color:var(--acc)}
-.cform textarea{min-height:120px;resize:vertical}
-.cform .hp{position:absolute;left:-9999px;opacity:0;height:0;overflow:hidden}
-.cform .btn{justify-content:center;width:100%}
-.cform .note{font-size:.78rem;color:var(--faint);line-height:1.6}
-.cform .note a{color:var(--tech)}
-.alt-ways{display:flex;gap:20px;flex-wrap:wrap;margin-top:16px;font-size:.9rem}
-.alt-ways a{color:var(--muted)}
-.alt-ways a b{color:var(--acc);font-family:var(--mono);font-size:.66rem;letter-spacing:.14em;margin-right:6px}
-@media(max-width:600px){.cform .row2{grid-template-columns:1fr}}
-
-/* ============ FOOTER ============ */
-footer{border-top:1px solid var(--line);padding:0}
-.foot-brand{padding:60px 0 30px;border-bottom:1px solid var(--line);display:flex;align-items:center;justify-content:space-between;gap:30px;flex-wrap:wrap}
-.foot-brand .big{font-family:var(--display);font-weight:640;font-size:clamp(2rem,6vw,4rem);letter-spacing:-.03em;line-height:1;color:var(--ink)}
-.foot-brand .big em{font-style:normal;color:var(--acc)}
-.foot-brand img{border-radius:8px}
-.foot-grid{display:flex;justify-content:space-between;gap:24px;flex-wrap:wrap;padding:30px 0 44px;color:var(--muted);font-size:.88rem}
-footer a{color:var(--muted)}
-footer a:hover{color:var(--ink)}
-.foot-meta{font-family:var(--mono);font-size:.68rem;letter-spacing:.1em;color:var(--faint);line-height:2}
-.foot-meta b{color:var(--tech);font-weight:400}
-
-/* ============ KAPITEL-SYSTEM (Scrollytelling) ============ */
-#progress{position:fixed;top:0;left:0;height:3px;background:var(--acc);width:0;z-index:99;transition:width .1s linear;box-shadow:0 0 12px rgba(43,200,183,.7)}
-.chap{position:relative;min-height:86vh;display:flex;align-items:center;overflow:hidden;border-top:1px solid var(--line);border-bottom:1px solid var(--line);background:#0A0D12}
-.chap .bg{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;opacity:.55;transform:scale(1.08);transition:transform 1.4s ease,opacity 1.4s ease}
-.chap.in .bg{transform:scale(1);opacity:.62}
-.chap:after{content:"";position:absolute;inset:0;background:linear-gradient(180deg,rgba(16,20,27,.88) 0%,rgba(16,20,27,.25) 40%,rgba(16,20,27,.92) 100%)}
-.chap .inner{position:relative;z-index:2;max-width:var(--maxw);margin:0 auto;padding:80px 28px;width:100%}
-.chap .knum{font-family:var(--mono);font-size:.78rem;letter-spacing:.3em;color:var(--acc);display:block;margin-bottom:18px}
-.chap h2{font-size:clamp(2.4rem,6vw,4.4rem);margin-bottom:18px;text-shadow:0 4px 40px rgba(0,0,0,.8)}
-.chap p{color:var(--ink);font-size:1.15rem;max-width:640px;text-shadow:0 2px 20px rgba(0,0,0,.8)}
-.chap .hint{font-family:var(--mono);font-size:.68rem;letter-spacing:.2em;color:var(--muted);margin-top:34px;display:flex;align-items:center;gap:10px}
-.chap .hint:after{content:"↓";color:var(--acc);animation:bob 1.6s ease-in-out infinite}
-@keyframes bob{50%{transform:translateY(5px)}}
-@media(prefers-reduced-motion:reduce){.chap .hint:after{animation:none}.chap .bg{transition:none;transform:none}}
-#chappill{position:fixed;right:18px;bottom:18px;z-index:60;font-family:var(--mono);font-size:.66rem;letter-spacing:.14em;color:var(--muted);background:rgba(16,20,27,.85);border:1px solid var(--line);border-radius:999px;padding:8px 14px;backdrop-filter:blur(8px);pointer-events:none;opacity:0;transition:opacity .3s}
-#chappill.show{opacity:1}
-#chappill b{color:var(--acc);font-weight:500}
-.hero .scenebg{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;opacity:.24;z-index:0}
-.hero .wrap{position:relative;z-index:2}
-
-/* Reveal */
-.reveal{opacity:0;transform:translateY(18px);transition:opacity .55s ease,transform .55s ease}
-.reveal.in{opacity:1;transform:none}
-@media(prefers-reduced-motion:reduce){.reveal{opacity:1;transform:none;transition:none}}
-
-/* ============ RESPONSIVE ============ */
-@media(max-width:1020px){
-  .hero-grid,.about-grid,.contact-box,.proofcards{grid-template-columns:1fr;gap:44px}
-  .svc,.steps{grid-template-columns:1fr}
-  .skillgrid{grid-template-columns:1fr}
-  .sheet-grid{grid-template-columns:repeat(3,1fr)}
-  .sheet-cell{border-top:1px solid var(--line)}
-  .usecase{grid-template-columns:1fr;gap:30px}
-  .usecase .visual{order:2}
-  .uc-grid{grid-template-columns:1fr 1fr}
-  .branche{grid-template-columns:1fr}
-  .branche .bname{border-right:none;border-bottom:1px solid var(--line)}
-  .branche .win{border-left:none;border-top:1px solid rgba(43,200,183,.3)}
-  .nav-links a:not(.btn){display:none}
-  section{padding:76px 0}
-}
-@media(max-width:600px){
-  .uc-grid{grid-template-columns:1fr}
-  .uc:nth-child(1),.uc:nth-child(6){grid-column:span 1}
-  .sheet-grid{grid-template-columns:repeat(2,1fr)}
-  .compare .row{grid-template-columns:1fr}
-  .compare .new{border-left:none;border-top:1px solid rgba(43,200,183,.35)}
-}
-
-/* ============ CINEMATIC V5 ============ */
-:root{--radius:18px;--radius-sm:10px;--warm:rgba(174,126,76,.16);--glass:rgba(18,22,30,.78)}
-body{background:radial-gradient(1000px 700px at 90% 8%,rgba(174,126,76,.08),transparent 62%),radial-gradient(900px 700px at 5% 42%,rgba(43,200,183,.055),transparent 64%),var(--bg);overflow-x:hidden}
-main{overflow:clip}
-header{height:72px;background:rgba(9,12,17,.78);border-color:rgba(237,235,227,.12);backdrop-filter:blur(18px) saturate(120%)}
-.nav{height:72px}.nav-links{gap:24px}.logo{font-size:1rem}.logo .mono{color:#87919d}
-section{padding:clamp(82px,9vw,128px) 0}h2{font-size:clamp(2.5rem,5vw,4.6rem);line-height:.95;letter-spacing:-.05em}.lead{font-size:clamp(1rem,1.45vw,1.16rem);line-height:1.75}.eyebrow{color:var(--acc);margin-bottom:22px}
-.panelbg{background:linear-gradient(135deg,rgba(21,26,35,.92),rgba(12,16,22,.96))}section.ruled{border-color:rgba(237,235,227,.1)}section.ruled:before,section.ruled:after{color:rgba(43,200,183,.48)}
-.hero{min-height:calc(100svh - 72px);padding:0;display:flex;align-items:stretch;background:#080b0f url('/hero-previews/media/hero-v1-poster.jpg') center/cover no-repeat}
-.hero:before{content:"";position:absolute;z-index:1;inset:0;background:linear-gradient(90deg,rgba(7,10,14,.98) 0%,rgba(7,10,14,.9) 28%,rgba(7,10,14,.6) 49%,rgba(7,10,14,.1) 75%),linear-gradient(0deg,rgba(7,10,14,.7),transparent 48%);mask-image:none}
-.hero:after{content:"";position:absolute;z-index:1;inset:0;background-image:linear-gradient(rgba(111,163,173,.06) 1px,transparent 1px),linear-gradient(90deg,rgba(111,163,173,.06) 1px,transparent 1px);background-size:72px 72px;mask-image:linear-gradient(90deg,#000,transparent 58%);pointer-events:none}
-.hero-video{position:absolute;z-index:0;inset:0;width:100%;max-width:none;height:100%;object-fit:cover;object-position:center;filter:saturate(.96)}.hero-shade{position:absolute;z-index:1;inset:0;pointer-events:none}
-.hero .wrap{position:relative;z-index:2;width:100%;min-height:calc(100svh - 72px);display:flex;align-items:center;padding-top:86px;padding-bottom:64px}.hero-grid{display:flex}.hero-copy{width:min(880px,61vw)}
-.hero .slug{margin-bottom:24px;color:#a4adb6;font-size:.68rem}.hero .slug b{color:var(--acc)}.hero h1{max-width:900px;margin:0;font-size:clamp(4rem,6.7vw,7.25rem);font-weight:650;line-height:.88;letter-spacing:-.065em}.hero h1 .accent{color:var(--acc)}
-.hero .sub{max-width:660px;margin:30px 0 0;color:#c7cdcf;font-size:clamp(1rem,1.35vw,1.22rem);line-height:1.6;text-wrap:balance}.hero .sub b{color:var(--ink)}.hero-ctas{margin:30px 0 0}.hero-proof{display:flex;flex-wrap:wrap;gap:8px 22px;margin:18px 0 0;padding:0;list-style:none;color:var(--muted);font-family:var(--mono);font-size:.65rem;letter-spacing:.08em;text-transform:uppercase}.hero-proof li{display:flex;align-items:center;gap:8px}.hero-proof li:before{content:"";width:5px;height:5px;border-radius:50%;background:var(--acc)}
-.hero-status{position:absolute;z-index:3;right:clamp(24px,4vw,64px);bottom:28px;display:flex;align-items:center;gap:10px;padding:10px 14px;border:1px solid rgba(237,235,227,.18);border-radius:999px;background:rgba(10,13,18,.58);backdrop-filter:blur(10px);color:var(--muted);font-family:var(--mono);font-size:.58rem;letter-spacing:.11em;text-transform:uppercase;transition:.35s}.hero-status i{width:7px;height:7px;border-radius:50%;background:#6b7683;transition:.35s}.hero.assistants-online .hero-status{border-color:rgba(43,200,183,.5);color:var(--ink)}.hero.assistants-online .hero-status i{background:var(--acc);box-shadow:0 0 12px rgba(43,200,183,.9)}
-.hero-video-toggle{position:absolute;z-index:4;top:22px;right:clamp(24px,4vw,64px);min-height:40px;padding:0 14px;border:1px solid rgba(237,235,227,.26);border-radius:999px;background:rgba(10,13,18,.6);backdrop-filter:blur(10px);color:var(--ink);font-family:var(--mono);font-size:.59rem;letter-spacing:.1em;text-transform:uppercase;cursor:pointer}.hero-video-toggle:hover{border-color:var(--acc);color:var(--acc)}.hero-video-toggle:focus-visible{outline:2px solid var(--acc-hi);outline-offset:4px}
-.sheet{padding:16px 0;background:rgba(9,12,17,.88);border-color:rgba(237,235,227,.1)}.sheet-grid{gap:1px;border:1px solid rgba(237,235,227,.1);border-radius:var(--radius-sm);overflow:hidden;background:rgba(237,235,227,.1)}.sheet-cell{min-height:132px;padding:24px;background:rgba(17,22,30,.98);border:0;display:flex;flex-direction:column;justify-content:center}.sheet-cell b{font-size:2.15rem}.sheet-cell span{color:#87919d}
-.pain-list{max-width:980px;gap:12px;background:transparent;border:0;overflow:visible}.pain-list li{border:1px solid rgba(237,235,227,.12);border-radius:var(--radius-sm);background:linear-gradient(110deg,rgba(21,26,35,.94),rgba(14,18,25,.92));padding:27px 30px;transition:transform .25s,border-color .25s}.pain-list li .n{font-size:.72rem}
-.svc{gap:14px;background:transparent;border:0;overflow:visible}.svc-card{transition:transform .25s,border-color .25s,background .25s;border:1px solid rgba(237,235,227,.12);border-radius:var(--radius);background:linear-gradient(155deg,rgba(26,32,42,.96),rgba(14,18,25,.96));padding:38px 32px;overflow:hidden}.svc-card:after{content:"";position:absolute;inset:auto -30% -55% 20%;height:180px;background:radial-gradient(circle,rgba(43,200,183,.13),transparent 68%);pointer-events:none}.svc-card h3{font-size:1.35rem}.banner{border-radius:var(--radius);padding:34px 38px;background:linear-gradient(110deg,rgba(43,200,183,.14),rgba(18,23,31,.92) 62%)}
-.usecase{gap:clamp(40px,7vw,90px);padding:clamp(58px,8vw,96px) 0}.usecase h3{font-size:clamp(1.8rem,3vw,2.5rem)}.usecase .visual{padding:10px;border-color:rgba(237,235,227,.12);border-radius:var(--radius);background:rgba(9,12,17,.8);box-shadow:0 28px 70px rgba(0,0,0,.32)}.usecase .visual img,.usecase .visual video{border-radius:12px}.usecase details{border-radius:var(--radius-sm);background:rgba(21,26,35,.66)}
-.compare{gap:14px}.compare .row{border-radius:var(--radius-sm);border-color:rgba(237,235,227,.12)}.compare .cell{padding:24px 26px}.uc-grid{gap:14px}.uc{min-height:210px;padding:28px;border-radius:var(--radius);border-color:rgba(237,235,227,.12);background:linear-gradient(145deg,rgba(24,30,40,.94),rgba(13,17,24,.95));transition:transform .25s,border-color .25s}.uc h4{font-size:1.1rem}.calc{border-style:solid;border-color:rgba(43,200,183,.38);border-radius:var(--radius-sm);background:rgba(43,200,183,.06);padding:24px 28px}
-.branchen-list{gap:14px}.branche{border-radius:var(--radius);border-color:rgba(237,235,227,.12);background:rgba(19,24,33,.94);box-shadow:0 20px 50px rgba(0,0,0,.14)}.branche .bname{padding:27px}.branche .cell{padding:25px}.branche .win{background:rgba(43,200,183,.045)}
-.proofcards{gap:18px}.proofcard{transition:border-color .25s,transform .25s;border-radius:var(--radius);border-color:rgba(237,235,227,.12);background:linear-gradient(150deg,rgba(24,30,40,.96),rgba(12,16,22,.96));box-shadow:0 28px 70px rgba(0,0,0,.22)}.proofcard .inner{padding:34px}.proofcard img{aspect-ratio:16/9;object-fit:cover}
-.about-grid{gap:clamp(44px,7vw,88px)}.quotebox{border-left-color:var(--acc);font-size:1.08rem}.timeline li{padding-bottom:28px}.holly img{border-radius:var(--radius);filter:saturate(.9)}
-.skillgrid{gap:14px}.skill{border-radius:var(--radius-sm);border-color:rgba(237,235,227,.12);background:rgba(20,25,34,.88)}.skill summary{padding:25px 28px}.skill[open]{border-color:rgba(43,200,183,.34)}.steps{gap:14px}.step-card{min-height:220px;padding:34px;border-radius:var(--radius);border-color:rgba(237,235,227,.12);background:linear-gradient(145deg,rgba(24,30,40,.94),rgba(13,17,24,.94))}.step-card:after{display:none}
-.faq details{border-color:rgba(237,235,227,.12)}.faq summary{padding:25px 0;font-size:1.12rem}.contact{background:radial-gradient(800px 500px at 15% 40%,rgba(43,200,183,.12),transparent 70%),linear-gradient(145deg,#111720,#0b0f15)}.contact-box{gap:clamp(44px,7vw,90px)}.cform{padding:34px;border-radius:var(--radius);border-color:rgba(237,235,227,.14);background:rgba(11,15,21,.72);box-shadow:0 34px 90px rgba(0,0,0,.3)}.cform input,.cform textarea{border-radius:8px;background:rgba(7,10,14,.88)}
-.chap{padding:0;min-height:82svh;border:0}.chap .bg{opacity:.5;filter:saturate(.72) contrast(1.05)}.chap.in .bg{opacity:.58}.chap:after{background:linear-gradient(90deg,rgba(7,10,14,.95),rgba(7,10,14,.4) 54%,rgba(7,10,14,.72)),linear-gradient(0deg,rgba(7,10,14,.82),transparent 55%)}.chap .inner{padding:clamp(90px,12vw,150px) max(28px,calc((100% - var(--maxw))/2 + 28px))}.chap h2{max-width:850px;font-size:clamp(3.8rem,8vw,7.6rem);letter-spacing:-.065em}.chap p{font-size:clamp(1.05rem,2vw,1.35rem);line-height:1.6}.chap .knum{color:var(--acc)}
-footer{background:#090c11}.foot-brand{padding-top:78px}.foot-brand .big{font-size:clamp(2.8rem,7vw,5.6rem)}
-.reveal{transform:translateY(24px);transition:opacity .7s cubic-bezier(.2,.7,.2,1),transform .7s cubic-bezier(.2,.7,.2,1)}
-@media(hover:hover){.pain-list li:hover,.uc:hover{transform:translateY(-4px);border-color:rgba(43,200,183,.38)}.svc-card:hover{transform:translateY(-5px);border-color:rgba(43,200,183,.32)}.proofcard:hover{border-color:rgba(43,200,183,.3)}}
-@media(max-width:1020px){.hero-copy{width:min(760px,72vw)}.sheet-grid{grid-template-columns:repeat(3,1fr)}.svc-card{min-height:auto}}
-@media(max-width:760px){header,.nav{height:64px}.nav{gap:10px}.logo{gap:8px;font-size:.78rem;white-space:nowrap}.logo img{width:26px;height:auto}.logo .mono{display:none}.nav .btn.small{padding:9px 10px;font-size:.56rem;letter-spacing:.06em;white-space:nowrap}.hero{min-height:calc(100svh - 64px);background-image:url('/hero-previews/media/hero-v1-poster-mobile.jpg');background-position:center}.hero:before{background:linear-gradient(0deg,rgba(7,10,14,.99) 0%,rgba(7,10,14,.93) 34%,rgba(7,10,14,.5) 59%,rgba(7,10,14,.08) 78%),linear-gradient(180deg,rgba(7,10,14,.42),transparent 22%)}.hero:after{background-size:48px 48px;mask-image:linear-gradient(0deg,#000,transparent 66%)}.hero .wrap{min-height:calc(100svh - 64px);align-items:flex-end;padding-top:100px;padding-bottom:max(28px,env(safe-area-inset-bottom))}.hero-copy{width:100%}.hero .slug{margin-bottom:14px;font-size:.56rem;letter-spacing:.13em}.hero h1{font-size:clamp(3rem,14vw,4.5rem);line-height:.88}.hero .sub{margin-top:18px;font-size:.93rem;line-height:1.48}.hero-ctas{display:grid;grid-template-columns:1fr;margin-top:22px}.hero-ctas .btn{width:100%;justify-content:center}.hero-proof{gap:6px 14px;font-size:.52rem}.hero-proof li:last-child{display:none}.hero-status{display:none}.hero-video-toggle{top:14px;right:16px;min-height:36px;font-size:.52rem}.sheet-grid{grid-template-columns:repeat(2,1fr)}.sheet-cell{min-height:118px;padding:20px 16px}.sheet-cell b{font-size:1.8rem}.sheet-cell span{font-size:.56rem}.pain-list li{grid-template-columns:32px 1fr;padding:22px 20px}.svc-card,.proofcard .inner,.step-card{padding:28px 24px}.chap{min-height:68svh}.chap .inner{padding:90px 20px}.chap h2{font-size:clamp(3.3rem,18vw,5.4rem)}.chap p{font-size:1rem}.contact-box{gap:36px}.cform{padding:24px 18px}}
-@media(max-height:710px) and (max-width:760px){.hero h1{font-size:clamp(2.7rem,12vw,3.65rem)}.hero .sub{font-size:.84rem}.hero .slug{margin-bottom:9px}.hero-ctas{margin-top:15px}.hero-proof{margin-top:10px}}
-@media(prefers-reduced-motion:reduce){.hero-video{display:block}.hero-video-toggle{display:block}}
+@font-face{font-family:"Space Grotesk";src:url("/assets/fonts/space-grotesk-var.woff2") format("woff2");font-weight:300 700;font-display:swap}
+@font-face{font-family:"IBM Plex Sans";src:url("/assets/fonts/plex-sans-400.woff2") format("woff2");font-weight:400;font-display:swap}
+@font-face{font-family:"IBM Plex Sans";src:url("/assets/fonts/plex-sans-600.woff2") format("woff2");font-weight:600;font-display:swap}
+@font-face{font-family:"IBM Plex Mono";src:url("/assets/fonts/plex-mono-400.woff2") format("woff2");font-weight:400;font-display:swap}
+@font-face{font-family:"IBM Plex Mono";src:url("/assets/fonts/plex-mono-500.woff2") format("woff2");font-weight:500;font-display:swap}
+:root{--bg:#0c1016;--panel:#121821;--panel2:#171e28;--ink:#edebe3;--muted:#9ba3ad;--faint:#6f7984;--accent:#2bc8b7;--accent-hi:#48e2d1;--line:rgba(237,235,227,.13);--line2:rgba(237,235,227,.24);--display:"Space Grotesk",sans-serif;--sans:"IBM Plex Sans",sans-serif;--mono:"IBM Plex Mono",monospace;--max:1240px;--radius:18px}
+*{box-sizing:border-box;margin:0;padding:0}html{scroll-behavior:smooth;background:var(--bg)}body{min-width:320px;background:radial-gradient(900px 700px at 95% 4%,rgba(164,112,63,.13),transparent 66%),radial-gradient(900px 700px at 0 38%,rgba(43,200,183,.045),transparent 67%),var(--bg);color:var(--ink);font:16px/1.65 var(--sans);-webkit-font-smoothing:antialiased;overflow-x:hidden}img,video{display:block;max-width:100%;height:auto}a{color:inherit;text-decoration:none}button,input,textarea{font:inherit}.container{width:min(var(--max),calc(100% - 48px));margin-inline:auto}::selection{background:var(--accent);color:#06110f}
+.site-header{position:sticky;z-index:50;top:0;height:72px;border-bottom:1px solid var(--line);background:rgba(8,11,16,.82);backdrop-filter:blur(18px) saturate(120%)}.nav{height:72px;display:flex;align-items:center;justify-content:space-between;gap:24px}.brand{display:flex;align-items:center;gap:11px;font:650 15px/1.1 var(--display);white-space:nowrap}.brand img{width:30px;height:24px}.brand small{display:block;margin-top:4px;color:var(--muted);font:400 9px/1 var(--mono);letter-spacing:.13em;text-transform:uppercase}.nav-links{display:flex;align-items:center;gap:26px}.nav-links>a:not(.button){color:var(--muted);font:500 10px var(--mono);letter-spacing:.12em;text-transform:uppercase}.nav-links>a:hover{color:var(--ink)}
+.button{display:inline-flex;min-height:48px;align-items:center;justify-content:center;gap:10px;padding:0 21px;border:1px solid var(--accent);border-radius:5px;background:var(--accent);color:#06110f;font:500 10px var(--mono);letter-spacing:.1em;text-transform:uppercase;cursor:pointer;transition:transform .2s,background .2s,border-color .2s}.button:after{content:"→"}.button:hover{transform:translateY(-2px);background:var(--accent-hi);border-color:var(--accent-hi)}.button.ghost{border-color:var(--line2);background:rgba(8,11,16,.32);color:var(--ink)}.button.ghost:hover{border-color:var(--ink);background:rgba(8,11,16,.6)}.button.small{min-height:38px;padding-inline:14px;font-size:9px}.button:focus-visible,.video-toggle:focus-visible,a:focus-visible,summary:focus-visible,input:focus-visible,textarea:focus-visible{outline:2px solid var(--accent-hi);outline-offset:4px}
+.hero{position:relative;isolation:isolate;min-height:calc(100svh - 72px);overflow:hidden;background:#090c11 url("/hero-previews/media/hero-v2-poster.jpg") center/cover no-repeat}.hero-video{position:absolute;z-index:-3;inset:0;width:100%;height:100%;max-width:none;object-fit:cover;object-position:center}.hero-shade{position:absolute;z-index:-2;inset:0;background:linear-gradient(90deg,rgba(6,9,13,.98),rgba(6,9,13,.91) 27%,rgba(6,9,13,.62) 49%,rgba(6,9,13,.1) 74%),linear-gradient(0deg,rgba(6,9,13,.74),transparent 48%)}.hero-grid{min-height:calc(100svh - 72px);display:flex;align-items:center;padding-block:88px 58px}.hero-copy{width:min(880px,62vw)}.eyebrow{display:flex;align-items:center;gap:12px;color:var(--accent);font:500 10px var(--mono);letter-spacing:.17em;text-transform:uppercase}.eyebrow:before{content:"";width:34px;height:1px;background:var(--accent)}.hero h1{max-width:900px;margin-top:24px;font:650 clamp(64px,6.8vw,116px)/.88 var(--display);letter-spacing:-.067em}.hero h1 span{color:var(--accent)}.hero-lead{max-width:650px;margin-top:28px;color:#c9ced0;font-size:clamp(16px,1.35vw,20px);line-height:1.55;text-wrap:balance}.hero-lead strong{color:var(--ink);font-weight:600}.hero-actions{display:flex;flex-wrap:wrap;gap:12px;margin-top:28px}.hero-proof{display:flex;flex-wrap:wrap;gap:8px 20px;margin-top:18px;color:var(--muted);font:500 9px var(--mono);letter-spacing:.08em;text-transform:uppercase;list-style:none}.hero-proof li{display:flex;align-items:center;gap:8px}.hero-proof li:before{content:"";width:5px;height:5px;border-radius:50%;background:var(--accent)}.hero-status{position:absolute;right:clamp(24px,4vw,64px);bottom:28px;display:flex;align-items:center;gap:9px;padding:10px 13px;border:1px solid var(--line);border-radius:999px;background:rgba(8,11,16,.62);backdrop-filter:blur(10px);color:var(--muted);font:500 9px var(--mono);letter-spacing:.1em;text-transform:uppercase}.hero-status i{width:7px;height:7px;border-radius:50%;background:var(--faint)}.hero[data-video-state="playing"] .hero-status{border-color:rgba(43,200,183,.48);color:var(--ink)}.hero[data-video-state="playing"] .hero-status i{background:var(--accent);box-shadow:0 0 12px rgba(43,200,183,.9)}.video-toggle{position:absolute;z-index:4;top:22px;right:clamp(24px,4vw,64px);min-height:40px;padding:0 14px;border:1px solid var(--line2);border-radius:999px;background:rgba(8,11,16,.62);backdrop-filter:blur(10px);color:var(--ink);font:500 9px var(--mono);letter-spacing:.09em;text-transform:uppercase;cursor:pointer}.video-toggle:hover{border-color:var(--accent);color:var(--accent)}
+.factbar{border-block:1px solid var(--line);background:rgba(8,11,16,.88)}.facts{display:grid;grid-template-columns:repeat(4,1fr)}.fact{padding:24px;border-left:1px solid var(--line)}.fact:first-child{border-left:0}.fact b{display:block;font:650 27px var(--display);letter-spacing:-.04em}.fact b span{color:var(--accent)}.fact small{display:block;margin-top:5px;color:var(--muted);font:400 9px/1.5 var(--mono);letter-spacing:.08em;text-transform:uppercase}
+.section{padding:clamp(84px,9vw,132px) 0;scroll-margin-top:82px}.section-head{display:grid;grid-template-columns:minmax(0,1.05fr) minmax(300px,.55fr);gap:56px;align-items:end;margin-bottom:54px}.section h2{margin-top:20px;font:650 clamp(42px,5.2vw,76px)/.94 var(--display);letter-spacing:-.055em}.section-intro{color:var(--muted);font-size:clamp(16px,1.4vw,19px)}.section-intro strong{color:var(--ink)}
+.usecases{background:linear-gradient(180deg,rgba(18,24,33,.55),transparent 18%)}.case-grid{display:grid;grid-template-columns:repeat(12,1fr);gap:14px}.usecase-card{grid-column:span 4;min-height:330px;display:flex;flex-direction:column;padding:28px;border:1px solid var(--line);border-radius:var(--radius);background:linear-gradient(145deg,rgba(24,31,41,.96),rgba(12,16,23,.97));box-shadow:0 22px 60px rgba(0,0,0,.16);transition:transform .25s,border-color .25s}.usecase-card.featured{grid-column:span 6;min-height:390px}.case-top{display:flex;align-items:center;justify-content:space-between;gap:12px}.case-number{color:var(--accent);font:500 10px var(--mono);letter-spacing:.14em}.case-time{padding:5px 8px;border:1px solid var(--line);border-radius:999px;color:var(--muted);font:400 8px var(--mono);letter-spacing:.08em;text-transform:uppercase}.usecase-card h3{margin-top:22px;font:600 clamp(21px,2vw,29px)/1.06 var(--display);letter-spacing:-.035em}.usecase-card p{margin-top:16px;color:var(--muted);font-size:14px;line-height:1.58}.usecase-card p b{display:block;margin-bottom:4px;color:var(--ink);font:500 9px var(--mono);letter-spacing:.12em;text-transform:uppercase}.usecase-card .case-solution{color:#c9ced0}.usecase-card .case-result{margin-top:auto;padding-top:18px;color:var(--accent);font-weight:600}.case-media{height:180px;margin:22px -10px -10px;overflow:hidden;border:1px solid var(--line);border-radius:12px}.case-media img{width:100%;height:100%;object-fit:cover}.case-flow{display:grid;grid-template-columns:repeat(4,1fr);gap:7px;margin-top:22px}.case-flow span{padding:12px 9px;border:1px solid var(--line);border-radius:8px;background:#0b0f15;color:var(--muted);font:400 9px/1.4 var(--mono)}.case-flow b{display:block;color:var(--accent);font-weight:500}.case-outro{display:grid;grid-template-columns:1fr auto;gap:30px;align-items:center;margin-top:22px;padding:30px 32px;border:1px solid rgba(43,200,183,.34);border-radius:var(--radius);background:linear-gradient(110deg,rgba(43,200,183,.11),rgba(16,21,29,.9) 65%)}.case-outro h3{font:600 24px var(--display)}.case-outro p{margin-top:7px;color:var(--muted)}.services{background:linear-gradient(135deg,rgba(19,25,34,.9),rgba(10,14,20,.95))}.service-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:14px}.service-card{padding:34px 30px;border:1px solid var(--line);border-radius:var(--radius);background:rgba(17,23,31,.92)}.service-card .num{color:var(--accent);font:500 10px var(--mono);letter-spacing:.13em}.service-card h3{margin-top:18px;font:600 25px var(--display)}.service-card p{margin-top:14px;color:var(--muted)}.service-card ul{margin-top:20px;list-style:none}.service-card li{padding:9px 0;border-top:1px dashed var(--line);color:#c0c6c8;font-size:14px}.service-card li:before{content:"→ ";color:var(--accent)}
+.proof-grid{display:grid;grid-template-columns:1fr 1fr;gap:18px}.proof-card{overflow:hidden;border:1px solid var(--line);border-radius:var(--radius);background:var(--panel)}.proof-card img{width:100%;aspect-ratio:16/8.5;object-fit:cover;border-bottom:1px solid var(--line)}.proof-copy{padding:30px}.proof-status{color:#9bcf8c;font:500 9px var(--mono);letter-spacing:.12em;text-transform:uppercase}.proof-card h3{margin-top:12px;font:600 27px var(--display)}.proof-card p{margin-top:13px;color:var(--muted)}.proof-card a{display:inline-block;margin-top:20px;color:var(--accent);font:500 10px var(--mono);letter-spacing:.09em;text-transform:uppercase}
+.about{background:linear-gradient(135deg,rgba(18,24,33,.85),rgba(10,14,20,.95))}.about-grid{display:grid;grid-template-columns:.82fr 1.18fr;gap:70px;align-items:center}.portrait{position:relative}.portrait img{width:100%;border:1px solid var(--line);border-radius:var(--radius);filter:saturate(.9)}.portrait:after{content:"25+ Jahre Technik";position:absolute;right:18px;bottom:18px;padding:9px 12px;border:1px solid var(--line);border-radius:999px;background:rgba(8,11,16,.7);font:500 9px var(--mono);letter-spacing:.1em;text-transform:uppercase}.about-copy h2{margin-top:20px}.about-copy>p{margin-top:22px;color:var(--muted);font-size:17px}.credentials{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:28px}.credential{padding:16px;border:1px solid var(--line);border-radius:10px;background:rgba(11,15,21,.56)}.credential b{display:block;color:var(--ink);font-size:14px}.credential span{display:block;margin-top:3px;color:var(--muted);font-size:12px}
+.process-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:14px}.process-card{padding:32px;border:1px solid var(--line);border-radius:var(--radius);background:linear-gradient(145deg,rgba(23,30,40,.94),rgba(12,16,23,.95))}.process-card .num{color:var(--accent);font:500 10px var(--mono);letter-spacing:.14em}.process-card h3{margin-top:16px;font:600 24px var(--display)}.process-card p{margin-top:12px;color:var(--muted)}
+.faq{max-width:900px}.faq details{border-bottom:1px solid var(--line)}.faq summary{display:flex;justify-content:space-between;gap:20px;padding:22px 0;cursor:pointer;list-style:none;font:600 18px var(--display)}.faq summary::-webkit-details-marker{display:none}.faq summary:after{content:"+";color:var(--accent);font:400 22px var(--mono)}.faq details[open] summary:after{content:"−"}.faq .answer{padding:0 0 24px;color:var(--muted)}
+.contact{background:radial-gradient(800px 550px at 12% 42%,rgba(43,200,183,.12),transparent 68%),linear-gradient(145deg,#111720,#090d13)}.contact-grid{display:grid;grid-template-columns:.9fr 1.1fr;gap:70px;align-items:start}.contact-copy h2{margin-top:20px}.contact-copy>p{margin-top:22px;color:var(--muted);font-size:17px}.contact-quote{margin-top:28px;padding-left:18px;border-left:2px solid var(--accent);color:var(--ink)!important}.contact-form{display:grid;gap:13px;padding:30px;border:1px solid var(--line);border-radius:var(--radius);background:rgba(9,13,18,.72);box-shadow:0 28px 80px rgba(0,0,0,.3)}.form-row{display:grid;grid-template-columns:1fr 1fr;gap:13px}.contact-form label{display:block;margin-bottom:6px;color:#7fa8ae;font:500 9px var(--mono);letter-spacing:.13em;text-transform:uppercase}.contact-form input,.contact-form textarea{width:100%;border:1px solid var(--line2);border-radius:7px;background:#090d13;color:var(--ink);padding:12px 13px}.contact-form textarea{min-height:122px;resize:vertical}.contact-form .button{width:100%}.hp{position:absolute;left:-9999px}.form-note{color:var(--faint);font-size:12px}.form-note a{color:var(--accent)}.direct{display:flex;flex-wrap:wrap;gap:16px;margin-top:18px;color:var(--muted);font-size:14px}.direct b{margin-right:6px;color:var(--accent);font:500 9px var(--mono);letter-spacing:.1em}
+.footer{padding:52px 0;border-top:1px solid var(--line);background:#080b10}.footer-grid{display:flex;justify-content:space-between;gap:30px;color:var(--muted);font-size:13px}.footer-brand{font:650 clamp(28px,4vw,48px) var(--display);color:var(--ink)}.footer-brand span{color:var(--accent)}.footer-links{display:flex;flex-wrap:wrap;justify-content:flex-end;gap:16px;margin-top:9px}.footer a:hover{color:var(--ink)}
+.reveal{opacity:0;transform:translateY(20px);transition:opacity .65s cubic-bezier(.2,.7,.2,1),transform .65s cubic-bezier(.2,.7,.2,1)}.reveal.in{opacity:1;transform:none}@media(hover:hover){.usecase-card:hover,.service-card:hover,.process-card:hover{transform:translateY(-4px);border-color:rgba(43,200,183,.36)}}
+@media(max-width:1000px){.hero-video{object-position:72% center}.nav-links>a:not(.button){display:none}.section-head{grid-template-columns:1fr;gap:22px}.usecase-card,.usecase-card.featured{grid-column:span 6}.service-grid,.process-grid{grid-template-columns:1fr}.about-grid,.contact-grid{grid-template-columns:1fr;gap:44px}.portrait{max-width:620px}.facts{grid-template-columns:repeat(2,1fr)}.fact:nth-child(3){border-left:0;border-top:1px solid var(--line)}.fact:nth-child(4){border-top:1px solid var(--line)}}
+@media(max-width:760px){.container{width:min(100% - 32px,var(--max))}.site-header,.nav{height:64px}.brand{font-size:13px}.brand img{width:26px;height:auto}.brand small{display:none}.button.small{min-height:36px;padding-inline:10px;font-size:8px}.hero{min-height:calc(100svh - 64px);background-image:url("/hero-previews/media/hero-v2-poster-mobile.jpg");background-position:center}.hero-video{object-position:center}.hero-shade{background:linear-gradient(0deg,rgba(6,9,13,.99),rgba(6,9,13,.94) 34%,rgba(6,9,13,.5) 59%,rgba(6,9,13,.08) 79%),linear-gradient(180deg,rgba(6,9,13,.42),transparent 22%)}.hero-grid{min-height:calc(100svh - 64px);align-items:flex-end;padding:100px 0 max(28px,env(safe-area-inset-bottom))}.hero-copy{width:100%}.hero h1{margin-top:15px;font-size:clamp(48px,14vw,70px)}.hero-lead{margin-top:17px;font-size:15px;line-height:1.46}.hero-actions{display:grid;margin-top:20px}.hero-actions .button{width:100%}.hero-proof{gap:6px 13px;font-size:8px}.hero-proof li:last-child{display:none}.hero-status{display:none}.video-toggle{top:14px;right:16px;min-height:36px;font-size:8px}.facts{grid-template-columns:1fr 1fr}.fact{min-height:112px;padding:18px 14px}.fact b{font-size:23px}.fact small{font-size:8px}.section{padding:76px 0}.section h2{font-size:clamp(38px,11.5vw,56px)}.section-head{margin-bottom:35px}.case-grid{grid-template-columns:1fr}.usecase-card,.usecase-card.featured{grid-column:auto;min-height:0;padding:24px}.case-flow{grid-template-columns:1fr 1fr}.case-outro{grid-template-columns:1fr;padding:25px}.service-card,.process-card,.proof-copy{padding:26px 23px}.proof-grid{grid-template-columns:1fr}.credentials{grid-template-columns:1fr}.contact-form{padding:23px 18px}.form-row{grid-template-columns:1fr}.footer-grid{display:block}.footer-links{justify-content:flex-start}.footer-meta{margin-top:18px}}
+@media(max-height:710px) and (max-width:760px){.hero h1{font-size:clamp(42px,12vw,56px)}.hero-lead{font-size:13px}.hero-actions{margin-top:14px}.hero-proof{margin-top:10px}}@media(prefers-reduced-motion:reduce){html{scroll-behavior:auto}.reveal{opacity:1;transform:none;transition:none}.button,.usecase-card,.service-card,.process-card{transition:none}}
 </style>
 </head>
 <body>
-
-<header>
-  <div class="wrap nav">
-    <a class="logo" href="#top"><img src="/assets/logo-mono.webp" alt="" width="34" height="27"><span>Karl Pilz <em>—</em> Der KI-Pate<span class="mono">KI-BERATER · SALZBURG / DACH</span></span></a>
-    <nav class="nav-links" aria-label="Kapitel-Navigation">
-      <a href="#k1">01&nbsp;Auftrag</a>
-      <a href="#k2">02&nbsp;Problem</a>
-      <a href="#k3">03&nbsp;Lösung</a>
-      <a href="#k4">04&nbsp;Beweis</a>
-      <a href="#k5">05&nbsp;Start</a>
-      <a class="btn small" href="#kontakt">KI-Sprechstunde</a>
-    </nav>
-  </div>
-</header>
-
+<header class="site-header"><div class="container nav"><a class="brand" href="#top"><img src="/assets/logo-mono.webp" alt="" width="34" height="27"><span>Karl Pilz<small>Der KI-Pate · Salzburg</small></span></a><nav class="nav-links" aria-label="Hauptnavigation"><a href="#use-cases">Use Cases</a><a href="#leistungen">Leistungen</a><a href="#beweise">Beweise</a><a href="#ueber-mich">Über mich</a><a class="button small" href="#kontakt">KI-Sprechstunde</a></nav></div></header>
 <main id="top">
-<div id="progress" role="presentation"></div>
-<div id="chappill">KAPITEL <b>01</b>/05 · DER AUFTRAG</div>
-
-<!-- ============ KAPITEL 01: DER AUFTRAG ============ -->
-<section class="hero" aria-label="Intro" id="k1" data-chapter="01" data-chapter-name="DER AUFTRAG">
-  <video class="hero-video" id="home-hero-video" poster="/hero-previews/media/hero-v1-poster.jpg" autoplay muted loop playsinline preload="metadata" aria-hidden="true">
-    <source src="/hero-previews/media/hero-v1-mobile.mp4" type="video/mp4" media="(max-width:760px)">
-    <source src="/hero-previews/media/hero-v1-desktop.mp4" type="video/mp4">
-  </video>
-  <div class="hero-shade" aria-hidden="true"></div>
-  <div class="wrap hero-grid">
-    <div class="hero-copy">
-      <p class="slug"><b>KARL PILZ</b> // KI-UMSETZUNG FÜR KMU</p>
-      <h1>KI, die Ihnen <br><span class="accent">Arbeit abnimmt.</span></h1>
-      <p class="sub"><b>Ich baue KI-Systeme, die Ihrem Betrieb messbar Arbeit abnehmen</b> — sicher, verständlich und im Alltag einsatzbereit.</p>
-      <div class="hero-ctas">
-        <a class="btn" href="#kontakt">Kostenlose KI-Sprechstunde</a>
-        <a class="btn ghost" href="#use-cases">Use Cases ansehen</a>
-      </div>
-      <ul class="hero-proof" aria-label="Vorteile der KI-Sprechstunde">
-        <li>30 Minuten</li><li>2–3 konkrete Use Cases</li><li>Klare nächste Schritte</li>
-      </ul>
-    </div>
+<section class="hero" data-video-state="holding" aria-label="Karl Pilz – Der KI-Pate"><video class="hero-video" id="hero-video" poster="/hero-previews/media/hero-v2-poster.jpg" muted playsinline preload="metadata" aria-hidden="true"><source src="/hero-previews/media/hero-v2-mobile.mp4" type="video/mp4" media="(max-width:760px)"><source src="/hero-previews/media/hero-v2-desktop.mp4" type="video/mp4"></video><div class="hero-shade" aria-hidden="true"></div><div class="container hero-grid"><div class="hero-copy"><p class="eyebrow">KI-Umsetzung für KMU &amp; Führungskräfte</p><h1>KI, die Ihnen<br><span>Arbeit abnimmt.</span></h1><p class="hero-lead"><strong>Ich verwandle tägliche Zeitfresser in funktionierende KI-Abläufe</strong> – verständlich, sicher und messbar.</p><div class="hero-actions"><a class="button" href="#kontakt">Kostenlose KI-Sprechstunde</a><a class="button ghost" href="#use-cases">Use Cases ansehen</a></div><ul class="hero-proof"><li>25+ Jahre Technik</li><li>2 KI-Plattformen live</li><li>Pilot in 4–6 Wochen</li></ul></div></div><div class="hero-status" aria-hidden="true"><i></i><span>Standbild · Start in 3 s</span></div><button class="video-toggle hero-video-toggle" type="button" aria-label="Hintergrundvideo sofort starten">Video starten</button></section>
+<div class="factbar"><div class="container facts"><div class="fact"><b>25<span>+</span></b><small>Jahre IT &amp; Engineering</small></div><div class="fact"><b>2</b><small>eigene KI-Plattformen live</small></div><div class="fact"><b>4–6</b><small>Wochen bis zum Pilot</small></div><div class="fact"><b>30</b><small>Minuten kostenloser Potenzial-Check</small></div></div></div><section id="use-cases" class="section usecases"><div class="container">
+  <header class="section-head reveal"><div><p class="eyebrow">Use Cases statt KI-Theorie</p><h2>Welcher Zeitfresser<br>kostet Sie jede Woche?</h2></div><p class="section-intro">Nicht noch ein Chatbot. Sondern <strong>konkrete Abläufe, die in Ihrem Betrieb Zeit sparen</strong> – mit klarer Freigabe, Datenschutz und messbarem Ergebnis.</p></header>
+  <div class="case-grid">
+    <article class="usecase-card featured reveal"><div class="case-top"><span class="case-number">UC.01</span><span class="case-time">Vertrieb &amp; Backoffice</span></div><h3>Aus einer Kundenanfrage wird ein fertiger Angebotsentwurf.</h3><p class="case-problem"><b>Das Problem</b>E-Mails, Anhänge und Preise werden händisch geprüft. Bis das Angebot rausgeht, vergehen Stunden oder Tage.</p><p class="case-solution"><b>Die Lösung</b>KI liest die Anfrage, erkennt Positionen, gleicht sie mit Preislisten ab und legt den Entwurf samt CRM-Eintrag zur Freigabe vor.</p><div class="case-flow" aria-label="Ablauf der Angebotsautomatisierung"><span><b>01</b>E-Mail &amp; PDF</span><span><b>02</b>KI prüft Daten</span><span><b>03</b>CRM &amp; ERP</span><span><b>04</b>Freigabe</span></div><p class="case-result"><b>Der Effekt</b>Antwort in Minuten statt Nacharbeit über mehrere Systeme.</p></article>
+    <article class="usecase-card featured reveal"><div class="case-top"><span class="case-number">UC.02</span><span class="case-time">Wissen &amp; Qualität</span></div><h3>Ihr Firmenwissen antwortet – mit Quelle, nicht mit Bauchgefühl.</h3><p class="case-problem"><b>Das Problem</b>Handbücher, Verträge und Projekterfahrung liegen in Ordnern und einzelnen Köpfen. Suchen kostet, Wissen geht verloren.</p><p class="case-solution"><b>Die Lösung</b>Eine geschützte KI-Wissensdatenbank durchsucht Ihre freigegebenen Dokumente und belegt jede Antwort mit der passenden Fundstelle.</p><div class="case-media"><img src="/assets/usecase-rag-wissensdatenbank.webp" alt="KI-Wissensdatenbank beantwortet eine Unternehmensfrage mit Quellenangabe" loading="lazy" width="1200" height="670"></div><p class="case-result"><b>Der Effekt</b>Schneller einarbeiten, sicherer entscheiden, Experten entlasten.</p></article>
+    <article class="usecase-card reveal"><div class="case-top"><span class="case-number">UC.03</span><span class="case-time">Meetings</span></div><h3>Das Meeting endet. Protokoll und Aufgaben sind bereits fertig.</h3><p class="case-problem"><b>Das Problem</b>Mitschreiben, zusammenfassen und nachfassen frisst Fokus – und trotzdem bleiben Zuständigkeiten offen.</p><p class="case-solution"><b>Die Lösung</b>KI erstellt aus dem Gespräch ein strukturiertes Protokoll, Entscheidungen, To-dos, Verantwortliche und Fristen.</p><p class="case-result"><b>Der Effekt</b>Alle wissen sofort, was als Nächstes passiert.</p></article>
+    <article class="usecase-card reveal"><div class="case-top"><span class="case-number">UC.04</span><span class="case-time">Buchhaltung</span></div><h3>Belege werden erkannt, geprüft und richtig übergeben.</h3><p class="case-problem"><b>Das Problem</b>Rechnungen kommen per Mail, Scan und Upload. Daten werden abgetippt, geprüft und mehrfach abgelegt.</p><p class="case-solution"><b>Die Lösung</b>KI extrahiert Lieferant, Beträge und Positionen, erkennt Abweichungen und übergibt freigegebene Daten an Ihre Software.</p><p class="case-result"><b>Der Effekt</b>Weniger Tipparbeit, weniger Fehler, schnellerer Monatsabschluss.</p></article>
+    <article class="usecase-card reveal"><div class="case-top"><span class="case-number">UC.05</span><span class="case-time">Kundenservice</span></div><h3>Standardfragen sofort beantworten – schwierige Fälle an Menschen.</h3><p class="case-problem"><b>Das Problem</b>Ihr Team beantwortet dieselben Fragen zu Lieferung, Rechnung und Produkten immer wieder.</p><p class="case-solution"><b>Die Lösung</b>Ein Assistent nutzt ausschließlich freigegebenes Wissen, beantwortet Routinen und übergibt sensible Fälle samt Kontext.</p><p class="case-result"><b>Der Effekt</b>Kürzere Wartezeit und mehr Zeit für Kunden, die Beratung brauchen.</p></article>
+    <article class="usecase-card reveal"><div class="case-top"><span class="case-number">UC.06</span><span class="case-time">Marketing</span></div><h3>Aus einem Produktfoto wird Content für eine ganze Kampagne.</h3><p class="case-problem"><b>Das Problem</b>Neue Produktbilder, Varianten, Texte und kurze Videos brauchen mehrere Dienstleister und lange Schleifen.</p><p class="case-solution"><b>Die Lösung</b>Ein abgestimmter KI-Workflow erzeugt markenkonforme Motive, Formate und Textvarianten – Ihr Team wählt aus.</p><p class="case-result"><b>Der Effekt</b>Mehr Varianten testen und deutlich schneller veröffentlichen.</p></article>
+    <article class="usecase-card reveal"><div class="case-top"><span class="case-number">UC.07</span><span class="case-time">HR &amp; Recruiting</span></div><h3>Bewerbungen strukturiert vergleichen, ohne Menschen auszusortieren.</h3><p class="case-problem"><b>Das Problem</b>Lebensläufe werden unter Zeitdruck gelesen; Kriterien sind uneinheitlich und wichtige Rückfragen gehen unter.</p><p class="case-solution"><b>Die Lösung</b>KI fasst nach Ihren Kriterien zusammen, markiert offene Punkte und bereitet Gespräche vor. Die Entscheidung bleibt beim Menschen.</p><p class="case-result"><b>Der Effekt</b>Konstantere Vorauswahl und bessere Bewerbungsgespräche.</p></article>
+    <article class="usecase-card reveal"><div class="case-top"><span class="case-number">UC.08</span><span class="case-time">Führung</span></div><h3>Der Wochenbericht liegt bereit, bevor der Montag beginnt.</h3><p class="case-problem"><b>Das Problem</b>Kennzahlen aus CRM, ERP und Tabellen werden händisch gesammelt – Entscheidungen basieren auf alten Daten.</p><p class="case-solution"><b>Die Lösung</b>KI führt freigegebene Daten zusammen, erklärt Abweichungen und erstellt einen Bericht mit Quellen und offenen Punkten.</p><p class="case-result"><b>Der Effekt</b>Weniger Berichtsbau, mehr Zeit für die eigentliche Entscheidung.</p></article>
   </div>
-  <div class="hero-status" aria-hidden="true"><i></i><span>KI-Assistenten starten</span></div>
-  <button class="hero-video-toggle" type="button" aria-label="Hintergrundvideo pausieren">Video pausieren</button>
-</section>
-
-<!-- DATENBLATT -->
-<div class="sheet" aria-label="Fakten">
-  <div class="wrap sheet-grid">
-    <div class="sheet-cell"><b>25<i>+</i></b><span>Jahre IT & Engineering</span></div>
-    <div class="sheet-cell"><b>2</b><span>KI-Plattformen im Live-Betrieb</span></div>
-    <div class="sheet-cell"><b>1</b><span>KI-Taskforce im Payment-Umfeld geleitet</span></div>
-    <div class="sheet-cell"><b>2023</b><span>seither Referent für Führungskräfte</span></div>
-    <div class="sheet-cell"><b>15</b><span>Jahre eigene Digitalagentur</span></div>
-    <div class="sheet-cell"><b>100<i>%</i></b><span>dieser Website: vom KI-Agenten gebaut</span></div>
+  <div class="case-outro reveal"><div><h3>Ihr konkreter Ablauf ist nicht dabei?</h3><p>Bringen Sie den nervigsten Prozess mit. In 30 Minuten klären wir Nutzen, Daten und einen realistischen ersten Schritt.</p></div><a class="button" href="#kontakt">Use Case prüfen lassen</a></div>
+</div></section>
+<section id="leistungen" class="section services"><div class="container">
+  <header class="section-head reveal"><div><p class="eyebrow">Vom Problem zum laufenden System</p><h2>Strategie, Umsetzung<br>und Befähigung.</h2></div><p class="section-intro">Sie bekommen keinen Foliensatz, den danach niemand umsetzt. <strong>Ich finde den richtigen Hebel, baue den Pilot und bringe Ihr Team ins Arbeiten.</strong></p></header>
+  <div class="service-grid">
+    <article class="service-card reveal"><span class="num">01 / KLARHEIT</span><h3>KI-Fahrplan</h3><p>Wir priorisieren die Use Cases, die zu Ihren Abläufen, Daten und Zielen passen.</p><ul><li>Potenzial- und Prozessanalyse</li><li>DSGVO- &amp; EU-AI-Act-Check</li><li>Aufwand, Nutzen und klare Reihenfolge</li></ul></article>
+    <article class="service-card reveal"><span class="num">02 / UMSETZUNG</span><h3>KI-Pilot</h3><p>Ich setze einen abgegrenzten Ablauf um und verbinde ihn mit Ihrer vorhandenen IT.</p><ul><li>RAG-Wissenssysteme und KI-Agenten</li><li>CRM-, ERP-, E-Mail- und API-Integration</li><li>Messbarer Pilot typischerweise in 4–6 Wochen</li></ul></article>
+    <article class="service-card reveal"><span class="num">03 / SICHERHEIT</span><h3>Schulung &amp; Patenschaft</h3><p>Führungskräfte und Teams lernen, KI sinnvoll und kontrolliert einzusetzen.</p><ul><li>Praxisworkshops und Keynotes</li><li>Richtlinien, Rollen und Governance</li><li>Laufende Begleitung als externer KI-Pate</li></ul></article>
   </div>
-</div>
+</div></section>
 
-<!-- VORSTELLUNG -->
-<section id="vorstellung" data-chapter="01" data-chapter-name="DER AUFTRAG">
-  <div class="wrap">
-    <p class="eyebrow"><span class="idx">01.2</span> Vorstellung</p>
-    <p class="fomo" style="margin:0;max-width:940px;font-size:clamp(1.4rem,3vw,2.1rem)">„Servus, ich bin Karl Pilz — <em>der KI-Pate, der mit der KI hilft.</em> Ingenieur seit 2001, Unternehmer seit 2010, KI-Entwickler aus Überzeugung. Ich halte keine Vorträge über Ihre Probleme. <em>Ich schaffe Lösungen für Ihre Probleme</em> — und bleibe, bis sie laufen."</p>
-    <p class="lead" style="margin-top:22px">Sie beschreiben mir, wo es hakt — ich liefere das System, das es löst. Zwei eigene KI-Plattformen im Live-Betrieb, KI-Taskforce im Payment-Umfeld geleitet, Führungskräfte im DACH-Raum geschult. Und diese Website? Hat mein KI-Agent gebaut — Sie schauen gerade auf mein Werkstück.</p>
+<section id="beweise" class="section"><div class="container">
+  <header class="section-head reveal"><div><p class="eyebrow">Nicht nur beraten. Selbst gebaut.</p><h2>KI-Plattformen<br>im echten Betrieb.</h2></div><p class="section-intro">Ich bewerte Lösungen nicht aus der Distanz. <strong>Datenschutz, Modelle, Infrastruktur und Nutzererlebnis</strong> kenne ich aus eigenen produktiven Systemen.</p></header>
+  <div class="proof-grid">
+    <article class="proof-card reveal"><img src="/assets/hoviguard-plattform.webp" alt="HOVIGuard Plattform für kontrollierte Unternehmens-KI" loading="lazy" width="1200" height="675"><div class="proof-copy"><span class="proof-status">● Plattform live</span><h3>HOVIGuard.eu</h3><p>Kontrollierte KI-Nutzung für Unternehmen – mit österreichischem Hosting, Schutz sensibler Daten und nachvollziehbarer Verwendung.</p><a href="https://hoviguard.eu" target="_blank" rel="noopener">Plattform ansehen →</a></div></article>
+    <article class="proof-card reveal"><img src="/assets/hovion-onpremise-ki.webp" alt="HOVION On-Premise-KI im eigenen Firmennetz" loading="lazy" width="1200" height="670"><div class="proof-copy"><span class="proof-status">● On-Premise-System</span><h3>HOVION.AI</h3><p>Lokale Sprachmodelle und Firmenwissen auf eigener Infrastruktur – für Organisationen, bei denen Daten das Haus nicht verlassen sollen.</p><a href="https://hovion.ai" target="_blank" rel="noopener">Lösung ansehen →</a></div></article>
   </div>
-</section>
+</div></section>
+<section id="ueber-mich" class="section about"><div class="container about-grid">
+  <div class="portrait reveal"><img src="/assets/karl-pilz-ki-berater-salzburg.webp" alt="Karl Pilz, KI-Berater und Entwickler aus Salzburg" loading="lazy" width="900" height="900"></div>
+  <div class="about-copy reveal"><p class="eyebrow">Karl Pilz · Der KI-Pate</p><h2>Ein Ansprechpartner, der Technik und Geschäft zusammenbringt.</h2><p>Ich bin Ingenieur, Entwickler und KI-Berater aus Anif bei Salzburg. Seit mehr als 25 Jahren übersetze ich neue Technologie in Systeme, die im Alltag funktionieren. Heute begleite ich KMU und Führungskräfte von der ersten Idee bis zur produktiven KI-Lösung.</p><p>Mein Maßstab ist einfach: Sie müssen verstehen, was das System tut, Ihre Daten müssen geschützt bleiben – und am Ende muss spürbar Arbeit wegfallen.</p><div class="credentials"><div class="credential"><b>25+ Jahre Technik</b><span>IT, Engineering und Unternehmenssysteme</span></div><div class="credential"><b>Hands-on Umsetzung</b><span>Beratung und Entwicklung aus einer Hand</span></div><div class="credential"><b>Salzburg &amp; DACH</b><span>Vor Ort oder remote</span></div><div class="credential"><b>Management Circle</b><span>Referent für KI-Praxis seit 2023</span></div></div><div class="hero-actions"><a class="button" href="#kontakt">Karl kennenlernen</a><a class="button ghost" href="https://www.linkedin.com/in/karl-pilz-8540a323" target="_blank" rel="noopener">LinkedIn</a></div></div>
+</div></section>
 
-<!-- ============ KAPITEL 02: DAS PROBLEM ============ -->
-<section class="chap" id="k2" data-chapter="02" data-chapter-name="DAS PROBLEM">
-  <img class="bg" src="/assets/szene-datenraum.webp" alt="" loading="lazy" aria-hidden="true">
-  <div class="inner">
-    <span class="knum">KAPITEL 02 / 05</span>
-    <h2>Das Problem.</h2>
-    <p>Ihre Mitarbeiter nutzen KI längst — nur eben unkontrolliert, mit Firmendaten, in privaten Accounts. Und während Sie noch abwägen, spart Ihr Mitbewerb bereits jede Woche Stunden ein.</p>
-    <span class="hint">WEITERSCROLLEN</span>
-  </div>
-</section>
+<section id="ablauf" class="section"><div class="container">
+  <header class="section-head reveal"><div><p class="eyebrow">Klein starten. Sauber messen.</p><h2>In drei Schritten<br>zum ersten Ergebnis.</h2></div><p class="section-intro">Der Einstieg bleibt überschaubar: <strong>ein relevanter Prozess, ein klarer Messwert, eine belastbare Entscheidung.</strong></p></header>
+  <div class="process-grid"><article class="process-card reveal"><span class="num">SCHRITT 01</span><h3>30 Minuten Klartext</h3><p>Sie zeigen mir den Prozess, der Zeit oder Nerven kostet. Ich sage offen, ob KI dort sinnvoll ist und welche Daten wir brauchen.</p></article><article class="process-card reveal"><span class="num">SCHRITT 02</span><h3>Pilot statt Großprojekt</h3><p>Wir bauen einen abgegrenzten Ablauf, testen ihn mit echten Fällen und messen Zeit, Qualität und Akzeptanz.</p></article><article class="process-card reveal"><span class="num">SCHRITT 03</span><h3>Ausbauen, wenn es trägt</h3><p>Erst nach dem Beweis entscheiden Sie: integrieren, auf weitere Teams ausrollen oder bewusst stoppen.</p></article></div>
+</div></section>
+<section id="faq" class="section"><div class="container faq">
+  <header class="section-head reveal"><div><p class="eyebrow">Häufige Fragen</p><h2>Was Entscheider<br>vor dem Start wissen.</h2></div><p class="section-intro">Kurz und ohne Fachnebel beantwortet.</p></header>
+  <details class="reveal"><summary>Was macht ein KI-Berater?</summary><div class="answer">Ein KI-Berater findet Prozesse, in denen KI messbar Arbeit abnimmt, prüft Datenschutz und Wirtschaftlichkeit und begleitet die Umsetzung. Ich gehe einen Schritt weiter: Ich baue die Systeme selbst und schule anschließend Ihr Team.</div></details>
+  <details class="reveal"><summary>Wie führt ein KMU KI DSGVO-konform ein?</summary><div class="answer">Zuerst klären wir Datenflüsse und erlaubte Werkzeuge. Danach folgen kontrollierte Zugänge, klare Regeln, Schulung und eine nachvollziehbare Nutzung – statt privater KI-Accounts mit Firmendaten.</div></details>
+  <details class="reveal"><summary>Kann KI komplett ohne Cloud im eigenen Haus laufen?</summary><div class="answer">Ja. Moderne lokale Sprachmodelle und eine Wissensdatenbank können auf eigener Hardware im Firmennetz laufen. Für besonders sensible Daten ist On-Premise häufig der sauberste Weg.</div></details>
+  <details class="reveal"><summary>Was kostet KI-Beratung in Österreich?</summary><div class="answer">Das hängt vom Prozess und Integrationsaufwand ab. Nach dem kostenlosen Erstgespräch erhalten Sie einen klar abgegrenzten Vorschlag – bevorzugt als planbares Paket oder Pilot mit definiertem Ergebnis.</div></details>
+  <details class="reveal"><summary>Wer bietet KI-Schulungen in Salzburg an?</summary><div class="answer">Ich schule Teams und Führungskräfte direkt vor Ort in Salzburg oder remote im DACH-Raum – von KI-Grundlagen und Prompting bis zu EU-AI-Act-Briefings und sicheren Arbeitsabläufen.</div></details>
+  <details class="reveal"><summary>Welche Prozesse automatisiert man zuerst mit KI?</summary><div class="answer">Ideal sind häufige, regelbasierte Routinen mit viel manueller Informationsarbeit: E-Mails, Angebote, Datentransfer, Protokolle und Berichte. Priorisiert wird nach Nutzen, Häufigkeit, Datenlage und Aufwand.</div></details>
+  <details class="reveal"><summary>Wie lange dauert ein KI-Pilotprojekt?</summary><div class="answer">Für einen klar begrenzten Prozess sind vier bis sechs Wochen oft realistisch. Danach liegen ein funktionierender Ablauf und Messwerte vor, auf deren Basis Sie über den Ausbau entscheiden.</div></details>
+  <details class="reveal"><summary>Was verlangt der EU AI Act von KMU?</summary><div class="answer">Unternehmen müssen KI-Anwendungen nach Risiko einordnen, Transparenzpflichten beachten, Mitarbeitende angemessen schulen und verbotene Praktiken vermeiden. Daraus machen wir eine praxistaugliche Checkliste für Ihren Betrieb.</div></details>
+</div></section>
 
-<!-- ENGPASS -->
-<section id="warum" class="ruled" data-chapter="02" data-chapter-name="DAS PROBLEM">
-  <div class="wrap">
-    <p class="eyebrow"><span class="idx">02.1</span> Kommt Ihnen das bekannt vor?</p>
-    <h2>Sie wissen, dass KI etwas bringt. Aber:</h2>
-    <ul class="pain-list">
-      <li><span class="n">A—</span><span><b>Datenschutz-Unsicherheit.</b> Ihre Mitarbeiter nutzen längst private ChatGPT-Accounts — mit Firmendaten, ohne Kontrolle. DSGVO und EU AI Act stehen im Raum.</span></li>
-      <li><span class="n">B—</span><span><b>Tool-Chaos ohne Strategie.</b> Jede Woche ein neues KI-Tool, jeder probiert etwas anderes. Was davon rechnet sich wirklich für Ihren Betrieb?</span></li>
-      <li><span class="n">C—</span><span><b>Keine Zeit, es selbst zu lernen.</b> Sie führen ein Unternehmen. Sich nebenbei in RAG, Agenten und Modellvergleiche einzuarbeiten, ist nicht Ihr Job.</span></li>
-    </ul>
-    <p class="lead" style="margin-top:30px">Genau dafür gibt es einen Paten: einen, der Verantwortung übernimmt, bis es läuft. <a href="#leistungen" style="color:var(--acc)">So arbeite ich →</a></p>
-  </div>
-</section>
-
-<!-- ============ KAPITEL 03: DIE LÖSUNG ============ -->
-<section class="chap" id="k3" data-chapter="03" data-chapter-name="DIE LÖSUNG">
-  <img class="bg" src="/assets/szene-nachtschicht.webp" alt="" loading="lazy" aria-hidden="true">
-  <div class="inner">
-    <span class="knum">KAPITEL 03 / 05</span>
-    <h2>Die Lösung.</h2>
-    <p>Es ist 3 Uhr früh. Ihre KI-Agenten sortieren die E-Mails von morgen, entwerfen Angebote und füllen das CRM. Genau solche Systeme baue ich Ihnen — Strategie, Umsetzung und Schulung aus einer Hand.</p>
-    <span class="hint">WEITERSCROLLEN</span>
-  </div>
-</section>
-
-<!-- LEISTUNGEN -->
-<section id="leistungen" class="ruled panelbg" data-chapter="03" data-chapter-name="DIE LÖSUNG">
-  <div class="wrap">
-    <p class="eyebrow"><span class="idx">03.1</span> Leistungen</p>
-    <h2>Strategie, Systeme und Schulung —<br>aus einer Hand.</h2>
-    <p class="lead">Karl Pilz begleitet Unternehmen in Salzburg, Österreich und im gesamten DACH-Raum bei der Einführung von Künstlicher Intelligenz: von der KI-Strategie über DSGVO-konforme KI-Systeme bis zur Schulung der Teams. Sein Ansatz: KI muss messbar Arbeit abnehmen — sonst ist sie Spielerei.</p>
-    <div class="svc">
-      <div class="svc-card">
-        <span class="num">SRV.01</span>
-        <h3>KI-Fahrplan</h3>
-        <p>Der Strategie-Sprint für Ihren Betrieb: Ich finde die Use Cases, die sich rechnen, prüfe DSGVO & EU AI Act und priorisiere nach Nutzen.</p>
-        <ul>
-          <li>Use-Case-Findung mit Ihren Fachbereichen</li>
-          <li>Datenschutz- & EU-AI-Act-Check</li>
-          <li>Priorisierung nach eingesparten Stunden</li>
-          <li>Ergebnis: umsetzbarer Plan in 2–4 Wochen</li>
-        </ul>
-      </div>
-      <div class="svc-card">
-        <span class="num">SRV.02</span>
-        <h3>KI-Umsetzung</h3>
-        <p>Ich baue das System, das Ihr Plan braucht — und integriere es in Ihre bestehende IT: CRM, ERP, E-Mail, Webshop.</p>
-        <ul>
-          <li>RAG-Wissensdatenbank für Ihr Firmenwissen</li>
-          <li>Prozess-Automatisierung mit KI-Agenten</li>
-          <li>Cloud DSGVO-konform über HOVIGuard — oder komplett in Ihrem Haus via HOVION</li>
-          <li>Pilot in 4–6 Wochen, messbares Ergebnis</li>
-        </ul>
-      </div>
-      <div class="svc-card">
-        <span class="num">SRV.03</span>
-        <h3>Schulung & Vorträge</h3>
-        <p>Ihr Team nutzt KI sicher und souverän — vom Prompt-Workshop bis zum Führungskräfte-Briefing. Formate, wie ich sie seit 2023 bei Management Circle halte.</p>
-        <ul>
-          <li>Keynotes & Impulsvorträge</li>
-          <li>Prompt-Engineering-Workshops</li>
-          <li>EU-AI-Act-Briefing für die Geschäftsleitung</li>
-          <li>Train-the-Trainer für interne Multiplikatoren</li>
-        </ul>
-      </div>
-    </div>
-    <div class="banner">
-      <div>
-        <h3>Die KI-Patenschaft</h3>
-        <p>Laufende Betreuung als Ihr externer KI-Verantwortlicher: Ich halte Ihre Systeme aktuell, bewerte neue Modelle und entwickle Ihre KI-Nutzung weiter. Monatlich kündbar — Sie binden sich an Ergebnisse, nicht an Verträge.</p>
-      </div>
-      <a class="btn" href="#kontakt">Unverbindlich anfragen</a>
-    </div>
-  </div>
-</section>
-
-<!-- USE CASES -->
-<section id="use-cases" class="ruled">
-  <div class="wrap">
-    <p class="eyebrow"><span class="idx">03.2</span> Use Cases</p>
-    <h2>Zeigen, nicht behaupten.</h2>
-    <p class="lead">Vier Beispiele, wie KI heute konkret Arbeit abnimmt — alle aus meiner täglichen Praxis.</p>
-
-    <article class="usecase">
-      <div>
-        <h3>Fragen Sie Ihr Unternehmen. Es antwortet jetzt.</h3>
-        <p>Handbücher, Verträge, Angebote, Projektordner — Ihr Wissen steckt in tausenden Dateien und ein paar Köpfen. Eine KI-Wissensdatenbank (RAG) macht es in Sekunden abfragbar: mit Quellenangabe statt Halluzination. Neue Mitarbeiter sind schneller produktiv, Ihre Experten beantworten nicht mehr zehnmal dieselbe Frage — und Wissen geht bei Pensionierungen nicht verloren. Auf Wunsch läuft alles auf einem Server in Ihrem Haus: Kein Dokument verlässt das Firmennetz.</p>
-        <details>
-          <summary>WIE ES FUNKTIONIERT — FÜR IHRE IT</summary>
-          <p style="margin-top:10px">4-Layer-Retrieval-Pipeline, wie ich sie in HOVION.AI produktiv betreibe: (1) Vision-Analyse für Screenshots & Scans, (2) persönliches Nutzer-Gedächtnis, (3) Firmen-Wissensdatenbank mit Vektor-Suche (Qdrant) und Re-Ranking, (4) klar gekennzeichneter Modell-Fallback. Jede Antwort liefert Quellen-Zitate. Stack: Python/FastAPI, PostgreSQL, vLLM auf eigener GPU, lokale Embedding-Modelle.</p>
-        </details>
-        <a class="mini-cta" href="#kontakt">Geht das bei uns? → Sprechstunde</a>
-      </div>
-      <figure class="visual">
-        <img src="/assets/usecase-rag-wissensdatenbank.webp" alt="KI-Wissensdatenbank (RAG) für Unternehmen: Frage und Antwort mit Quellenangabe" loading="lazy" width="1200" height="670">
-        <figcaption>Firmenwissen abfragbar — mit Quellenangabe, auf Wunsch on-premise.</figcaption>
-      </figure>
-    </article>
-
-    <article class="usecase">
-      <figure class="visual">
-        <div class="flow" role="img" aria-label="Automatisierungs-Ablauf: E-Mail geht ein, KI-Agent klassifiziert, ERP wird befüllt, Angebot geht raus">
-          <div class="step"><b>01 EINGANG</b><span>Kundenanfrage landet im Postfach — PDF-Anhang, Freitext, unstrukturiert.</span></div>
-          <div class="step"><b>02 KI-AGENT</b><span>liest, klassifiziert, zieht Positionen & Kundendaten heraus, prüft gegen Preisliste.</span></div>
-          <div class="step"><b>03 SYSTEME</b><span>CRM aktualisiert, ERP-Auftrag angelegt, Unterlagen abgelegt — automatisch.</span></div>
-          <div class="step"><b>04 ERGEBNIS</b><span>Fertiger Angebotsentwurf zur Freigabe. Aus Stunden werden Minuten.</span></div>
-        </div>
-        <figcaption>Typischer Ablauf mit n8n, Power Automate und KI-Agenten.</figcaption>
-      </figure>
-      <div>
-        <h3>Angebot geschrieben, CRM gepflegt — während Sie im Termin sind.</h3>
-        <p>E-Mails sortieren und beantworten, Angebote vorbereiten, Daten zwischen Systemen übertragen, Berichte erstellen: Solche Routinen kosten jedes Team viele Stunden pro Woche. Mit n8n, Power Automate und KI-Agenten verbinde ich Ihre bestehenden Systeme zu Abläufen, die von selbst laufen. Genau solche Automatisierungen und Integrationen habe ich 2023–2025 in der KI-Taskforce eines österreichischen Payment-Unternehmens aufgebaut und bewertet. Ihr Team macht wieder die Arbeit, für die Sie es eingestellt haben.</p>
-        <a class="mini-cta" href="#kontakt">Welche Routine frisst bei Ihnen Zeit? → Sprechstunde</a>
-      </div>
-    </article>
-
-    <article class="usecase">
-      <div>
-        <h3>Ein Produktfoto rein. Ein Werbevideo raus. Am selben Tag.</h3>
-        <p>Neue Produktbilder in jeder Umgebung, jedem Stil, jeder Jahreszeit — ohne Fotostudio, ohne Agentur-Wartezeit. Und aus dem besten Bild wird direkt ein Kampagnenvideo für Social Media und Ihren Shop. Was früher Wochen und vierstellige Budgets brauchte, liefert dieser Workflow in Stunden. Die Beispiele rechts: ein einziges Demo-Packshot, daraus generierte Szenen und ein fertiger Videospot — alle Assets auf dieser Seite sind KI-generiert.</p>
-        <details>
-          <summary>UND MIT PORTRÄTS GEHT DAS AUCH</summary>
-          <p style="margin-top:10px">Aus meinem LinkedIn-Foto wurden die Filmszenen weiter unten in der Über-mich-Sektion — gleiche Person, neue Inszenierung. Dieselbe Technik liefert Ihnen konsistente Team-, Produkt- und Kampagnenbilder in Ihrem Marken-Look.</p>
-        </details>
-        <a class="mini-cta" href="#kontakt">Content-Produktion beschleunigen? → Sprechstunde</a>
-      </div>
-      <figure class="visual">
-        <img src="/assets/produkt-original.webp" alt="KI-Bildgenerierung für Produkte: Original-Packshot eines Demo-Produkts" loading="lazy" width="800" height="800">
-        <div class="scene-grid">
-          <img src="/assets/produkt-szene-1.webp" alt="KI-generierte Werbeszene: Wanderin trinkt das Produkt am Alpengipfel" loading="lazy" width="400" height="400">
-          <img src="/assets/produkt-szene-2.webp" alt="KI-generierte Werbeszene: Familie mit dem Produkt beim Picknick am Bergsee" loading="lazy" width="400" height="400">
-          <img src="/assets/produkt-szene-3.webp" alt="KI-generierte Werbeszene: Produkt am Alpenbach im Morgenlicht" loading="lazy" width="400" height="400">
-        </div>
-        <video controls preload="none" poster="/assets/produkt-video-poster.webp" style="margin-top:8px" aria-label="KI-generiertes Werbevideo aus einem Produktfoto">
-          <source src="/assets/produkt-werbevideo.mp4" type="video/mp4">
-        </video>
-        <figcaption>1 Packshot → 3 Szenen → 1 Werbevideo. Komplett KI-generiert.</figcaption>
-      </figure>
-    </article>
-
-    <article class="usecase">
-      <figure class="visual">
-        <img src="/assets/comic-agentic-engineering.webp" alt="Comic: Karl Pilz gibt Anweisungen, KI-Agenten setzen sie um — Agentic Engineering erklärt" loading="lazy" width="1200" height="670">
-        <img src="/assets/usecase-agentic-coding.webp" alt="Agentic Coding in der Praxis: KI-Agent baut autonom eine Website" loading="lazy" width="1200" height="670" style="margin-top:8px">
-        <figcaption>Oben: das Prinzip. Unten: die Praxis. Strategie & Abnahme: Mensch. Umsetzung: KI-Agenten.</figcaption>
-      </figure>
-      <div>
-        <h3>Diese Website hat mein KI-Agent gebaut. Ich habe sie nur beauftragt.</h3>
-        <p>Recherche auf LinkedIn und in meinen Projekten, DNS-Einstellungen, Server-Konfiguration, GitHub-Repository, Texte, Bilder, Deployment — das alles hat ein KI-Agent an einem einzigen Tag autonom erledigt. Ich habe die Strategie vorgegeben und das Ergebnis abgenommen. Interne Tools, Prototypen und Automatisierungen, die sich früher nie gerechnet haben, entstehen mit Agentic Coding in Tagen statt Monaten. Ich arbeite jeden Tag so — und bringe diese Arbeitsweise in Ihr Unternehmen.</p>
-        <p style="margin-top:12px"><a href="https://github.com/Ki-Pate/ki-pate.at" target="_blank" rel="noopener" style="color:var(--tech)">Der Quellcode dieser Seite liegt offen auf GitHub →</a></p>
-        <a class="mini-cta" href="#kontakt">Was würde Ihr Agent bauen? → Sprechstunde</a>
-      </div>
-    </article>
-  </div>
-</section>
-
-<!-- MARKETING -->
-<section id="marketing" class="ruled panelbg">
-  <div class="wrap">
-    <p class="eyebrow"><span class="idx">03.3</span> Früher → Heute</p>
-    <h2>Marketing hat sich verändert.<br>Fotoshootings und Video-Drehs wurden ersetzt.</h2>
-    <p class="lead">Viele Unternehmen zahlen noch immer vierstellige Beträge für ein Produktshooting — und warten Wochen auf den fertigen Werbeclip. Heute entstehen Produktbilder, Videos und Kampagnentexte in Stunden, im eigenen Haus, für einen Bruchteil der Kosten. Wer so arbeitet, testet zehn Varianten statt einer und veröffentlicht jede Woche statt zweimal im Jahr. Genau das passiert gerade — die Frage ist nur, ob in Ihrem Haus oder beim Mitbewerb.</p>
-    <div class="compare">
-      <div class="row">
-        <div class="cell old"><span class="lbl">Früher</span><b>Produktshooting</b>Typischerweise 3 Wochen Vorlauf und rund 4.000 €.</div>
-        <div class="cell new"><span class="lbl">Heute</span><b>Ein Nachmittag</b>Direkt in Ihrem Betrieb — jede Umgebung, jede Jahreszeit.</div>
-      </div>
-      <div class="row">
-        <div class="cell old"><span class="lbl">Früher</span><b>Werbevideo</b>Typischerweise 4–6 Wochen mit Drehteam und Schnittstudio.</div>
-        <div class="cell new"><span class="lbl">Heute</span><b>2 Arbeitstage</b>Samt Zuschnitten für Social Media und Shop.</div>
-      </div>
-      <div class="row">
-        <div class="cell old"><span class="lbl">Früher</span><b>Kampagnentexte</b>Typischerweise 2 Wochen Agenturschleife pro Fassung.</div>
-        <div class="cell new"><span class="lbl">Heute</span><b>10 Varianten vor der Mittagspause</b>Und getestet wird, was verkauft.</div>
-      </div>
-    </div>
-    <div class="usecase" style="border-top:1px dashed var(--line);margin-top:44px">
-      <div>
-        <h3>Mitarbeiterfotos? Braucht keinen Fotografen mehr.</h3>
-        <p>Jeder Betrieb kennt es: Die Team-Seite zeigt Handy-Schnappschüsse aus drei Jahrzehnten — schlechtes Licht, jeder Hintergrund anders, der Neue fehlt ganz. Ein Foto-Termin für alle scheitert an Schichtplänen und Budget. Mit KI reicht pro Person ein einziges brauchbares Foto: Daraus entstehen einheitliche, professionelle Porträts im Look Ihres Unternehmens — gleiches Licht, gleicher Hintergrund, Ihre CI-Farbe. Neue Mitarbeiter? In fünf Minuten im Team-Look, ohne dass jemand das Studio bucht.</p>
-        <p style="margin-top:10px;color:var(--faint);font-size:.85rem">Demo rechts mit KI-generierten, fiktiven Personen — aus Datenschutzgründen. Mit Ihren echten Mitarbeitern funktioniert es genauso, Einverständnis vorausgesetzt.</p>
-        <a class="mini-cta" href="#kontakt">Team-Seite erneuern? → Sprechstunde</a>
-      </div>
-      <figure class="visual">
-        <img src="/assets/usecase-mitarbeiterfotos.webp" alt="Use Case Mitarbeiterfotos mit KI: unvorteilhafte Schnappschüsse werden zu einheitlichen professionellen Team-Porträts im Unternehmensstil" loading="lazy" width="1200" height="670">
-        <figcaption>Vorher: Handy-Schnappschüsse. Nachher: ein Team, ein Stil — ohne Fotostudio.</figcaption>
-      </figure>
-    </div>
-    <p class="lead" style="margin-top:30px">Bringen Sie ein Produktfoto — oder Ihre alte Team-Seite — in die KI-Sprechstunde mit: Ich zeige Ihnen in 30 Minuten, was Ihr Marketing ab nächster Woche kann. <a href="#kontakt" style="color:var(--acc)">Termin sichern →</a></p>
-  </div>
-</section>
-
-<!-- ALLTAG -->
-<section id="alltag" class="ruled">
-  <div class="wrap">
-    <p class="eyebrow"><span class="idx">03.4</span> Alltag</p>
-    <h2>Diese 8 Routinen hat jeder Betrieb.<br>In manchen laufen sie schon von selbst.</h2>
-    <p class="lead">Während Sie das lesen, beantwortet bei Ihrem Mitbewerb eine KI die E-Mails von heute Früh, schreibt das Meeting-Protokoll und legt den Angebotsentwurf zur Freigabe vor.</p>
-    <div class="uc-grid">
-      <div class="uc"><h4>Die tägliche E-Mail-Flut</h4><p>Posteingang sichten, beantworten, weiterleiten — typischerweise 5 h/Woche pro Mitarbeiter. <span class="sol">KI priorisiert und entwirft die Antworten vor; Sie geben nur noch frei.</span></p></div>
-      <div class="uc"><h4>Angebote schreiben</h4><p>Zwischen Anfrage und Angebot liegen oft Tage. <span class="sol">KI baut den Entwurf aus Preisliste und Alt-Angeboten in Minuten.</span></p></div>
-      <div class="uc"><h4>Meeting-Protokolle</h4><p>Mitschreiben, zusammenfassen, nachfassen — 2–3 h/Woche. <span class="sol">KI liefert Protokoll, To-dos und Zuständigkeiten fertig.</span></p></div>
-      <div class="uc"><h4>Rechnungen & Belege</h4><p>Abtippen, kontieren, ablegen — 3–4 h/Woche Handarbeit. <span class="sol">KI liest Belege aus und übergibt geprüft an Ihre Software.</span></p></div>
-      <div class="uc"><h4>Social-Media-Content</h4><p>Ideen, Texte, Bilder — 4 h/Woche, oder der Kanal liegt brach. <span class="sol">Ein Monat Content in Ihrer Tonalität an einem Vormittag.</span></p></div>
-      <div class="uc"><h4>Bewerbungen sichten</h4><p>Pro offener Stelle typischerweise 3 h/Woche. <span class="sol">KI fasst zusammen und reiht nach Ihren Kriterien; Sie sprechen mit den Besten.</span></p></div>
-      <div class="uc"><h4>Immer dieselben Kundenfragen</h4><p>Dieselben 20 Fragen kosten 5 h/Woche. <span class="sol">Ein KI-Assistent antwortet sofort — auch Samstag um 22 Uhr.</span></p></div>
-      <div class="uc"><h4>Berichte & Auswertungen</h4><p>Zahlen aus drei Systemen zusammensuchen — 3 h/Woche pro Führungskraft. <span class="sol">KI legt den fertigen Bericht Montag um 7 Uhr ab.</span></p></div>
-    </div>
-    <div class="calc">RECHENBEISPIEL // 5 h/Woche × 10 Mitarbeiter × 45 Arbeitswochen = 2.250 h/Jahr. Zu 50 €/h sind das <b>112.500 € — jedes Jahr.</b></div>
-    <p class="fomo">„Jede Woche ohne KI kostet Stunden, die Ihr Mitbewerb <em>bereits eingespart</em> hat."</p>
-  </div>
-</section>
-
-<!-- BRANCHEN -->
-<section id="branchen" class="ruled panelbg">
-  <div class="wrap">
-    <p class="eyebrow"><span class="idx">03.5</span> Branchen im Umbruch</p>
-    <h2>Diese Branchen verändert KI gerade.<br>Nicht irgendwann — jetzt.</h2>
-    <p class="lead">Keine dieser Branchen verschwindet. Aber in jeder verschiebt sich gerade, wer das Geschäft macht: weg von denen, die Routinearbeit verkaufen — hin zu denen, die KI führen können. Das sind keine Prognosen. Das alles passiert bereits.</p>
-    <div class="branchen-list">
-      <div class="branche">
-        <div class="bname"><span class="mono">B.01</span>Werbung, Foto & Content</div>
-        <div class="cell fear"><span class="lbl">Das bricht weg</span>Fotoshootings, Werbevideos, Standardtexte — genau das Grundrauschen, von dem viele Agenturen leben, entsteht heute in Stunden im eigenen Haus. Diese Website samt aller Bilder und Videos ist der Beweis.</div>
-        <div class="cell win"><span class="lbl">Das machen Gewinner</span>Zehn Kampagnen-Varianten statt einer, jede Woche frischer Content, Budget fließt in Strategie statt in Wartezeit. Produktionskosten nahe null — Tempo als Waffe.</div>
-      </div>
-      <div class="branche">
-        <div class="bname"><span class="mono">B.02</span>Übersetzung & Lokalisierung</div>
-        <div class="cell fear"><span class="lbl">Das bricht weg</span>Routine-Übersetzungen kauft kaum noch jemand ein: KI liefert sie sofort, in Dutzenden Sprachen gleichzeitig, zu einem Bruchteil der Kosten.</div>
-        <div class="cell win"><span class="lbl">Das machen Gewinner</span>Webshop, Produktdoku und Support ab sofort mehrsprachig — Märkte erschließen, für die sich ein Übersetzungsbüro nie gerechnet hätte.</div>
-      </div>
-      <div class="branche">
-        <div class="bname"><span class="mono">B.03</span>Kundenservice & Call-Center</div>
-        <div class="cell fear"><span class="lbl">Das bricht weg</span>First-Level-Anfragen — Lieferzeit, Rechnung, Passwort — braucht kein Mensch mehr zu beantworten. Wer dafür Personal bindet, zahlt doppelt: Gehälter und die Geduld seiner Kunden.</div>
-        <div class="cell win"><span class="lbl">Das machen Gewinner</span>Antwort in Sekunden, rund um die Uhr, auch Samstag um 22 Uhr. Die Mitarbeiter kümmern sich um die Fälle, die wirklich Umsatz bringen.</div>
-      </div>
-      <div class="branche">
-        <div class="bname"><span class="mono">B.04</span>Buchhaltung & Steuerkanzleien</div>
-        <div class="cell fear"><span class="lbl">Das bricht weg</span>Belege abtippen, kontieren, ablegen — die Fleißarbeit, nach der jahrzehntelang abgerechnet wurde, erledigt KI im Hintergrund. Wer nur Datenerfassung verkauft, verliert die Rechnungsgrundlage.</div>
-        <div class="cell win"><span class="lbl">Das machen Gewinner</span>Beratung statt Belegerfassung: Mit demselben Team doppelt so viele Mandanten betreuen — und die wertvolle Arbeit machen, für die Mandanten gern zahlen.</div>
-      </div>
-      <div class="branche">
-        <div class="bname"><span class="mono">B.05</span>Recht & Vertragsprüfung</div>
-        <div class="cell fear"><span class="lbl">Das bricht weg</span>Verträge screenen, Klauseln vergleichen, Rechtsprechung suchen: Was früher tagelange Zuarbeit kostete, liefert KI in Minuten — mit Fundstelle. Die abrechenbare Routinestunde stirbt.</div>
-        <div class="cell win"><span class="lbl">Das machen Gewinner</span>Schneller prüfen, Fixpreise anbieten, mehr Mandate annehmen — und die Fälle gewinnen, für die den Zögernden die Zeit fehlt.</div>
-      </div>
-      <div class="branche">
-        <div class="bname"><span class="mono">B.06</span>Software & IT-Dienstleistung</div>
-        <div class="cell fear"><span class="lbl">Das bricht weg</span>Standard-Websites, Formulare, kleine Tools: Agentic Coding baut in Tagen, wofür bisher Monate und fünfstellige Angebote üblich waren. Diese Seite hat ein KI-Agent gebaut — an einem Tag.</div>
-        <div class="cell win"><span class="lbl">Das machen Gewinner</span>Agenten übernehmen die Basisarbeit; das Team liefert in derselben Zeit Lösungen, die sich früher nie gerechnet haben — interne Tools, Prototypen, Automatisierungen.</div>
-      </div>
-    </div>
-    <p class="fomo">„In keiner dieser Branchen verschwinden die Unternehmen. Es wechselt nur, <em>wer vorne ist</em>."</p>
-    <p class="lead" style="margin-top:30px">Ihre Branche ist dabei — oder demnächst. In der KI-Sprechstunde sage ich Ihnen ehrlich, was in Ihrem Betrieb automatisierbar ist und was nicht. <a href="#kontakt" style="color:var(--acc)">Termin sichern →</a></p>
-  </div>
-</section>
-
-<!-- ============ KAPITEL 04: DER BEWEIS ============ -->
-<section class="chap" id="k4" data-chapter="04" data-chapter-name="DER BEWEIS">
-  <img class="bg" src="/assets/karl-hollywood-3.webp" alt="" loading="lazy" aria-hidden="true">
-  <div class="inner">
-    <span class="knum">KAPITEL 04 / 05</span>
-    <h2>Der Beweis.</h2>
-    <p>Zwei eigene KI-Plattformen im Live-Betrieb, 25 Jahre Technik-Karriere — und diese Website, die mein KI-Agent gebaut hat. Prüfen Sie selbst nach.</p>
-    <span class="hint">WEITERSCROLLEN</span>
-  </div>
-</section>
-
-<!-- LIVE-BEWEISE -->
-<section id="produkte" class="ruled" data-chapter="04" data-chapter-name="DER BEWEIS">
-  <div class="wrap">
-    <p class="eyebrow"><span class="idx">04.1</span> Live-Beweise</p>
-    <h2>Was ich für mich selbst gebaut habe,<br>baue ich auch für Sie.</h2>
-    <p class="lead">Karl Pilz ist Gründer von HOVIGuard.eu, einer in Österreich gehosteten Plattform für sichere, DSGVO-konforme Unternehmens-KI, und Entwickler von HOVION.AI, einer On-Premise-KI-Komplettlösung für den Betrieb im eigenen Firmennetz. Beide Systeme sind im Live-Betrieb.</p>
-    <div class="proofcards">
-      <div class="proofcard">
-        <img src="/assets/hoviguard-plattform.webp" alt="HOVIGuard.eu – DSGVO-konforme Unternehmens-KI-Plattform aus Österreich" loading="lazy" width="1200" height="675">
-        <div class="inner">
-          <span class="status">LIVE — HOVIGUARD.EU</span>
-          <h3>Sichere Unternehmens-KI. In Betrieb.</h3>
-          <ul>
-            <li>100+ KI-Modelle (Claude, GPT, Gemini, Mistral) in einer Plattform</li>
-            <li>MultiLayer Data Shield: PII-Filter, bevor Daten das Modell erreichen</li>
-            <li>Lückenloser Audit-Trail & Compliance-Cockpit für die Geschäftsführung</li>
-            <li>Gehostet in Österreich — kein Training auf Ihren Daten, vertraglich zugesichert</li>
-            <li>Schluss mit Shadow AI: eine zentrale, freigegebene Plattform</li>
-          </ul>
-          <a class="btn ghost" href="https://hoviguard.eu" target="_blank" rel="noopener">HOVIGuard live ansehen</a>
-        </div>
-      </div>
-      <div class="proofcard">
-        <img src="/assets/hovion-onpremise-ki.webp" alt="HOVION.AI – On-Premise-KI-Lösung: lokale LLMs im eigenen Firmennetz" loading="lazy" width="1200" height="675">
-        <div class="inner">
-          <span class="status">PRODUKTIV — HOVION.AI</span>
-          <h3>KI komplett in Ihrem Haus.</h3>
-          <ul>
-            <li>Plug-and-Play-System im Firmennetz: kein Dokument verlässt das Haus</li>
-            <li>12+ Microservices, 4-Layer-RAG-Pipeline mit Quellen-Zitaten</li>
-            <li>Lokale Sprachmodelle auf eigener GPU (vLLM) — unabhängig von US-Clouds</li>
-            <li>Eigene Desktop-App mit Chat, Vision & Offline-Modus</li>
-            <li>Rollen & Rechte, Audit-Log, Agenten-System</li>
-          </ul>
-          <a class="btn ghost" href="#kontakt">Demo auf Anfrage</a>
-        </div>
-      </div>
-    </div>
-  </div>
-</section>
-
-<!-- ÜBER -->
-<section id="ueber" class="ruled panelbg">
-  <div class="wrap about-grid">
-    <div>
-      <p class="eyebrow"><span class="idx">04.2</span> Über Karl</p>
-      <h2>Vom Maschinenbau zur KI — 25 Jahre Technik, die läuft.</h2>
-      <p class="lead" style="margin-top:18px">Karl Pilz aus Anif bei Salzburg begleitet Unternehmen bei der DSGVO-konformen Einführung von Künstlicher Intelligenz. Der Ingenieur (HTL Maschinenbau, FH Salzburg Informationstechnik) führte über ein Jahrzehnt Software-Teams, gründete 2010 die Digitalagentur Web2null und leitete 2023–2025 die KI-Taskforce der hobex AG. Heute ist er Gründer von HOVIGuard.eu und schult als Referent bei Management Circle Führungskräfte im DACH-Raum.</p>
-      <div class="quotebox">Warum „Pate"? Weil ich Verantwortung übernehme, statt Berichte abzuliefern. Ein Pate ist da, wenn es zählt — und macht seine Schützlinge stark, statt sie abhängig zu halten. Mein Ziel ist erreicht, wenn Ihr Team KI selbstverständlich nutzt.</div>
-      <p class="lead">Und weil ich auch ausgebildeter Mental- & Burnoutprophylaxe-Trainer bin, gilt bei mir: KI soll Ihre Leute entlasten — nicht zusätzlich stressen.</p>
-      <div class="holly">
-        <h3>Der KI-Pate, von der KI inszeniert</h3>
-        <p class="cap" style="margin:4px 0 14px">AUS EINEM EINZIGEN LINKEDIN-FOTO: DREI FILMSZENEN + EIN KURZVIDEO. KLEINE MACHTDEMONSTRATION AUS USE CASE 3.</p>
-        <div class="scene-grid">
-          <img src="/assets/karl-hollywood-1.webp" alt="KI-generiertes Filmporträt von Karl Pilz: Abendstraße, Anzug mit türkisem Einstecktuch" loading="lazy" width="600" height="800">
-          <img src="/assets/karl-hollywood-2.webp" alt="KI-generiertes Film-noir-Porträt von Karl Pilz im Studierzimmer mit türkisem Einstecktuch" loading="lazy" width="600" height="800">
-          <img src="/assets/karl-hollywood-3.webp" alt="KI-generiertes Porträt von Karl Pilz in einer KI-Kommandozentrale" loading="lazy" width="800" height="450">
-        </div>
-        <video controls preload="none" poster="/assets/karl-hollywood-video-poster.webp" style="margin-top:8px;border-radius:4px" aria-label="KI-generiertes Kurzvideo: Karl Pilz als Filmfigur">
-          <source src="/assets/karl-hollywood-video.mp4" type="video/mp4">
-        </video>
-        <p class="cap">ALLE BILDER & VIDEOS AUF DIESER SEITE: KI-GENERIERT MIT MEINEN WORKFLOWS.</p>
-      </div>
-    </div>
-    <div>
-      <figure class="fig">
-        <span class="frame"></span><span class="tick"></span>
-        <img src="/assets/karl-pilz-portrait-skyline.webp" alt="Karl Pilz, Ingenieur und KI-Experte aus Anif bei Salzburg" loading="lazy" width="800" height="800">
-        <figcaption><b>ABB. 02 — WERDEGANG</b><span>2001 → HEUTE</span></figcaption>
-      </figure>
-      <ol class="timeline" style="margin-top:36px">
-        <li><span class="year">1995–2001</span><b>HTL Maschinenbau & Umwelttechnik</b>Ingenieur — technisches Fundament</li>
-        <li><span class="year">2004–2009</span><b>FH Salzburg: Informationstechnik & Systemmanagement</b>Dipl.-Ing. (FH), berufsbegleitend — parallel: CAD-Konstruktion & Medizintechnik (Beckman Coulter)</li>
-        <li><span class="year">2007–2011</span><b>Projektleitung Anlagenbau · Web bei Reed Exhibitions</b>Von der Maschine zur Digitalisierung</li>
-        <li><span class="year">seit 2010</span><b>Gründung Web2null.at</b>15+ Jahre Digitalagentur: Web, E-Commerce, Prozesse, Automatisierung</li>
-        <li><span class="year">2012–2017</span><b>Bereichsleitung Software & Web/App</b>brainlink (Team 6–8) und Aktionsfinder — agile Teams geführt</li>
-        <li><span class="year">2023–2025</span><b>Projektmanager KI-Taskforce, hobex AG</b>GenAI-Use-Cases, lokale LLMs, Datenschutz, Schulungen im Payment-Umfeld</li>
-        <li><span class="year">seit 2024</span><b>HOVION.AI</b>On-Premise-KI-Komplettlösung — selbst entwickelt, produktiv im Einsatz</li>
-        <li><span class="year">seit 2025</span><b>Founder HOVIGuard.eu</b>Sichere Unternehmens-KI aus Österreich — live</li>
-      </ol>
-      <p style="margin-top:20px"><a href="https://www.linkedin.com/in/karl-pilz-8540a323" target="_blank" rel="noopener" style="color:var(--tech)">Auf LinkedIn folgen →</a></p>
-    </div>
-  </div>
-</section>
-
-<!-- KOMPETENZEN -->
-<section id="kompetenzen" class="ruled">
-  <div class="wrap">
-    <p class="eyebrow"><span class="idx">04.3</span> Kompetenzfelder</p>
-    <h2>Sechs Felder. Ein Ziel: weniger Arbeit für Sie.</h2>
-    <div class="skillgrid">
-      <details class="skill">
-        <summary><span class="t">KI-Strategie & Recht<span class="benefit">Sie wissen, was sich rechnet — und was erlaubt ist.</span></span></summary>
-        <div class="body">
-          <div class="tags"><span>KI-Strategie</span><span>Use-Case-Bewertung</span><span>Digitale Strategie</span><span>IT-Strategie</span><span>EU AI Act</span><span>DSGVO</span><span>Datenschutzbewertung</span><span>Daten- & Algorithmenethik</span><span>Shadow-AI-Analyse</span></div>
-          <p class="proof">KI-TASKFORCE HOBEX AG · ZERTIFIKATE KI-CAMPUS</p>
-        </div>
-      </details>
-      <details class="skill">
-        <summary><span class="t">KI-Systeme & Wissensdatenbanken<span class="benefit">Ihr Firmenwissen wird abfragbar — Ihre Daten bleiben im Haus.</span></span></summary>
-        <div class="body">
-          <div class="tags"><span>RAG-Pipelines</span><span>Lokale LLMs (vLLM, Ollama, LM Studio)</span><span>On-Premise-Architektur</span><span>Vektor-DBs (Qdrant)</span><span>PostgreSQL / SQL</span><span>Python / FastAPI</span><span>Docker-Microservices</span><span>CRM/ERP-Integration</span></div>
-          <p class="proof">HOVION.AI (4-LAYER-RAG, PRODUKTIV) · HOVIGUARD.EU (LIVE)</p>
-        </div>
-      </details>
-      <details class="skill">
-        <summary><span class="t">Automatisierung & KI-Agenten<span class="benefit">Wiederkehrende Arbeit erledigt sich ab jetzt selbst.</span></span></summary>
-        <div class="body">
-          <div class="tags"><span>Prozessautomatisierung</span><span>n8n</span><span>Microsoft Power Automate</span><span>KI-Agenten</span><span>Agentic Coding (Claude Code)</span><span>Prompt Engineering</span><span>API-Integrationen</span></div>
-          <p class="proof">AUTOMATISIERUNGEN BEI HOBEX · DIESE WEBSITE ALS WERKSTÜCK</p>
-        </div>
-      </details>
-      <details class="skill">
-        <summary><span class="t">KI-Content & Marketing<span class="benefit">Produktbilder, Videos und Kampagnen in Stunden statt Wochen.</span></span></summary>
-        <div class="body">
-          <div class="tags"><span>KI-Bildgenerierung</span><span>Bild-zu-Video-Workflows</span><span>ComfyUI</span><span>SEO</span><span>Google Analytics</span><span>E-Commerce</span><span>Web-Content-Management</span><span>Adobe Photoshop</span></div>
-          <p class="proof">USE CASE 3 AUF DIESER SEITE · 15 JAHRE WEB2NULL</p>
-        </div>
-      </details>
-      <details class="skill">
-        <summary><span class="t">Schulung & Führungskräfte-Briefings<span class="benefit">Ihr Team nutzt KI wirklich — sicher, souverän und gern.</span></span></summary>
-        <div class="body">
-          <div class="tags"><span>Keynotes & Vorträge</span><span>Prompt-Engineering-Trainings</span><span>Train-the-Trainer (zertifiziert)</span><span>Erwachsenenbildung</span><span>Mitarbeiterführung</span><span>Mental- & Burnoutprophylaxe-Training</span></div>
-          <p class="proof">REFERENT BEI MANAGEMENT CIRCLE SEIT 2023 · SCHULUNGEN BEI HOBEX</p>
-        </div>
-      </details>
-      <details class="skill">
-        <summary><span class="t">Digitales Fundament<span class="benefit">KI, die auf 25 Jahren solider IT steht — nicht auf Sand.</span></span></summary>
-        <div class="body">
-          <div class="tags"><span>Projektmanagement</span><span>Agile Methoden</span><span>Teamleitung (6–8 Personen)</span><span>Webentwicklung</span><span>E-Commerce-Plattformen</span><span>Maschinenbau & CAD</span><span>Medizintechnik-Entwicklung</span><span>Blockchain-Grundlagen</span></div>
-          <p class="proof">KARRIERE-TIMELINE OBEN · WEB2NULL SEIT 2010 · PMA JUNIOR-PM</p>
-        </div>
-      </details>
-    </div>
-  </div>
-</section>
-
-<!-- ============ KAPITEL 05: DER START ============ -->
-<section class="chap" id="k5" data-chapter="05" data-chapter-name="DER START">
-  <img class="bg" src="/assets/szene-morgen.webp" alt="" loading="lazy" aria-hidden="true">
-  <div class="inner">
-    <span class="knum">KAPITEL 05 / 05</span>
-    <h2>Der Start.</h2>
-    <p>Die Nacht hat gearbeitet, der Morgen gehört dem Gespräch: 30 Minuten KI-Sprechstunde, kostenlos. Drei Schritte, ein Pilot, messbare Zahlen — so fangen wir an.</p>
-    <span class="hint">WEITERSCROLLEN</span>
-  </div>
-</section>
-
-<!-- ABLAUF -->
-<section id="ablauf" class="ruled panelbg" data-chapter="05" data-chapter-name="DER START">
-  <div class="wrap">
-    <p class="eyebrow"><span class="idx">05.1</span> So starten wir</p>
-    <h2>Wie läuft eine KI-Einführung ab?</h2>
-    <div class="steps">
-      <div class="step-card">
-        <span class="n">SCHRITT 01</span>
-        <h3>KI-Sprechstunde</h3>
-        <p>30 Minuten, kostenlos, per Video-Call oder Telefon. Sie schildern Ihren Betrieb, ich bringe erste Use-Case-Ideen mit. Kein Verkaufsgespräch — ein Fachgespräch.</p>
-      </div>
-      <div class="step-card">
-        <span class="n">SCHRITT 02</span>
-        <h3>Potenzial-Check</h3>
-        <p>Vor Ort oder remote: Ich schaue mir Ihre Prozesse und Systeme an und liefere konkrete Use Cases mit Aufwandsschätzung und Datenschutz-Einordnung.</p>
-      </div>
-      <div class="step-card">
-        <span class="n">SCHRITT 03</span>
-        <h3>Pilot in 4–6 Wochen</h3>
-        <p>Ein Prozess, ein messbares Ergebnis. Danach entscheiden Sie auf Basis von Zahlen, ob wir ausbauen — nicht auf Basis von Versprechen.</p>
-      </div>
-    </div>
-  </div>
-</section>
-
-<!-- FAQ -->
-<section id="faq" class="ruled">
-  <div class="wrap">
-    <p class="eyebrow"><span class="idx">05.2</span> FAQ</p>
-    <h2>Häufige Fragen zu KI im Unternehmen</h2>
-    <div class="faq">
-      <details><summary>Was macht ein KI-Berater?</summary><p class="a">Ein KI-Berater findet die Prozesse, in denen KI einem Unternehmen messbar Arbeit abnimmt, prüft Datenschutz und Wirtschaftlichkeit und begleitet die Umsetzung. Karl Pilz aus Salzburg geht einen Schritt weiter: Er baut die Systeme selbst — von der RAG-Wissensdatenbank bis zur Automatisierung — und schult anschließend das Team.</p></details>
-      <details><summary>Wie führt ein Mittelstandsbetrieb KI DSGVO-konform ein?</summary><p class="a">Zuerst die Datenflüsse klären: Welche Daten dürfen zu welchem KI-Anbieter? Dann eine kontrollierte Plattform statt privater KI-Accounts einführen, Mitarbeiter schulen und Nutzung nachvollziehbar machen. Karl Pilz hat dafür HOVIGuard.eu gebaut — eine in Österreich gehostete Plattform mit PII-Filter und Audit-Trail — und begleitet Betriebe bei genau dieser Einführung.</p></details>
-      <details><summary>Kann KI komplett ohne Cloud im eigenen Haus laufen?</summary><p class="a">Ja. Moderne lokale Sprachmodelle laufen auf eigener Hardware im Firmennetz — kein Dokument verlässt das Haus. Karl Pilz betreibt mit HOVION.AI selbst eine solche On-Premise-Lösung: eigene Server, lokale Modelle, RAG-Wissensdatenbank und Desktop-Client. Für Betriebe mit sensiblen Daten ist das oft der sauberste Weg.</p></details>
-      <details><summary>Was kostet KI-Beratung in Österreich?</summary><p class="a">Marktüblich liegen Tagsätze für erfahrene KI-Berater in Österreich grob zwischen 1.200 und 2.000 Euro. Karl Pilz arbeitet lieber mit klaren Paketen: Erstgespräch kostenlos, danach Fixpreis je Vorhaben — etwa für einen KI-Fahrplan oder ein Pilotprojekt. So bleibt das Budget planbar.</p></details>
-      <details><summary>Wer bietet KI-Schulungen in Salzburg an?</summary><p class="a">Karl Pilz, der KI-Pate aus Anif bei Salzburg, schult Teams und Führungskräfte direkt vor Ort oder remote: Prompt-Workshops, ChatGPT- und KI-Grundlagen, EU-AI-Act-Briefings. Seit 2023 ist er außerdem Referent bei Management Circle und bringt Führungskräften im DACH-Raum den KI-Einsatz bei.</p></details>
-      <details><summary>Welche Prozesse automatisiert man zuerst mit KI?</summary><p class="a">Die mit hohem Volumen und klaren Regeln: E-Mail-Sortierung und -Beantwortung, Angebotserstellung, Datenübertragung zwischen CRM, ERP und Webshop, Berichte und Protokolle. Karl Pilz priorisiert nach einer einfachen Formel: eingesparte Stunden pro Woche mal Häufigkeit, geteilt durch Umsetzungsaufwand — und startet mit dem besten Verhältnis.</p></details>
-      <details><summary>Wie lange dauert ein KI-Pilotprojekt?</summary><p class="a">Vier bis sechs Wochen sind realistisch: ein Prozess, ein messbares Ziel, ein funktionierendes System. Nach diesem Muster arbeitet Karl Pilz mit Unternehmen in Salzburg und im DACH-Raum — erst der Pilot mit Messwerten, dann die Entscheidung über den Ausbau. So bleibt das Risiko klein.</p></details>
-      <details><summary>Was verlangt der EU AI Act von kleinen und mittleren Unternehmen?</summary><p class="a">KMU müssen ihre KI-Anwendungen nach Risiko einstufen, Transparenzpflichten einhalten, Mitarbeiter nachweislich schulen (KI-Kompetenz nach Artikel 4) und verbotene Praktiken vermeiden. Karl Pilz übersetzt diese Pflichten in eine praktikable Checkliste und richtet die KI-Nutzung so ein, dass sie einer Prüfung standhält.</p></details>
-    </div>
-  </div>
-</section>
-
-<!-- KONTAKT -->
-<section id="kontakt" class="contact ruled">
-  <div class="wrap contact-box">
-    <div>
-      <p class="eyebrow"><span class="idx">05.3</span> KI ist weit mehr, als du denkst.</p>
-      <h2>Reden wir 30 Minuten über Ihre Prozesse.</h2>
-      <p class="lead">Schicken Sie mir Ihre Anfrage — Sie bekommen binnen 24 Stunden einen Terminvorschlag für die kostenlose KI-Sprechstunde. Sie gehen mit 2–3 konkreten Use-Cases raus, auch wenn wir nie zusammenarbeiten. Handschlagqualität inklusive.</p>
-      <p class="fomo" style="margin-top:24px">„Die Frage ist nicht, ob KI in Ihrer Branche ankommt — nur, <em>bei wem zuerst</em>."</p>
-    </div>
-    <div>
-      <form class="cform" action="/kontakt.php" method="post" aria-label="Anfrageformular KI-Sprechstunde">
-        <div class="row2">
-          <div><label for="f-name">Name *</label><input id="f-name" name="name" required autocomplete="name"></div>
-          <div><label for="f-firma">Firma</label><input id="f-firma" name="firma" autocomplete="organization"></div>
-        </div>
-        <div class="row2">
-          <div><label for="f-email">E-Mail *</label><input id="f-email" type="email" name="email" required autocomplete="email"></div>
-          <div><label for="f-tel">Telefon</label><input id="f-tel" type="tel" name="telefon" autocomplete="tel"></div>
-        </div>
-        <div><label for="f-msg">Worum geht es? *</label><textarea id="f-msg" name="nachricht" required placeholder="Kurz Ihr Betrieb, Ihre Branche und wo es hakt — den Rest besprechen wir."></textarea></div>
-        <div class="hp" aria-hidden="true"><label for="f-web">Website</label><input id="f-web" name="website" tabindex="-1" autocomplete="off"></div>
-        <button class="btn" type="submit">Anfrage senden</button>
-        <p class="note">Ihre Angaben verwende ich ausschließlich zur Beantwortung Ihrer Anfrage (Art. 6 Abs. 1 lit. b DSGVO) — Details in der <a href="/datenschutz.html">Datenschutzerklärung</a>. Kein Newsletter, keine Weitergabe.</p>
-      </form>
-      <div class="alt-ways">
-        <a href="mailto:hallo@ki-pate.at"><b>E-MAIL</b>hallo@ki-pate.at</a>
-        <a href="tel:+436601495489"><b>TEL</b>+43 660 1495489</a>
-        <a href="https://www.linkedin.com/in/karl-pilz-8540a323" target="_blank" rel="noopener"><b>IN</b>LinkedIn</a>
-      </div>
-    </div>
-  </div>
-</section>
-
+<section id="kontakt" class="section contact"><div class="container contact-grid">
+  <div class="contact-copy reveal"><p class="eyebrow">Kostenlose KI-Sprechstunde</p><h2>Zeigen Sie mir den Prozess, der Sie nervt.</h2><p>In 30 Minuten klären wir, ob KI dort wirklich hilft, was ein sinnvoller Pilot wäre und wo die Grenzen liegen. Ohne Verkaufsshow und ohne Fachchinesisch.</p><p class="contact-quote">Sie gehen mit einer ehrlichen Einschätzung und einem konkreten nächsten Schritt aus dem Gespräch.</p><div class="direct"><a href="mailto:hallo@ki-pate.at"><b>MAIL</b>hallo@ki-pate.at</a><a href="tel:+436601495489"><b>TEL</b>+43 660 1495489</a></div></div>
+  <form class="contact-form reveal" action="/kontakt.php" method="post" aria-label="Anfrageformular für die KI-Sprechstunde"><div class="form-row"><div><label for="name">Name *</label><input id="name" name="name" type="text" autocomplete="name" required maxlength="120"></div><div><label for="firma">Unternehmen</label><input id="firma" name="firma" type="text" autocomplete="organization" maxlength="160"></div></div><div class="form-row"><div><label for="email">E-Mail *</label><input id="email" name="email" type="email" autocomplete="email" required maxlength="180"></div><div><label for="telefon">Telefon</label><input id="telefon" name="telefon" type="tel" autocomplete="tel" maxlength="60"></div></div><div><label for="nachricht">Welcher Ablauf kostet Sie Zeit? *</label><textarea id="nachricht" name="nachricht" required placeholder="Zum Beispiel: Jeden Montag übertragen wir ..." maxlength="3000"></textarea></div><div class="hp" aria-hidden="true"><label for="website">Website</label><input id="website" name="website" type="text" tabindex="-1" autocomplete="off"></div><button class="button" type="submit">Sprechstunde anfragen</button><p class="form-note">Mit dem Absenden akzeptieren Sie die <a href="/datenschutz.html">Datenschutzerklärung</a>.</p></form>
+</div></section>
 </main>
-
-<footer>
-  <div class="wrap foot-brand">
-    <div class="big">Der KI-Pate<em>.</em></div>
-    <img src="/assets/logo-ki-pate.webp" alt="Logo Der KI-Pate" width="150" height="150" loading="lazy">
-  </div>
-  <div class="wrap foot-grid">
-    <div>
-      <b style="color:var(--ink)">Ing. DI (FH) Karl Pilz — Der KI-Pate</b><br>
-      Sagmüllerweg 8 · 5081 Anif bei Salzburg · Österreich<br>
-      <a href="tel:+436601495489">+43 660 1495489</a> · <a href="mailto:hallo@ki-pate.at">hallo@ki-pate.at</a><br><br>
-      <a href="/impressum.html">Impressum</a> · <a href="/datenschutz.html">Datenschutz</a> · <a href="/presse/">Presse-Kit</a> · <a href="/llms.txt">llms.txt</a> · <a href="https://github.com/Ki-Pate/ki-pate.at" target="_blank" rel="noopener">Quellcode</a>
-    </div>
-    <div class="foot-meta">
-      DOK.-NR. <b>KIP-2026-V5</b> // GEZEICHNET VON <b>KI-AGENT (CODEX)</b><br>
-      GEPRÜFT & FREIGEGEBEN VON <b>K. PILZ</b> // STRATEGIE: MENSCH. UMSETZUNG: KI.<br>
-      © 2026 KARL PILZ · KI-PATE.AT · SALZBURG
-    </div>
-  </div>
-</footer>
-
+<footer class="footer"><div class="container footer-grid"><div><div class="footer-brand">KI, die <span>arbeitet.</span></div><p>Karl Pilz · Der KI-Pate · Anif bei Salzburg</p></div><div class="footer-meta"><div class="footer-links"><a href="#use-cases">Use Cases</a><a href="#kontakt">Kontakt</a><a href="/impressum.html">Impressum</a><a href="/datenschutz.html">Datenschutz</a><a href="/presse/">Presse</a></div><p style="margin-top:12px;text-align:right">© <span id="year"></span> Karl Pilz</p></div></div></footer>
 <script>
-/* Kapitel-System: Progressbar + Pille + Szenen */
-(function(){
-  const bar=document.getElementById('progress');
-  const pill=document.getElementById('chappill');
-  addEventListener('scroll',()=>{
-    const h=document.documentElement;
-    const p=h.scrollTop/(h.scrollHeight-h.clientHeight)*100;
-    if(bar)bar.style.width=p+'%';
-    if(pill)pill.classList.toggle('show',h.scrollTop>300);
-  },{passive:true});
-  const chapEls=[...document.querySelectorAll('[data-chapter]')];
-  const cio=new IntersectionObserver(es=>{
-    es.forEach(e=>{
-      if(e.isIntersecting){
-        if(e.target.classList.contains('chap'))e.target.classList.add('in');
-        const c=e.target.getAttribute('data-chapter'), n=e.target.getAttribute('data-chapter-name');
-        if(pill&&c)pill.innerHTML='KAPITEL <b>'+c+'</b>/05 · '+n;
-      }
-    });
-  },{threshold:.3});
-  chapEls.forEach(el=>cio.observe(el));
-})();
+(() => {
+  const hero = document.querySelector('.hero');
+  const video = document.getElementById('hero-video');
+  const toggle = document.querySelector('.video-toggle');
+  const status = document.querySelector('.hero-status span');
+  const reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  const isMobile = window.matchMedia('(max-width: 760px)').matches;
+  const HOLD_MS = 3000;
+  const PLAYBACK_RATE = 0.72;
+  let holdTimer;
+  let countdownTimer;
 
-/* Reveal on scroll */
-const io=new IntersectionObserver(es=>es.forEach(e=>{if(e.isIntersecting){e.target.classList.add('in');io.unobserve(e.target)}}),{threshold:.1});
-document.querySelectorAll('section .wrap > *, .usecase, .svc-card, .proofcard, .step-card, .skill, .branche, .uc').forEach(el=>{el.classList.add('reveal');io.observe(el)});
+  if (isMobile) video.poster = '/hero-previews/media/hero-v2-poster-mobile.jpg';
+  video.muted = true;
+  video.defaultPlaybackRate = PLAYBACK_RATE;
+  video.playbackRate = PLAYBACK_RATE;
 
-/* Terminal typing — Signature */
-(function(){
-  const el=document.getElementById('termlog');
-  if(!el) return;
-  const lines=[
-    ['ok','  ✓ LinkedIn & Projekte analysiert — 49 Skills, 11 Stationen'],
-    ['ok','  ✓ DNS konfiguriert, SSL ausgestellt, Repo angelegt'],
-    ['ok','  ✓ Texte, Bilder & Videos generiert — DSGVO-sauber, self-hosted'],
-    ['ok','  ✓ Deployed auf ki-pate.at — Ladezeit 0,2 s'],
-    ['hl','→ Genau so baue ich Systeme für Ihr Unternehmen.']
-  ];
-  const reduce=matchMedia('(prefers-reduced-motion: reduce)').matches;
-  let li=0;
-  function addLine(){
-    if(li>=lines.length){const c=document.createElement('span');c.className='ln';c.innerHTML='<span class="p">karl@ki-pate:~$</span> <span class="cur"></span>';el.appendChild(c);return}
-    const pair=lines[li++];
-    const s=document.createElement('span');s.className='ln '+pair[0];el.appendChild(s);
-    if(reduce){s.textContent=pair[1];addLine();return}
-    let i=0;(function type(){s.textContent=pair[1].slice(0,++i);if(i<pair[1].length)setTimeout(type,12);else setTimeout(addLine,260)})();
+  function clearHoldTimers() {
+    window.clearTimeout(holdTimer);
+    window.clearInterval(countdownTimer);
   }
-  if(reduce){addLine()}else{setTimeout(addLine,700)}
-})();
-</script>
-<script>
-(function(){
-  const hero=document.querySelector('.hero');
-  const video=document.getElementById('home-hero-video');
-  const toggle=document.querySelector('.hero-video-toggle');
-  const status=document.querySelector('.hero-status span');
-  if(!hero||!video||!toggle)return;
-  const updateStatus=()=>{
-    const online=video.currentTime>=4.1&&video.currentTime<=8.9;
-    hero.classList.toggle('assistants-online',online);
-    if(status)status.textContent=online?'KI-Assistenten im Einsatz':'KI-Assistenten starten';
-  };
-  const syncToggle=()=>{
-    const paused=video.paused;
-    toggle.textContent=paused?'Video starten':'Video pausieren';
-    toggle.setAttribute('aria-label',paused?'Hintergrundvideo abspielen':'Hintergrundvideo pausieren');
-  };
-  toggle.addEventListener('click',()=>video.paused?video.play().catch(syncToggle):video.pause());
-  video.addEventListener('timeupdate',updateStatus);
-  video.addEventListener('seeked',updateStatus);
-  video.addEventListener('play',syncToggle);
-  video.addEventListener('pause',syncToggle);
-  syncToggle();
-  video.play().catch(syncToggle);
+
+  function setState(state) {
+    hero.dataset.videoState = state;
+    if (state === 'holding') {
+      toggle.textContent = 'Video starten';
+    } else if (state === 'playing') {
+      status.textContent = 'Film läuft · 0,72×';
+      toggle.textContent = 'Video pausieren';
+      toggle.setAttribute('aria-label', 'Hintergrundvideo pausieren');
+    } else if (state === 'paused') {
+      status.textContent = 'Video pausiert';
+      toggle.textContent = 'Video fortsetzen';
+      toggle.setAttribute('aria-label', 'Hintergrundvideo fortsetzen');
+    } else if (state === 'ended') {
+      status.textContent = 'Schlussszene';
+      toggle.textContent = 'Nochmal ansehen';
+      toggle.setAttribute('aria-label', 'Hintergrundvideo noch einmal ansehen');
+    }
+  }
+
+  function startVideo() {
+    clearHoldTimers();
+    video.defaultPlaybackRate = PLAYBACK_RATE;
+    video.playbackRate = PLAYBACK_RATE;
+    const playRequest = video.play();
+    if (playRequest) playRequest.catch(() => setState('paused'));
+  }
+
+  video.addEventListener('loadedmetadata', () => {
+    video.defaultPlaybackRate = PLAYBACK_RATE;
+    video.playbackRate = PLAYBACK_RATE;
+  });
+  video.addEventListener('play', () => setState('playing'));
+  video.addEventListener('pause', () => {
+    if (hero.dataset.videoState !== 'holding' && hero.dataset.videoState !== 'ended') setState('paused');
+  });
+  video.addEventListener('ended', () => {
+    video.pause();
+    setState('ended');
+  });
+
+  toggle.addEventListener('click', () => {
+    if (hero.dataset.videoState === 'holding') {
+      startVideo();
+    } else if (hero.dataset.videoState === 'ended') {
+      video.currentTime = 0;
+      startVideo();
+    } else if (video.paused) {
+      startVideo();
+    } else {
+      video.pause();
+    }
+  });
+
+  if (reducedMotion) {
+    status.textContent = 'Standbild · Animation reduziert';
+  } else {
+    const startedAt = performance.now();
+    countdownTimer = window.setInterval(() => {
+      const seconds = Math.max(1, Math.ceil((HOLD_MS - (performance.now() - startedAt)) / 1000));
+      status.textContent = `Standbild · Start in ${seconds} s`;
+    }, 250);
+    holdTimer = window.setTimeout(startVideo, HOLD_MS);
+  }
+
+  const reveals = document.querySelectorAll('.reveal');
+  if ('IntersectionObserver' in window && !reducedMotion) {
+    const observer = new IntersectionObserver(entries => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('in');
+          observer.unobserve(entry.target);
+        }
+      });
+    }, { threshold: 0.08, rootMargin: '0px 0px -40px' });
+    reveals.forEach(element => observer.observe(element));
+  } else {
+    reveals.forEach(element => element.classList.add('in'));
+  }
+
+  document.getElementById('year').textContent = new Date().getFullYear();
 })();
 </script>
 </body>
